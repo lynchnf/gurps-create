@@ -1,24 +1,49 @@
 [
   {
     "name": "Backpack, Small",
+    "cost": 60,
     "weight": 3,
     "notes": "Holds 40 lbs of gear"
   },
   {
     "name": "Blanket",
-    "weight": 4
+    "cost": 20,
+    "weight": 4,
+    "notes": "A warm sleeping blanket."
   },
   {
     "name": "Bottle, Ceramic",
+    "cost": 3,
     "weight": 2,
-    "notes": "Holds 1 quart water"
+    "notes": "Holds 1 quart liquid."
   },
   {
     "name": "Broadsword",
-    "weight": 3
+    "cost": 600,
+    "weight": 3,
+    "meleeWeapon": {
+      "skill": "Broadsword",
+      "modes": [
+        {
+          "damageBase": "swing",
+          "damageAdds": 1,
+          "damageType": "cut",
+          "reaches": [1],
+          "minimumStrength": 10
+        },
+        {
+          "damageBase": "thrust",
+          "damageAdds": 2,
+          "damageType": "imp",
+          "reaches": [1],
+          "minimumStrength": 10
+        }
+      ]
+    }
   },
   {
-    "name": "Brush, comb, etc."
+    "name": "Brush, comb, etc.",
+    "cost": 5
   },
   {
     "name": "Bullets",
@@ -27,16 +52,39 @@
   },
   {
     "name": "Climbing Gear",
+    "cost": 20,
     "weight": 4,
-    "notes": "Hammer, spikes, carabiners"
+    "notes": "Hammer, spikes, carabiners."
   },
   {
     "name": "Greatsword",
+    "cost": 900,
     "weight": 7,
-    "notes": "Requires 2 hands"
+    "meleeWeapon": {
+      "skill": "Two-Handed Sword",
+      "modes": [
+        {
+          "damageBase": "swing",
+          "damageAdds": 3,
+          "damageType": "cut",
+          "reaches": [1,2],
+          "minimumStrength": 12,
+          "requiresTwoHands": true
+        },
+        {
+          "damageBase": "thrust",
+          "damageAdds": 3,
+          "damageType": "imp",
+          "reaches": [2],
+          "minimumStrength": 12,
+          "requiresTwoHands": true
+        }
+      ]
+    }
   },
   {
-    "name": "Hand held mirror"
+    "name": "Hand held mirror",
+    "cost": 5
   },
   {
     "name": "Jager Rifle",
@@ -50,19 +98,45 @@
   },
   {
     "name": "Large Knife",
-    "weight": 1
+    "cost": 40,
+    "weight": 1,
+    "meleeWeapon": {
+      "skill": "Knife",
+      "modes": [
+        {
+          "damageBase": "swing",
+          "damageAdds": -2,
+          "damageType": "cut",
+          "reaches": [0,1],
+          "parryAdjust": -1,
+          "minimumStrength": 6
+        },
+        {
+          "damageBase": "thrust",
+          "damageAdds": 3,
+          "damageType": "imp",
+          "reaches": [0],
+          "parryAdjust": -1,
+          "minimumStrength": 6,
+          "note": "Can be thrown."
+        }
+      ]
+    }
   },
   {
     "name": "Mandolin",
+    "cost": 100,
     "weight": 3
   },
   {
     "name": "Personal Basics",
+    "cost": 5,
     "weight": 1,
-    "notes": "Minimum gear for camping"
+    "notes": "Minimum gear for camping. Includes utensils, tinderbox or flint and steel, towel, etc."
   },
   {
     "name": "Rope, 20 yrds",
+    "cost": 10,
     "weight": 3,
     "notes": "Supports 300 lbs"
   }

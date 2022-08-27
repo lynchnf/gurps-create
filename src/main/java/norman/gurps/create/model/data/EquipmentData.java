@@ -2,9 +2,11 @@ package norman.gurps.create.model.data;
 
 public class EquipmentData {
     private String name;
+    private Integer cost;
     private Double weight;
     private Integer quantity;
     private String notes;
+    private MeleeWeaponData meleeWeapon;
 
     public String getName() {
         return name;
@@ -12,6 +14,14 @@ public class EquipmentData {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getCost() {
+        return cost;
+    }
+
+    public void setCost(Integer cost) {
+        this.cost = cost;
     }
 
     public Double getWeight() {
@@ -36,5 +46,13 @@ public class EquipmentData {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public MeleeWeaponData getMeleeWeapon() {
+        return meleeWeapon;
+    }
+
+    public void setMeleeWeapon(MeleeWeaponData meleeWeapon) {
+        this.meleeWeapon = meleeWeapon;
     }
 }
