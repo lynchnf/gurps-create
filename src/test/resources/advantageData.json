@@ -1,0 +1,8 @@
+[
+  {   "name": "AdvantageName",
+    "multiLevel": false,
+    "firstLevel": 12,
+    "firstLevelCost": 23,
+    "costPerLevel": 34
+  }
+]

@@ -1,0 +1,460 @@
+[
+  {
+    "name": "Acrobatics",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "H",
+    "defaults": [
+      {
+        "attribute": "DX",
+        "penalty": -6
+      }
+    ]
+  },
+  {
+    "name": "Area Knowledge",
+    "controllingAttribute": "IQ",
+    "difficultyLevel": "E",
+    "defaults": [
+      {
+        "attribute": "IQ",
+        "penalty": -4
+      },
+      {
+        "skill": "Geography",
+        "penalty": -3
+      }
+    ]
+  },
+  {
+    "name": "Artist",
+    "controllingAttribute": "IQ",
+    "difficultyLevel": "H",
+    "defaults": [
+      {
+        "attribute": "IQ",
+        "penalty": -6
+      }
+    ]
+  },
+  {
+    "name": "Brawling",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "E"
+  },
+  {
+    "name": "Carousing",
+    "controllingAttribute": "HT",
+    "difficultyLevel": "E",
+    "defaults": [
+      {
+        "attribute": "HT",
+        "penalty": -4
+      }
+    ]
+  },
+  {
+    "name": "Climbing",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "A",
+    "defaults": [
+      {
+        "attribute": "DX",
+        "penalty": -5
+      }
+    ]
+  },
+  {
+    "name": "Cooking",
+    "controllingAttribute": "IQ",
+    "difficultyLevel": "A",
+    "defaults": [
+      {
+        "attribute": "IQ",
+        "penalty": -5
+      }
+    ]
+  },
+  {
+    "name": "Dancing",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "A",
+    "defaults": [
+      {
+        "attribute": "DX",
+        "penalty": -5
+      }
+    ]
+  },
+  {
+    "name": "Diplomacy",
+    "controllingAttribute": "IQ",
+    "difficultyLevel": "H",
+    "defaults": [
+      {
+        "attribute": "IQ",
+        "penalty": -6
+      },
+      {
+        "skill": "Politics",
+        "penalty": -6
+      }
+    ]
+  },
+  {
+    "name": "Escape",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "H",
+    "defaults": [
+      {
+        "attribute": "DX",
+        "penalty": -6
+      }
+    ]
+  },
+  {
+    "name": "Explosives",
+    "controllingAttribute": "IQ",
+    "difficultyLevel": "A",
+    "defaults": [
+      {
+        "attribute": "IQ",
+        "penalty": -5
+      },
+      {
+        "skill": "Engineer",
+        "specialty": "Combat",
+        "penalty": -3
+      },
+      {
+        "skill": "Engineer",
+        "specialty": "Explosives",
+        "penalty": -3
+      },
+      {
+        "skill": "Engineer",
+        "specialty": "Mining",
+        "penalty": -3
+      }
+    ]
+  },
+  {
+    "name": "Fast-Draw",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "E"
+  },
+  {
+    "name": "First Aid",
+    "controllingAttribute": "IQ",
+    "difficultyLevel": "E",
+    "defaults": [
+      {
+        "attribute": "IQ",
+        "penalty": -4
+      },
+      {
+        "skill": "Esoteric Medicine"
+      },
+      {
+        "skill": "Physician"
+      },
+      {
+        "skill": "Veterinary",
+        "penalty": -4
+      }
+    ]
+  },
+  {
+    "name": "Fishing",
+    "controllingAttribute": "Per",
+    "difficultyLevel": "E",
+    "defaults": [
+      {
+        "attribute": "Per",
+        "penalty": -4
+      }
+    ]
+  },
+  {
+    "name": "Gambling",
+    "controllingAttribute": "IQ",
+    "difficultyLevel": "A",
+    "defaults": [
+      {
+        "attribute": "IQ",
+        "penalty": -5
+      },
+      {
+        "skill": "Mathematics",
+        "penalty": -5
+      }
+    ]
+  },
+  {
+    "name": "Gardening",
+    "controllingAttribute": "IQ",
+    "difficultyLevel": "E",
+    "defaults": [
+      {
+        "attribute": "IQ",
+        "penalty": -4
+      },
+      {
+        "skill": "Farming",
+        "penalty": -4
+      }
+    ]
+  },
+  {
+    "name": "Guns",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "E",
+    "defaults": [
+      {
+        "attribute": "DX",
+        "penalty": -4
+      }
+    ]
+  },
+  {
+    "name": "Kite Flying",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "E",
+    "defaults": [
+      {
+        "attribute": "DX",
+        "penalty": -4
+      }
+    ]
+  },
+  {
+    "name": "Knitting",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "E",
+    "defaults": [
+      {
+        "attribute": "DX",
+        "penalty": -4
+      }
+    ]
+  },
+  {
+    "name": "Interrogation",
+    "controllingAttribute": "IQ",
+    "difficultyLevel": "A",
+    "defaults": [
+      {
+        "attribute": "IQ",
+        "penalty": -5
+      },
+      {
+        "skill": "Intimidation",
+        "penalty": -3
+      },
+      {
+        "skill": "Psychology",
+        "penalty": -4
+      }
+    ]
+  },
+  {
+    "name": "Intimidation",
+    "controllingAttribute": "Will",
+    "difficultyLevel": "A",
+    "defaults": [
+      {
+        "attribute": "Will",
+        "penalty": -5
+      },
+      {
+        "skill": "Acting",
+        "penalty": -3
+      }
+    ]
+  },
+  {
+    "name": "Jumping",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "E"
+  },
+  {
+    "name": "Broadsword",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "A",
+    "defaults": [
+      {
+        "attribute": "DX",
+        "penalty": -5
+      },
+      {
+        "skill": "Rapier",
+        "penalty": -4
+      },
+      {
+        "skill": "Saber",
+        "penalty": -4
+      },
+      {
+        "skill": "Shortsword",
+        "penalty": -2
+      },
+      {
+        "skill": "Two-Handed Sword",
+        "penalty": -4
+      }
+    ]
+  },
+  {
+    "name": "Knife",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "E",
+    "defaults": [
+      {
+        "attribute": "DX",
+        "penalty": -4
+      },
+      {
+        "skill": "Main-Gauche",
+        "penalty": -3
+      },
+      {
+        "skill": "Shortsword",
+        "penalty": -3
+      }
+    ]
+  },
+  {
+    "name": "Two-Handed Sword",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "A",
+    "defaults": [
+      {
+        "attribute": "DX",
+        "penalty": -5
+      },
+      {
+        "skill": "Broadsword",
+        "penalty": -4
+      }
+    ]
+  },
+  {
+    "name": "Musical Instrument",
+    "controllingAttribute": "IQ",
+    "difficultyLevel": "H"
+  },
+  {
+    "name": "Bartender",
+    "controllingAttribute": "IQ",
+    "difficultyLevel": "A",
+    "defaults": [
+      {
+        "attribute": "IQ",
+        "penalty": -5
+      },
+      {
+        "skill": "Carousing",
+        "penalty": -3
+      }
+    ]
+  },
+  {
+    "name": "Poetry",
+    "controllingAttribute": "IQ",
+    "difficultyLevel": "A",
+    "defaults": [
+      {
+        "attribute": "IQ",
+        "penalty": -5
+      },
+      {
+        "skill": "Writing",
+        "penalty": -5
+      }
+    ]
+  },
+  {
+    "name": "Singing",
+    "controllingAttribute": "HT",
+    "difficultyLevel": "E",
+    "defaults": [
+      {
+        "attribute": "HT",
+        "penalty": -4
+      }
+    ]
+  },
+  {
+    "name": "Soldier",
+    "controllingAttribute": "IQ",
+    "difficultyLevel": "A",
+    "defaults": [
+      {
+        "attribute": "IQ",
+        "penalty": -5
+      }
+    ]
+  },
+  {
+    "name": "Survival",
+    "controllingAttribute": "Per",
+    "difficultyLevel": "A",
+    "defaults": [
+      {
+        "attribute": "Per",
+        "penalty": -5
+      },
+      {
+        "skill": "Naturalist",
+        "penalty": -3
+      }
+    ]
+  },
+  {
+    "name": "Swimming",
+    "controllingAttribute": "HT",
+    "difficultyLevel": "E",
+    "defaults": [
+      {
+        "attribute": "HT",
+        "penalty": -4
+      }
+    ]
+  },
+  {
+    "name": "Tactics",
+    "controllingAttribute": "IQ",
+    "difficultyLevel": "H",
+    "defaults": [
+      {
+        "attribute": "IQ",
+        "penalty": -6
+      },
+      {
+        "skill": "Strategy",
+        "penalty": -6
+      }
+    ]
+  },
+  {
+    "name": "Throwing",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "A",
+    "defaults": [
+      {
+        "attribute": "DX",
+        "penalty": -3
+      }
+    ]
+  },
+  {
+    "name": "Thrown Knife",
+    "controllingAttribute": "DX",
+    "difficultyLevel": "E",
+    "defaults": [
+      {
+        "attribute": "DX",
+        "penalty": -4
+      }
+    ]
+  }
+]

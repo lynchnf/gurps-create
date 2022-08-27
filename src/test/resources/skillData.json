@@ -1,0 +1,13 @@
+[
+  {
+    "name": "SkillName",
+    "controllingAttribute": "ST",
+    "difficultyLevel": "E",
+    "defaults": [
+      {
+        "attribute": "ST",
+        "penalty": -4
+      }
+    ]
+  }
+]

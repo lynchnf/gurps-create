@@ -1,0 +1,69 @@
+[
+  {
+    "name": "Backpack, Small",
+    "weight": 3,
+    "notes": "Holds 40 lbs of gear"
+  },
+  {
+    "name": "Blanket",
+    "weight": 4
+  },
+  {
+    "name": "Bottle, Ceramic",
+    "weight": 2,
+    "notes": "Holds 1 quart water"
+  },
+  {
+    "name": "Broadsword",
+    "weight": 3
+  },
+  {
+    "name": "Brush, comb, etc."
+  },
+  {
+    "name": "Bullets",
+    "weight": 1.2,
+    "quantity": 20
+  },
+  {
+    "name": "Climbing Gear",
+    "weight": 4,
+    "notes": "Hammer, spikes, carabiners"
+  },
+  {
+    "name": "Greatsword",
+    "weight": 7,
+    "notes": "Requires 2 hands"
+  },
+  {
+    "name": "Hand held mirror"
+  },
+  {
+    "name": "Jager Rifle",
+    "weight": 11,
+    "notes": "Weapon requires 2 hands"
+  },
+  {
+    "name": "Jager Uniform",
+    "weight": 33,
+    "notes": "Heavy jacket, pants, boots."
+  },
+  {
+    "name": "Large Knife",
+    "weight": 1
+  },
+  {
+    "name": "Mandolin",
+    "weight": 3
+  },
+  {
+    "name": "Personal Basics",
+    "weight": 1,
+    "notes": "Minimum gear for camping"
+  },
+  {
+    "name": "Rope, 20 yrds",
+    "weight": 3,
+    "notes": "Supports 300 lbs"
+  }
+]

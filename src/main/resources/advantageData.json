@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Ambidexterity",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Catfall",
+    "costPerLevel": 10
+  },
+  {
+    "name": "Combat Reflex",
+    "costPerLevel": 15
+  },
+  {
+    "name": "Damage Resistance",
+    "multiLevel": true,
+    "costPerLevel": 5
+  },
+  {
+    "name": "Dark Vision",
+    "costPerLevel": 25
+  },
+  {
+    "name": "Discriminatory Smell",
+    "costPerLevel": 15
+  },
+  {
+    "name": "Extended Lifespan",
+    "multiLevel": true,
+    "costPerLevel": 2
+  },
+  {
+    "name": "Fangs",
+    "costPerLevel": 2
+  },
+  {
+    "name": "Fearlessness",
+    "multiLevel": true,
+    "costPerLevel": 2
+  },
+  {
+    "name": "Hard to Kill",
+    "multiLevel": true,
+    "costPerLevel": 2
+  },
+  {
+    "name": "Perfect Balance",
+    "costPerLevel": 15
+  },
+  {
+    "name": "Rank",
+    "multiLevel": true,
+    "costPerLevel": 5
+  },
+  {
+    "name": "Sharp Claws",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Sharp Teeth",
+    "costPerLevel": 1
+  }
+]
