@@ -8,6 +8,7 @@ public class EquipmentData {
     private String notes;
     private MeleeWeaponData meleeWeapon;
     private RangedWeaponData rangedWeapon;
+    private ArmorData armor;
 
     public String getName() {
         return name;
@@ -63,5 +64,13 @@ public class EquipmentData {
 
     public void setRangedWeapon(RangedWeaponData rangedWeapon) {
         this.rangedWeapon = rangedWeapon;
+    }
+
+    public ArmorData getArmor() {
+        return armor;
+    }
+
+    public void setArmor(ArmorData armor) {
+        this.armor = armor;
     }
 }

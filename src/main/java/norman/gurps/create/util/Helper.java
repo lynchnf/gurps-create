@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import norman.gurps.create.Application;
 import norman.gurps.create.LoggingException;
 import norman.gurps.create.model.data.AdvantageData;
+import norman.gurps.create.model.data.ArmorData;
 import norman.gurps.create.model.data.DefaultData;
 import norman.gurps.create.model.data.DisadvantageData;
 import norman.gurps.create.model.data.EquipmentData;
@@ -287,6 +288,14 @@ public class Helper {
                         newRanged.getModes().add(newMode);
                     }
                     newData.setRangedWeapon(newRanged);
+                }
+
+                // Armor
+                ArmorData oldArmor = oldData.getArmor();
+                if (oldArmor != null) {
+                    ArmorData newArmor = new ArmorData();
+                    newArmor.setDamageResistance(oldArmor.getDamageResistance() != null ? oldArmor.getDamageResistance() : Integer.valueOf(0));
+                    newData.setArmor(newArmor);
                 }
                 dataMap.put(newData.getName(), newData);
             }

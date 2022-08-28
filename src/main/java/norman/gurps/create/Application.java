@@ -54,24 +54,6 @@ public class Application {
     private void doIt() throws URISyntaxException, IOException {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         ObjectMapper mapper = new ObjectMapper();
-
-        // Get file directory.
-        URL url = loader.getResource("example.json");
-        String path = url.toURI().getPath();
-        File file = new File(path);
-        File fileDir = file.getParentFile();
-
-        // Equipment
-        Map<String, EquipmentData> equipMap = Helper.getEquipmentDataMap(loader, mapper);
-
-        // Write equipment file.
-        File equipFile = new File(fileDir, "equipment.json");
-        mapper.writeValue(equipFile, equipMap.values());
-    }
-
-    private void doIt2() throws URISyntaxException, IOException {
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         // Create request object.

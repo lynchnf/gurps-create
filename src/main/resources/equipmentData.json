@@ -110,8 +110,12 @@
   },
   {
     "name": "Jager Uniform",
-    "weight": 33,
-    "notes": "Heavy jacket, pants, boots."
+    "cost": 450,
+    "weight": 36,
+    "notes": "Heavy jacket, pants, boots.",
+    "armor": {
+      "damageResistance": 2
+    }
   },
   {
     "name": "Large Knife",
