@@ -1,8 +1,8 @@
 [
   {
-    "name" : "DisadvantageName",
-"selfControlAllowed": false,
-"multiLevel": true,
-"costPerLevel": -12
+    "name": "DisadvantageName",
+    "selfControlAllowed": false,
+    "multiLevel": true,
+    "costPerLevel": -12
   }
 ]

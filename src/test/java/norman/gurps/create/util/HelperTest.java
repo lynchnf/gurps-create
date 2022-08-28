@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class HelperTest {
@@ -129,9 +130,12 @@ class HelperTest {
         assertEquals("SkillName", data.getName());
         assertEquals("ST", data.getControllingAttribute());
         assertEquals("E", data.getDifficultyLevel());
-        assertEquals(1, data.getDefaults().size());
+        assertEquals(2, data.getDefaults().size());
         assertEquals("ST", data.getDefaults().get(0).getAttribute());
         assertEquals(-4, data.getDefaults().get(0).getPenalty());
+        assertEquals("DefaultSkill", data.getDefaults().get(1).getSkill());
+        assertEquals("Specialty", data.getDefaults().get(1).getSpecialty());
+        assertEquals(-3, data.getDefaults().get(1).getPenalty());
     }
 
     @Test
@@ -140,9 +144,46 @@ class HelperTest {
         assertEquals(1, map.size());
         EquipmentData data = map.get("EquipmentName");
         assertEquals("EquipmentName", data.getName());
-        assertEquals(1.23, data.getWeight(), 0.001);
-        assertEquals(234, data.getQuantity());
+        assertEquals(123, data.getCost());
+        assertEquals(2.34, data.getWeight(), 0.001);
+        assertEquals(345, data.getQuantity());
         assertEquals("Test equipment", data.getNotes());
+
+        assertEquals("MeleeSkill", data.getMeleeWeapon().getSkill());
+        assertEquals(1, data.getMeleeWeapon().getModes().size());
+        assertEquals("swing", data.getMeleeWeapon().getModes().get(0).getDamageBase());
+        assertEquals(0, data.getMeleeWeapon().getModes().get(0).getDamageDice());
+        assertEquals(-2, data.getMeleeWeapon().getModes().get(0).getDamageAdds());
+        assertEquals("cut", data.getMeleeWeapon().getModes().get(0).getDamageType());
+        assertEquals(2, data.getMeleeWeapon().getModes().get(0).getReaches().size());
+        assertEquals(0, data.getMeleeWeapon().getModes().get(0).getReaches().get(0));
+        assertEquals(1, data.getMeleeWeapon().getModes().get(0).getReaches().get(1));
+        assertEquals(-1, data.getMeleeWeapon().getModes().get(0).getParryAdjust());
+        assertEquals("balanced", data.getMeleeWeapon().getModes().get(0).getBalancedForParry());
+        assertEquals(6, data.getMeleeWeapon().getModes().get(0).getMinimumStrength());
+        assertEquals(false, data.getMeleeWeapon().getModes().get(0).getRequiresTwoHands());
+        assertNull(data.getMeleeWeapon().getModes().get(0).getNote());
+
+        assertEquals("RangedSkill", data.getRangedWeapon().getSkill());
+        assertEquals(1, data.getRangedWeapon().getModes().size());
+        assertEquals("thrust", data.getRangedWeapon().getModes().get(0).getDamageBase());
+        assertEquals(0, data.getRangedWeapon().getModes().get(0).getDamageDice());
+        assertEquals(0, data.getRangedWeapon().getModes().get(0).getDamageAdds());
+        assertEquals("imp", data.getRangedWeapon().getModes().get(0).getDamageType());
+        assertEquals(0, data.getRangedWeapon().getModes().get(0).getAccuracy());
+        assertEquals(0, data.getRangedWeapon().getModes().get(0).getHalfDamageRange());
+        assertEquals(0.8, data.getRangedWeapon().getModes().get(0).getHalfDamageRangeMultiplier());
+        assertEquals(0, data.getRangedWeapon().getModes().get(0).getMaximumDamageRange());
+        assertEquals(1.5, data.getRangedWeapon().getModes().get(0).getMaximumDamageRangeMultiplier());
+        assertEquals(1, data.getRangedWeapon().getModes().get(0).getRateOfFire());
+        assertEquals(1, data.getRangedWeapon().getModes().get(0).getShots());
+        assertEquals(0, data.getRangedWeapon().getModes().get(0).getTimeToReload());
+        assertEquals(6, data.getRangedWeapon().getModes().get(0).getMinimumStrength());
+        assertEquals(false, data.getRangedWeapon().getModes().get(0).getRequiresTwoHands());
+        assertEquals(-2, data.getRangedWeapon().getModes().get(0).getBulk());
+        assertNull(data.getRangedWeapon().getModes().get(0).getNote());
+
+        assertEquals(2, data.getArmor().getDamageResistance());
     }
 
     @Test

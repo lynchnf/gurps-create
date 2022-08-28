@@ -294,7 +294,9 @@ public class Helper {
                 ArmorData oldArmor = oldData.getArmor();
                 if (oldArmor != null) {
                     ArmorData newArmor = new ArmorData();
-                    newArmor.setDamageResistance(oldArmor.getDamageResistance() != null ? oldArmor.getDamageResistance() : Integer.valueOf(0));
+                    newArmor.setDamageResistance(
+                            oldArmor.getDamageResistance() != null ? oldArmor.getDamageResistance() :
+                                    Integer.valueOf(0));
                     newData.setArmor(newArmor);
                 }
                 dataMap.put(newData.getName(), newData);

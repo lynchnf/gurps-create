@@ -375,6 +375,55 @@ public class Application {
         }
     }
 
+    private static void transformEquipment(GameCharacterRequest req, GameCharacterResponse resp,
+            Map<String, EquipmentData> equipMap) {
+        for (EquipmentRequest equipReq : req.getEquipmentList()) {
+            EquipmentResponse equipResp = new EquipmentResponse();
+            EquipmentData equipData = equipMap.get(equipReq.getName());
+            equipResp.setName(equipReq.getName());
+            equipResp.setQuantity(equipReq.getQuantity() != null ? equipReq.getQuantity() : Integer.valueOf(1));
+            equipResp.setWeight(equipData.getWeight() != 0.0 ?
+                    equipData.getWeight() * equipResp.getQuantity() / equipData.getQuantity() : 0.0);
+            if (equipData.getNotes() != null) {
+                equipResp.setNotes(equipData.getNotes());
+            }
+            resp.getEquipmentList().add(equipResp);
+        }
+    }
+
+    private static void constructOtherAttributes(GameCharacterResponse resp, int intelligenceValue, int healthValue) {
+        OtherAttributes other = new OtherAttributes();
+        int move;
+        if (resp.getEquipmentWeight() <= resp.getSecondaryAttributes().getBasicLift()) {
+            other.setEncumbranceLevel(0);
+            move = resp.getSecondaryAttributes().getBasicMove().getValue();
+        } else if (resp.getEquipmentWeight() <= 2.0 * resp.getSecondaryAttributes().getBasicLift()) {
+            other.setEncumbranceLevel(1);
+            move = (int) (0.8 * resp.getSecondaryAttributes().getBasicMove().getValue());
+        } else if (resp.getEquipmentWeight() <= 3.0 * resp.getSecondaryAttributes().getBasicLift()) {
+            other.setEncumbranceLevel(2);
+            move = (int) (0.6 * resp.getSecondaryAttributes().getBasicMove().getValue());
+        } else if (resp.getEquipmentWeight() <= 6.0 * resp.getSecondaryAttributes().getBasicLift()) {
+            other.setEncumbranceLevel(3);
+            move = (int) (0.4 * resp.getSecondaryAttributes().getBasicMove().getValue());
+        } else if (resp.getEquipmentWeight() <= 10.0 * resp.getSecondaryAttributes().getBasicLift()) {
+            other.setEncumbranceLevel(4);
+            move = (int) (0.2 * resp.getSecondaryAttributes().getBasicMove().getValue());
+        } else {
+            other.setEncumbranceLevel(5);
+            move = 0;
+        }
+        other.setEncumberedMove(Math.max(move, 1));
+        other.setDamageResistance(0);
+        int dodge = (int) (resp.getSecondaryAttributes().getBasicSpeed().getValue() + 3 - other.getEncumbranceLevel());
+        other.setDodge(Math.max(dodge, 1));
+        other.setFrightCheck(intelligenceValue);
+        other.setMentalStunCheck(intelligenceValue);
+        other.setPhysicalStunCheck(healthValue);
+        other.setDeathCheck(healthValue);
+        resp.setOtherAttributes(other);
+    }
+
     private static void applySkillDefaults(GameCharacterResponse resp, int strengthValue, int dexterityValue,
             int intelligenceValue, int healthValue, int willValue, int perceptionValue,
             Map<String, SkillData> skillMap) {
@@ -469,53 +518,5 @@ public class Application {
             }
         }
     }
-
-    private static void transformEquipment(GameCharacterRequest req, GameCharacterResponse resp,
-            Map<String, EquipmentData> equipMap) {
-        for (EquipmentRequest equipReq : req.getEquipmentList()) {
-            EquipmentResponse equipResp = new EquipmentResponse();
-            EquipmentData equipData = equipMap.get(equipReq.getName());
-            equipResp.setName(equipReq.getName());
-            equipResp.setQuantity(equipReq.getQuantity() != null ? equipReq.getQuantity() : Integer.valueOf(1));
-            equipResp.setWeight(equipData.getWeight() != 0.0 ?
-                    equipData.getWeight() * equipResp.getQuantity() / equipData.getQuantity() : 0.0);
-            if (equipData.getNotes() != null) {
-                equipResp.setNotes(equipData.getNotes());
-            }
-            resp.getEquipmentList().add(equipResp);
-        }
-    }
-
-    private static void constructOtherAttributes(GameCharacterResponse resp, int intelligenceValue, int healthValue) {
-        OtherAttributes other = new OtherAttributes();
-        int move;
-        if (resp.getEquipmentWeight() <= resp.getSecondaryAttributes().getBasicLift()) {
-            other.setEncumbranceLevel(0);
-            move = resp.getSecondaryAttributes().getBasicMove().getValue();
-        } else if (resp.getEquipmentWeight() <= 2.0 * resp.getSecondaryAttributes().getBasicLift()) {
-            other.setEncumbranceLevel(1);
-            move = (int) (0.8 * resp.getSecondaryAttributes().getBasicMove().getValue());
-        } else if (resp.getEquipmentWeight() <= 3.0 * resp.getSecondaryAttributes().getBasicLift()) {
-            other.setEncumbranceLevel(2);
-            move = (int) (0.6 * resp.getSecondaryAttributes().getBasicMove().getValue());
-        } else if (resp.getEquipmentWeight() <= 6.0 * resp.getSecondaryAttributes().getBasicLift()) {
-            other.setEncumbranceLevel(3);
-            move = (int) (0.4 * resp.getSecondaryAttributes().getBasicMove().getValue());
-        } else if (resp.getEquipmentWeight() <= 10.0 * resp.getSecondaryAttributes().getBasicLift()) {
-            other.setEncumbranceLevel(4);
-            move = (int) (0.2 * resp.getSecondaryAttributes().getBasicMove().getValue());
-        } else {
-            other.setEncumbranceLevel(5);
-            move = 0;
-        }
-        other.setEncumberedMove(Math.max(move, 1));
-        other.setDamageResistance(0);
-        int dodge = (int) (resp.getSecondaryAttributes().getBasicSpeed().getValue() + 3 - other.getEncumbranceLevel());
-        other.setDodge(Math.max(dodge, 1));
-        other.setFrightCheck(intelligenceValue);
-        other.setMentalStunCheck(intelligenceValue);
-        other.setPhysicalStunCheck(healthValue);
-        other.setDeathCheck(healthValue);
-        resp.setOtherAttributes(other);
-    }
 }
+

@@ -1,8 +1,42 @@
 [
   {
     "name": "EquipmentName",
-    "weight": 1.23,
-    "quantity": 234,
-    "notes": "Test equipment"
+    "cost": 123,
+    "weight": 2.34,
+    "quantity": 345,
+    "notes": "Test equipment",
+    "meleeWeapon": {
+      "skill": "MeleeSkill",
+      "modes": [
+        {
+          "damageBase": "swing",
+          "damageAdds": -2,
+          "damageType": "cut",
+          "reaches": [
+            0,
+            1
+          ],
+          "parryAdjust": -1,
+          "minimumStrength": 6
+        }
+      ]
+    },
+    "rangedWeapon": {
+      "skill": "RangedSkill",
+      "modes": [
+        {
+          "damageBase": "thrust",
+          "damageType": "imp",
+          "halfDamageRangeMultiplier": 0.8,
+          "maximumDamageRangeMultiplier": 1.5,
+          "shots": 1,
+          "minimumStrength": 6,
+          "bulk": -2
+        }
+      ]
+    },
+    "armor": {
+      "damageResistance": 2
+    }
   }
 ]

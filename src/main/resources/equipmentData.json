@@ -65,7 +65,10 @@
           "damageBase": "swing",
           "damageAdds": 3,
           "damageType": "cut",
-          "reaches": [1,2],
+          "reaches": [
+            1,
+            2
+          ],
           "minimumStrength": 12,
           "requiresTwoHands": true
         },
@@ -73,7 +76,9 @@
           "damageBase": "thrust",
           "damageAdds": 3,
           "damageType": "imp",
-          "reaches": [2],
+          "reaches": [
+            2
+          ],
           "minimumStrength": 12,
           "requiresTwoHands": true
         }
@@ -128,14 +133,19 @@
           "damageBase": "swing",
           "damageAdds": -2,
           "damageType": "cut",
-          "reaches": [0,1],
+          "reaches": [
+            0,
+            1
+          ],
           "parryAdjust": -1,
           "minimumStrength": 6
         },
         {
           "damageBase": "thrust",
           "damageType": "imp",
-          "reaches": [0],
+          "reaches": [
+            0
+          ],
           "parryAdjust": -1,
           "minimumStrength": 6,
           "note": "Can be thrown."
