@@ -6,6 +6,8 @@ import norman.gurps.create.model.data.AdvantageData;
 import norman.gurps.create.model.data.DefaultData;
 import norman.gurps.create.model.data.DisadvantageData;
 import norman.gurps.create.model.data.EquipmentData;
+import norman.gurps.create.model.data.MeleeWeaponData;
+import norman.gurps.create.model.data.MeleeWeaponModeData;
 import norman.gurps.create.model.data.SkillData;
 import norman.gurps.create.model.request.AdvantageRequest;
 import norman.gurps.create.model.request.DisadvantageRequest;
@@ -19,6 +21,7 @@ import norman.gurps.create.model.response.DoubleAttribute;
 import norman.gurps.create.model.response.EquipmentResponse;
 import norman.gurps.create.model.response.GameCharacterResponse;
 import norman.gurps.create.model.response.IntegerAttribute;
+import norman.gurps.create.model.response.MeleeWeaponResponse;
 import norman.gurps.create.model.response.OtherAttributes;
 import norman.gurps.create.model.response.PrimaryAttributes;
 import norman.gurps.create.model.response.SecondaryAttributes;
@@ -185,6 +188,9 @@ public class Application {
 
         // Other Attributes
         constructOtherAttributes(resp, intelligenceValue, healthValue);
+
+        // Melee Weapons
+        constructMeleeWeapons(resp, strengthValue, equipMap);
 
         // Defaults
         applySkillDefaults(resp, strengthValue, dexterityValue, intelligenceValue, healthValue, willValue,
@@ -422,6 +428,59 @@ public class Application {
         other.setPhysicalStunCheck(healthValue);
         other.setDeathCheck(healthValue);
         resp.setOtherAttributes(other);
+    }
+
+    private void constructMeleeWeapons(GameCharacterResponse resp, int strengthValue,
+            Map<String, EquipmentData> equipMap) {
+        for (EquipmentResponse equipResp : resp.getEquipmentList()) {
+            EquipmentData equipData = equipMap.get(equipResp.getName());
+            MeleeWeaponData meleeData = equipData.getMeleeWeapon();
+            if (meleeData != null) {
+                for (MeleeWeaponModeData modeData : meleeData.getModes()) {
+                    MeleeWeaponResponse meleeResp = new MeleeWeaponResponse();
+                    meleeResp.setName(equipResp.getName());
+                    int skill = 0;
+                    for (SkillResponse skillResp : resp.getSkills()) {
+                        if (skillResp.getName().equals(meleeData.getSkill())) {
+                            skill = skillResp.getLevel();
+                        }
+                    }
+                    if (modeData.getMinimumStrength() > strengthValue) {
+                        skill += strengthValue - modeData.getMinimumStrength();
+                    }
+                    meleeResp.setSkill(skill);
+                    int damageDice = 0;
+                    int damageAdds = 0;
+                    if (modeData.getDamageBase() != null) {
+                        if (modeData.getDamageBase().equals("swing")) {
+                            damageDice = resp.getSecondaryAttributes().getSwingDamageDice();
+                            damageAdds = resp.getSecondaryAttributes().getSwingDamageAdds();
+                        } else if (modeData.getDamageBase().equals("thrust")) {
+                            damageDice = resp.getSecondaryAttributes().getThrustDamageDice();
+                            damageAdds = resp.getSecondaryAttributes().getThrustDamageAdds();
+                        } else {
+                            String msg = String.format("Illegal Damage Base %s found for Melee Weapon %s.",
+                                    modeData.getDamageBase(), equipResp.getName());
+                            throw new LoggingException(LOGGER, msg);
+                        }
+                    }
+                    damageDice += modeData.getDamageDice();
+                    damageAdds += modeData.getDamageAdds();
+                    meleeResp.setDamageDice(damageDice);
+                    meleeResp.setDamageAdds(damageAdds);
+                    meleeResp.setDamageType(modeData.getDamageType());
+                    meleeResp.getReaches().addAll(modeData.getReaches());
+                    meleeResp.setParry(skill / 2 + 3 + modeData.getParryAdjust());
+                    meleeResp.setBalancedForParry(modeData.getBalancedForParry());
+                    meleeResp.setMinimumStrength(modeData.getMinimumStrength());
+                    meleeResp.setRequiresTwoHands(modeData.getRequiresTwoHands());
+                    if (modeData.getNote() != null) {
+                        meleeResp.setNote(modeData.getNote());
+                    }
+                    resp.getMeleeWeapons().add(meleeResp);
+                }
+            }
+        }
     }
 
     private static void applySkillDefaults(GameCharacterResponse resp, int strengthValue, int dexterityValue,

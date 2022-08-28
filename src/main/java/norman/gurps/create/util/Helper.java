@@ -224,12 +224,12 @@ public class Helper {
                         newMode.setDamageAdds(
                                 oldMode.getDamageAdds() != null ? oldMode.getDamageAdds() : Integer.valueOf(0));
                         newMode.setDamageType(oldMode.getDamageType());
-                        if (oldMode.getReaches() != null) {
+                        if (oldMode.getReaches() != null && !oldMode.getReaches().isEmpty()) {
                             for (Integer reach : oldMode.getReaches()) {
                                 newMode.getReaches().add(reach);
                             }
                         } else {
-                            newMode.getReaches().add(Integer.valueOf(1));
+                            newMode.getReaches().add(1);
                         }
                         newMode.setParryAdjust(
                                 oldMode.getParryAdjust() != null ? oldMode.getParryAdjust() : Integer.valueOf(0));

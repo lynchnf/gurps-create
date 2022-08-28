@@ -13,6 +13,7 @@ public class GameCharacterResponse {
     private List<String> quirks = new ArrayList<>();
     private List<SkillResponse> skills = new ArrayList<>();
     private List<EquipmentResponse> equipmentList = new ArrayList<>();
+    private List<MeleeWeaponResponse> meleeWeapons = new ArrayList<>();
 
     public Integer getAdvantagePoints() {
         int advantagePoints = 0;
@@ -125,5 +126,13 @@ public class GameCharacterResponse {
 
     public void setEquipmentList(List<EquipmentResponse> equipmentList) {
         this.equipmentList = equipmentList;
+    }
+
+    public List<MeleeWeaponResponse> getMeleeWeapons() {
+        return meleeWeapons;
+    }
+
+    public void setMeleeWeapons(List<MeleeWeaponResponse> meleeWeapons) {
+        this.meleeWeapons = meleeWeapons;
     }
 }
