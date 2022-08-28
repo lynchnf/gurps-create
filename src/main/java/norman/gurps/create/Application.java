@@ -8,6 +8,8 @@ import norman.gurps.create.model.data.DisadvantageData;
 import norman.gurps.create.model.data.EquipmentData;
 import norman.gurps.create.model.data.MeleeWeaponData;
 import norman.gurps.create.model.data.MeleeWeaponModeData;
+import norman.gurps.create.model.data.RangedWeaponData;
+import norman.gurps.create.model.data.RangedWeaponModeData;
 import norman.gurps.create.model.data.SkillData;
 import norman.gurps.create.model.request.AdvantageRequest;
 import norman.gurps.create.model.request.DisadvantageRequest;
@@ -24,6 +26,7 @@ import norman.gurps.create.model.response.IntegerAttribute;
 import norman.gurps.create.model.response.MeleeWeaponResponse;
 import norman.gurps.create.model.response.OtherAttributes;
 import norman.gurps.create.model.response.PrimaryAttributes;
+import norman.gurps.create.model.response.RangedWeaponResponse;
 import norman.gurps.create.model.response.SecondaryAttributes;
 import norman.gurps.create.model.response.SkillResponse;
 import norman.gurps.create.util.Helper;
@@ -191,6 +194,9 @@ public class Application {
 
         // Melee Weapons
         constructMeleeWeapons(resp, strengthValue, equipMap);
+
+        // Ranged Weapons
+        rangedMeleeWeapons(resp, strengthValue, equipMap);
 
         // Defaults
         applySkillDefaults(resp, strengthValue, dexterityValue, intelligenceValue, healthValue, willValue,
@@ -478,6 +484,73 @@ public class Application {
                         meleeResp.setNote(modeData.getNote());
                     }
                     resp.getMeleeWeapons().add(meleeResp);
+                }
+            }
+        }
+    }
+
+    private void rangedMeleeWeapons(GameCharacterResponse resp, int strengthValue,
+            Map<String, EquipmentData> equipMap) {
+        for (EquipmentResponse equipResp : resp.getEquipmentList()) {
+            EquipmentData equipData = equipMap.get(equipResp.getName());
+            RangedWeaponData rangedData = equipData.getRangedWeapon();
+            if (rangedData != null) {
+                for (RangedWeaponModeData modeData : rangedData.getModes()) {
+                    RangedWeaponResponse rangedResp = new RangedWeaponResponse();
+                    rangedResp.setName(equipResp.getName());
+
+                    int skill = 0;
+                    for (SkillResponse skillResp : resp.getSkills()) {
+                        if (skillResp.getName().equals(rangedData.getSkill())) {
+                            skill = skillResp.getLevel();
+                        }
+                    }
+                    if (modeData.getMinimumStrength() > strengthValue) {
+                        skill += strengthValue - modeData.getMinimumStrength();
+                    }
+                    rangedResp.setSkill(skill);
+                    int damageDice = 0;
+                    int damageAdds = 0;
+                    if (modeData.getDamageBase() != null) {
+                        if (modeData.getDamageBase().equals("swing")) {
+                            damageDice = resp.getSecondaryAttributes().getSwingDamageDice();
+                            damageAdds = resp.getSecondaryAttributes().getSwingDamageAdds();
+                        } else if (modeData.getDamageBase().equals("thrust")) {
+                            damageDice = resp.getSecondaryAttributes().getThrustDamageDice();
+                            damageAdds = resp.getSecondaryAttributes().getThrustDamageAdds();
+                        } else {
+                            String msg = String.format("Illegal Damage Base %s found for Ranged Weapon %s.",
+                                    modeData.getDamageBase(), equipResp.getName());
+                            throw new LoggingException(LOGGER, msg);
+                        }
+                    }
+                    damageDice += modeData.getDamageDice();
+                    damageAdds += modeData.getDamageAdds();
+                    rangedResp.setDamageDice(damageDice);
+                    rangedResp.setDamageAdds(damageAdds);
+                    rangedResp.setDamageType(modeData.getDamageType());
+                    rangedResp.setAccuracy(modeData.getAccuracy());
+                    if (modeData.getHalfDamageRange() != null) {
+                        rangedResp.setHalfDamageRange(modeData.getHalfDamageRange());
+                    } else if (modeData.getHalfDamageRangeMultiplier() != null) {
+                        rangedResp.setHalfDamageRange((int) (modeData.getHalfDamageRangeMultiplier() * strengthValue));
+                    }
+                    if (modeData.getMaximumDamageRange() != null) {
+                        rangedResp.setMaximumDamageRange(modeData.getMaximumDamageRange());
+                    } else if (modeData.getMaximumDamageRangeMultiplier() != null) {
+                        rangedResp.setMaximumDamageRange(
+                                (int) (modeData.getMaximumDamageRangeMultiplier() * strengthValue));
+                    }
+                    rangedResp.setRateOfFire(modeData.getRateOfFire());
+                    rangedResp.setShots(modeData.getShots());
+                    rangedResp.setTimeToReload(modeData.getTimeToReload());
+                    rangedResp.setMinimumStrength(modeData.getMinimumStrength());
+                    rangedResp.setRequiresTwoHands(modeData.getRequiresTwoHands());
+                    rangedResp.setBulk(modeData.getBulk());
+                    if (modeData.getNote() != null) {
+                        rangedResp.setNote(modeData.getNote());
+                    }
+                    resp.getRangedWeapons().add(rangedResp);
                 }
             }
         }

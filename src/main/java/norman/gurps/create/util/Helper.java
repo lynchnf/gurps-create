@@ -263,15 +263,18 @@ public class Helper {
                                 oldMode.getDamageAdds() != null ? oldMode.getDamageAdds() : Integer.valueOf(0));
                         newMode.setDamageType(oldMode.getDamageType());
                         newMode.setAccuracy(oldMode.getAccuracy() != null ? oldMode.getAccuracy() : Integer.valueOf(0));
-                        newMode.setHalfDamageRange(oldMode.getHalfDamageRange() != null ? oldMode.getHalfDamageRange() :
-                                Integer.valueOf(0));
-                        newMode.setHalfDamageRangeMultiplier(oldMode.getHalfDamageRangeMultiplier() != null ?
-                                oldMode.getHalfDamageRangeMultiplier() : Double.valueOf(0));
-                        newMode.setMaximumDamageRange(
-                                oldMode.getMaximumDamageRange() != null ? oldMode.getMaximumDamageRange() :
-                                        Integer.valueOf(0));
-                        newMode.setMaximumDamageRangeMultiplier(oldMode.getMaximumDamageRangeMultiplier() != null ?
-                                oldMode.getMaximumDamageRangeMultiplier() : Double.valueOf(0));
+                        if (oldMode.getHalfDamageRange() != null) {
+                            newMode.setHalfDamageRange(oldMode.getHalfDamageRange());
+                        }
+                        if (oldMode.getHalfDamageRangeMultiplier() != null) {
+                            newMode.setHalfDamageRangeMultiplier(oldMode.getHalfDamageRangeMultiplier());
+                        }
+                        if (oldMode.getMaximumDamageRange() != null) {
+                            newMode.setMaximumDamageRange(oldMode.getMaximumDamageRange());
+                        }
+                        if (oldMode.getMaximumDamageRangeMultiplier() != null) {
+                            newMode.setMaximumDamageRangeMultiplier(oldMode.getMaximumDamageRangeMultiplier());
+                        }
                         newMode.setRateOfFire(
                                 oldMode.getRateOfFire() != null ? oldMode.getRateOfFire() : Integer.valueOf(1));
                         newMode.setShots(oldMode.getShots() != null ? oldMode.getShots() : Integer.valueOf(1));
