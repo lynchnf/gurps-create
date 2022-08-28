@@ -28,14 +28,12 @@
           "damageBase": "swing",
           "damageAdds": 1,
           "damageType": "cut",
-          "reaches": [1],
           "minimumStrength": 10
         },
         {
           "damageBase": "thrust",
           "damageAdds": 2,
           "damageType": "imp",
-          "reaches": [1],
           "minimumStrength": 10
         }
       ]
@@ -88,8 +86,27 @@
   },
   {
     "name": "Jager Rifle",
+    "cost": 300,
     "weight": 11,
-    "notes": "Weapon requires 2 hands"
+    "rangedWeapon": {
+      "skill": "Guns",
+      "modes": [
+        {
+          "damageDice": 3,
+          "damageAdds": 1,
+          "damageType": "pi+",
+          "accuracy": 3,
+          "halfDamageRange": 65,
+          "maximumDamageRange": 650,
+          "rateOfFire": 1,
+          "shots": 1,
+          "timeToReload": 60,
+          "minimumStrength": 10,
+          "requiresTwoHands": true,
+          "bulk": -6
+        }
+      ]
+    }
   },
   {
     "name": "Jager Uniform",
@@ -113,12 +130,25 @@
         },
         {
           "damageBase": "thrust",
-          "damageAdds": 3,
           "damageType": "imp",
           "reaches": [0],
           "parryAdjust": -1,
           "minimumStrength": 6,
           "note": "Can be thrown."
+        }
+      ]
+    },
+    "rangedWeapon": {
+      "skill": "Thrown Knife",
+      "modes": [
+        {
+          "damageBase": "thrust",
+          "damageType": "imp",
+          "halfDamageRangeMultiplier": 0.8,
+          "maximumDamageRangeMultiplier": 1.5,
+          "shots": 1,
+          "minimumStrength": 6,
+          "bulk": -2
         }
       ]
     }

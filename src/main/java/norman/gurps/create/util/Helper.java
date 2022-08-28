@@ -9,6 +9,8 @@ import norman.gurps.create.model.data.DisadvantageData;
 import norman.gurps.create.model.data.EquipmentData;
 import norman.gurps.create.model.data.MeleeWeaponData;
 import norman.gurps.create.model.data.MeleeWeaponModeData;
+import norman.gurps.create.model.data.RangedWeaponData;
+import norman.gurps.create.model.data.RangedWeaponModeData;
 import norman.gurps.create.model.data.SkillData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -205,27 +207,86 @@ public class Helper {
                 if (oldData.getNotes() != null) {
                     newData.setNotes(oldData.getNotes());
                 }
-                MeleeWeaponData oldWeapon = oldData.getMeleeWeapon();
-                if (oldWeapon != null) {
-                    MeleeWeaponData newWeapon = new MeleeWeaponData();
-                    newWeapon.setSkill(oldWeapon.getSkill());
-                    for (MeleeWeaponModeData oldMode : oldWeapon.getModes()) {
+
+                // Melee Weapon
+                MeleeWeaponData oldMelee = oldData.getMeleeWeapon();
+                if (oldMelee != null) {
+                    MeleeWeaponData newMelee = new MeleeWeaponData();
+                    newMelee.setSkill(oldMelee.getSkill());
+                    for (MeleeWeaponModeData oldMode : oldMelee.getModes()) {
                         MeleeWeaponModeData newMode = new MeleeWeaponModeData();
-                        if (oldMode.getDamageBase() != null) newMode.setDamageBase(oldMode.getDamageBase());
-                        newMode.setDamageDice(oldMode.getDamageDice() != null ? oldMode.getDamageDice() : Integer.valueOf(0));
-                        newMode.setDamageAdds(oldMode.getDamageAdds() != null ? oldMode.getDamageAdds() : Integer.valueOf(0));
-                        newMode.setDamageType(oldMode.getDamageType());
-                        for (Integer reach : oldMode.getReaches()) {
-                            newMode.getReaches().add(reach);
+                        if (oldMode.getDamageBase() != null) {
+                            newMode.setDamageBase(oldMode.getDamageBase());
                         }
-                        newMode.setParryAdjust(oldMode.getParryAdjust() != null ? oldMode.getParryAdjust(): Integer.valueOf(0));
-                        newMode.setBalancedForParry(oldMode.getBalancedForParry() != null ? oldMode.getBalancedForParry(): "balanced");
-                        newMode.setMinimumStrength(oldMode.getMinimumStrength() != null ? oldMode.getMinimumStrength(): Integer.valueOf(0));
-                        newMode.setRequiresTwoHands(oldMode.getRequiresTwoHands() != null ? oldMode.getRequiresTwoHands(): Boolean.FALSE);
-                        if (oldMode.getNote() != null) newMode.setNote(oldMode.getNote());
-                        newWeapon.getModes().add(newMode);
+                        newMode.setDamageDice(
+                                oldMode.getDamageDice() != null ? oldMode.getDamageDice() : Integer.valueOf(0));
+                        newMode.setDamageAdds(
+                                oldMode.getDamageAdds() != null ? oldMode.getDamageAdds() : Integer.valueOf(0));
+                        newMode.setDamageType(oldMode.getDamageType());
+                        if (oldMode.getReaches() != null) {
+                            for (Integer reach : oldMode.getReaches()) {
+                                newMode.getReaches().add(reach);
+                            }
+                        } else {
+                            newMode.getReaches().add(Integer.valueOf(1));
+                        }
+                        newMode.setParryAdjust(
+                                oldMode.getParryAdjust() != null ? oldMode.getParryAdjust() : Integer.valueOf(0));
+                        newMode.setBalancedForParry(
+                                oldMode.getBalancedForParry() != null ? oldMode.getBalancedForParry() : "balanced");
+                        newMode.setMinimumStrength(oldMode.getMinimumStrength() != null ? oldMode.getMinimumStrength() :
+                                Integer.valueOf(0));
+                        newMode.setRequiresTwoHands(
+                                oldMode.getRequiresTwoHands() != null ? oldMode.getRequiresTwoHands() : Boolean.FALSE);
+                        if (oldMode.getNote() != null) {
+                            newMode.setNote(oldMode.getNote());
+                        }
+                        newMelee.getModes().add(newMode);
                     }
-                    newData.setMeleeWeapon(newWeapon);
+                    newData.setMeleeWeapon(newMelee);
+                }
+
+                // Ranged Weapon
+                RangedWeaponData oldRanged = oldData.getRangedWeapon();
+                if (oldRanged != null) {
+                    RangedWeaponData newRanged = new RangedWeaponData();
+                    newRanged.setSkill(oldRanged.getSkill());
+                    for (RangedWeaponModeData oldMode : oldRanged.getModes()) {
+                        RangedWeaponModeData newMode = new RangedWeaponModeData();
+                        if (oldMode.getDamageBase() != null) {
+                            newMode.setDamageBase(oldMode.getDamageBase());
+                        }
+                        newMode.setDamageDice(
+                                oldMode.getDamageDice() != null ? oldMode.getDamageDice() : Integer.valueOf(0));
+                        newMode.setDamageAdds(
+                                oldMode.getDamageAdds() != null ? oldMode.getDamageAdds() : Integer.valueOf(0));
+                        newMode.setDamageType(oldMode.getDamageType());
+                        newMode.setAccuracy(oldMode.getAccuracy() != null ? oldMode.getAccuracy() : Integer.valueOf(0));
+                        newMode.setHalfDamageRange(oldMode.getHalfDamageRange() != null ? oldMode.getHalfDamageRange() :
+                                Integer.valueOf(0));
+                        newMode.setHalfDamageRangeMultiplier(oldMode.getHalfDamageRangeMultiplier() != null ?
+                                oldMode.getHalfDamageRangeMultiplier() : Double.valueOf(0));
+                        newMode.setMaximumDamageRange(
+                                oldMode.getMaximumDamageRange() != null ? oldMode.getMaximumDamageRange() :
+                                        Integer.valueOf(0));
+                        newMode.setMaximumDamageRangeMultiplier(oldMode.getMaximumDamageRangeMultiplier() != null ?
+                                oldMode.getMaximumDamageRangeMultiplier() : Double.valueOf(0));
+                        newMode.setRateOfFire(
+                                oldMode.getRateOfFire() != null ? oldMode.getRateOfFire() : Integer.valueOf(1));
+                        newMode.setShots(oldMode.getShots() != null ? oldMode.getShots() : Integer.valueOf(1));
+                        newMode.setTimeToReload(
+                                oldMode.getTimeToReload() != null ? oldMode.getTimeToReload() : Integer.valueOf(0));
+                        newMode.setMinimumStrength(oldMode.getMinimumStrength() != null ? oldMode.getMinimumStrength() :
+                                Integer.valueOf(0));
+                        newMode.setRequiresTwoHands(
+                                oldMode.getRequiresTwoHands() != null ? oldMode.getRequiresTwoHands() : Boolean.FALSE);
+                        newMode.setBulk(oldMode.getBulk() != null ? oldMode.getBulk() : Integer.valueOf(0));
+                        if (oldMode.getNote() != null) {
+                            newMode.setNote(oldMode.getNote());
+                        }
+                        newRanged.getModes().add(newMode);
+                    }
+                    newData.setRangedWeapon(newRanged);
                 }
                 dataMap.put(newData.getName(), newData);
             }
