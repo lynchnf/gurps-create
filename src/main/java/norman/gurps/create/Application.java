@@ -2,6 +2,7 @@ package norman.gurps.create;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import norman.gurps.create.model.data.AdvantageData;
 import norman.gurps.create.model.data.DefaultData;
 import norman.gurps.create.model.data.DisadvantageData;
@@ -35,8 +36,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -49,20 +52,8 @@ public class Application {
 
     public static void main(String[] args) {
         LOGGER.debug("Starting Application");
-        Application me = new Application();
-        try {
-            me.doIt();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    private void doIt() throws URISyntaxException, IOException {
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
-        // Create request object.
+        // Create example request object.
         GameCharacterRequest req = new GameCharacterRequest();
         req.setCharacterName("Anton");
         req.setStrengthAdjustment(4);
@@ -131,27 +122,37 @@ public class Application {
         req.getEquipmentList().add(new EquipmentRequest("Hand held mirror"));
         req.getEquipmentList().add(new EquipmentRequest("Brush, comb, etc."));
 
-        // Get file directory.
-        URL url = loader.getResource("example.json");
-        String path = url.toURI().getPath();
-        File file = new File(path);
-        File fileDir = file.getParentFile();
+        try {
+            // Get file directory.
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            URL url = loader.getResource("example.json");
+            File file = new File(url.toURI().getPath());
+            File fileDir = file.getParentFile();
 
-        // Write request file.
-        File reqFile = new File(fileDir, "request.json");
-        mapper.writeValue(reqFile, req);
+            // Write request file in a pretty format.
+            File reqFile = new File(fileDir, "request.json");
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(reqFile, req);
 
-        // Transform request object to response object.
-        GameCharacterResponse resp = transform(req, loader, mapper);
+            // Create response string.
+            Application me = new Application();
+            String respJson = me.doIt(reqFile, true);
 
-        // Write request file.
-        File respFile = new File(fileDir, "response.json");
-        mapper.writeValue(respFile, resp);
-
-        LOGGER.debug("Total Points=" + resp.getPoints());
+            // Write request file.
+            File respFile = new File(fileDir, "response.json");
+            Files.write(Paths.get(respFile.getPath()), respJson.getBytes(StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private GameCharacterResponse transform(GameCharacterRequest req, ClassLoader loader, ObjectMapper mapper) {
+    private String doIt(File reqFile, boolean prettify) throws IOException {
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        ObjectMapper mapper = new ObjectMapper();
+
+        GameCharacterRequest req = mapper.readValue(reqFile, GameCharacterRequest.class);
+        cleanRequest(req);
         GameCharacterResponse resp = new GameCharacterResponse();
         resp.setCharacterName(req.getCharacterName());
 
@@ -202,15 +203,50 @@ public class Application {
         applySkillDefaults(resp, strengthValue, dexterityValue, intelligenceValue, healthValue, willValue,
                 perceptionValue, skillMap);
 
-        // Sort for output
-        resp.getAdvantages().sort(Comparator.comparing(AdvantageResponse::getName)
-                .thenComparing(AdvantageResponse::getDescription));
-        resp.getDisadvantages().sort(Comparator.comparing(DisadvantageResponse::getName)
-                .thenComparing(DisadvantageResponse::getDescription));
-        resp.getSkills().sort(Comparator.comparing(SkillResponse::getName).thenComparing(SkillResponse::getSpecialty));
-        resp.getEquipmentList()
-                .sort(Comparator.comparing(EquipmentResponse::getName).thenComparing(EquipmentResponse::getNotes));
-        return resp;
+        // Sort
+        sortForOutput(resp);
+
+        LOGGER.debug("Total Points=" + resp.getTotalPoints());
+
+        // Output JSON string.
+        if (prettify) {
+            mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        }
+        return mapper.writeValueAsString(resp);
+    }
+
+    private void cleanRequest(GameCharacterRequest req) {
+        if (req.getStrengthAdjustment() == null) {
+            req.setStrengthAdjustment(0);
+        }
+        if (req.getDexterityAdjustment() == null) {
+            req.setDexterityAdjustment(0);
+        }
+        if (req.getIntelligenceAdjustment() == null) {
+            req.setIntelligenceAdjustment(0);
+        }
+        if (req.getHealthAdjustment() == null) {
+            req.setHealthAdjustment(0);
+        }
+        if (req.getHitPointsAdjustment() == null) {
+            req.setHitPointsAdjustment(0);
+        }
+        if (req.getWillAdjustment() == null) {
+            req.setWillAdjustment(0);
+        }
+        if (req.getPerceptionAdjustment() == null) {
+            req.setPerceptionAdjustment(0);
+        }
+        if (req.getFatiguePointsAdjustment() == null) {
+            req.setFatiguePointsAdjustment(0);
+        }
+        if (req.getBasicSpeedAdjustment() == null) {
+            req.setBasicSpeedAdjustment(0.0);
+        }
+        if (req.getBasicMoveAdjustment() == null) {
+            req.setBasicMoveAdjustment(0);
+        }
     }
 
     private static void transformPrimaryAttributes(GameCharacterRequest req, GameCharacterResponse resp) {
@@ -649,6 +685,20 @@ public class Application {
                 }
             }
         }
+    }
+
+    private void sortForOutput(GameCharacterResponse resp) {
+        resp.getAdvantages().sort(Comparator.comparing(AdvantageResponse::getName)
+                .thenComparing(AdvantageResponse::getDescription));
+        resp.getDisadvantages().sort(Comparator.comparing(DisadvantageResponse::getName)
+                .thenComparing(DisadvantageResponse::getDescription));
+        resp.getQuirks().sort(Comparator.naturalOrder());
+        resp.getSkills().sort(Comparator.comparing(SkillResponse::getName).thenComparing(SkillResponse::getSpecialty));
+        resp.getEquipmentList()
+                .sort(Comparator.comparing(EquipmentResponse::getName).thenComparing(EquipmentResponse::getNotes));
+        // TODO Add mode name to melee & ranged weapons.
+        resp.getMeleeWeapons().sort(Comparator.comparing(MeleeWeaponResponse::getName));
+        resp.getRangedWeapons().sort(Comparator.comparing(RangedWeaponResponse::getName));
     }
 }
 

@@ -44,7 +44,7 @@ public class GameCharacterResponse {
         return skillPoints;
     }
 
-    public Integer getPoints() {
+    public Integer getTotalPoints() {
         return primaryAttributes.getPoints() + secondaryAttributes.getPoints() + getAdvantagePoints() +
                 getDisadvantagePoints() + getQuirkPoints() + getSkillPoints();
     }
