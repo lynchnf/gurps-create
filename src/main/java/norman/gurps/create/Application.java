@@ -147,7 +147,7 @@ public class Application {
         }
     }
 
-    private String doIt(File reqFile, boolean prettify) throws IOException {
+    protected String doIt(File reqFile, boolean prettify) throws IOException {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         ObjectMapper mapper = new ObjectMapper();
 

@@ -1,109 +1,109 @@
 {
-  "characterName" : "Default Values Guy",
-  "primaryAttributes" : {
-    "strength" : {
-      "base" : 10,
-      "adjustment" : 0,
-      "rate" : 10,
-      "value" : 10,
-      "points" : 0
+  "characterName": "Default Values Guy",
+  "primaryAttributes": {
+    "strength": {
+      "base": 10,
+      "adjustment": 0,
+      "rate": 10,
+      "value": 10,
+      "points": 0
     },
-    "dexterity" : {
-      "base" : 10,
-      "adjustment" : 0,
-      "rate" : 20,
-      "value" : 10,
-      "points" : 0
+    "dexterity": {
+      "base": 10,
+      "adjustment": 0,
+      "rate": 20,
+      "value": 10,
+      "points": 0
     },
-    "intelligence" : {
-      "base" : 10,
-      "adjustment" : 0,
-      "rate" : 20,
-      "value" : 10,
-      "points" : 0
+    "intelligence": {
+      "base": 10,
+      "adjustment": 0,
+      "rate": 20,
+      "value": 10,
+      "points": 0
     },
-    "health" : {
-      "base" : 10,
-      "adjustment" : 0,
-      "rate" : 10,
-      "value" : 10,
-      "points" : 0
+    "health": {
+      "base": 10,
+      "adjustment": 0,
+      "rate": 10,
+      "value": 10,
+      "points": 0
     },
-    "points" : 0
+    "points": 0
   },
-  "secondaryAttributes" : {
-    "hitPoints" : {
-      "base" : 10,
-      "adjustment" : 0,
-      "rate" : 2,
-      "value" : 10,
-      "points" : 0
+  "secondaryAttributes": {
+    "hitPoints": {
+      "base": 10,
+      "adjustment": 0,
+      "rate": 2,
+      "value": 10,
+      "points": 0
     },
-    "will" : {
-      "base" : 10,
-      "adjustment" : 0,
-      "rate" : 5,
-      "value" : 10,
-      "points" : 0
+    "will": {
+      "base": 10,
+      "adjustment": 0,
+      "rate": 5,
+      "value": 10,
+      "points": 0
     },
-    "perception" : {
-      "base" : 10,
-      "adjustment" : 0,
-      "rate" : 5,
-      "value" : 10,
-      "points" : 0
+    "perception": {
+      "base": 10,
+      "adjustment": 0,
+      "rate": 5,
+      "value": 10,
+      "points": 0
     },
-    "fatiguePoints" : {
-      "base" : 10,
-      "adjustment" : 0,
-      "rate" : 3,
-      "value" : 10,
-      "points" : 0
+    "fatiguePoints": {
+      "base": 10,
+      "adjustment": 0,
+      "rate": 3,
+      "value": 10,
+      "points": 0
     },
-    "thrustDamageDice" : 1,
-    "thrustDamageAdds" : -2,
-    "thrustDamage" : "1d-2",
-    "swingDamageDice" : 1,
-    "swingDamageAdds" : 0,
-    "swingDamage" : "1d",
-    "basicLift" : 20.0,
-    "basicSpeed" : {
-      "base" : 5.0,
-      "adjustment" : 0.0,
-      "rate" : 20,
-      "value" : 5.0,
-      "points" : 0
+    "thrustDamageDice": 1,
+    "thrustDamageAdds": -2,
+    "thrustDamage": "1d-2",
+    "swingDamageDice": 1,
+    "swingDamageAdds": 0,
+    "swingDamage": "1d",
+    "basicLift": 20.0,
+    "basicSpeed": {
+      "base": 5.0,
+      "adjustment": 0.0,
+      "rate": 20,
+      "value": 5.0,
+      "points": 0
     },
-    "basicMove" : {
-      "base" : 5,
-      "adjustment" : 0,
-      "rate" : 5,
-      "value" : 5,
-      "points" : 0
+    "basicMove": {
+      "base": 5,
+      "adjustment": 0,
+      "rate": 5,
+      "value": 5,
+      "points": 0
     },
-    "points" : 0
+    "points": 0
   },
-  "otherAttributes" : {
-    "encumbranceLevel" : 0,
-    "encumberedMove" : 5,
-    "damageResistance" : 0,
-    "dodge" : 8,
-    "frightCheck" : 10,
-    "mentalStunCheck" : 10,
-    "physicalStunCheck" : 10,
-    "deathCheck" : 10
+  "otherAttributes": {
+    "encumbranceLevel": 0,
+    "encumberedMove": 5,
+    "damageResistance": 0,
+    "dodge": 8,
+    "frightCheck": 10,
+    "mentalStunCheck": 10,
+    "physicalStunCheck": 10,
+    "deathCheck": 10
   },
-  "advantages" : [ ],
-  "disadvantages" : [ ],
-  "quirks" : [ ],
-  "skills" : [ ],
-  "equipmentList" : [ ],
-  "meleeWeapons" : [ ],
-  "rangedWeapons" : [ ],
-  "totalPoints" : 0,
-  "equipmentWeight" : 0.0,
-  "disadvantagePoints" : 0,
-  "skillPoints" : 0,
-  "advantagePoints" : 0,
-  "quirkPoints" : 0
+  "advantages": [],
+  "disadvantages": [],
+  "quirks": [],
+  "skills": [],
+  "equipmentList": [],
+  "meleeWeapons": [],
+  "rangedWeapons": [],
+  "totalPoints": 0,
+  "equipmentWeight": 0.0,
+  "disadvantagePoints": 0,
+  "skillPoints": 0,
+  "advantagePoints": 0,
+  "quirkPoints": 0
 }
