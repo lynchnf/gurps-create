@@ -9,7 +9,7 @@
       "skill": "MeleeSkill",
       "modes": [
         {
-          "damageBase": "swing",
+          "damageBase": "sw",
           "damageAdds": -2,
           "damageType": "cut",
           "reaches": [
@@ -25,7 +25,7 @@
       "skill": "RangedSkill",
       "modes": [
         {
-          "damageBase": "thrust",
+          "damageBase": "thr",
           "damageType": "imp",
           "halfDamageRangeMultiplier": 0.8,
           "maximumDamageRangeMultiplier": 1.5,

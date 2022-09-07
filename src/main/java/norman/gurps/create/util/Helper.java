@@ -3,6 +3,8 @@ package norman.gurps.create.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import norman.gurps.create.Application;
 import norman.gurps.create.LoggingException;
+import norman.gurps.create.model.BalancedForParry;
+import norman.gurps.create.model.DifficultyLevel;
 import norman.gurps.create.model.data.AdvantageData;
 import norman.gurps.create.model.data.ArmorData;
 import norman.gurps.create.model.data.DefaultData;
@@ -234,7 +236,8 @@ public class Helper {
                         newMode.setParryAdjust(
                                 oldMode.getParryAdjust() != null ? oldMode.getParryAdjust() : Integer.valueOf(0));
                         newMode.setBalancedForParry(
-                                oldMode.getBalancedForParry() != null ? oldMode.getBalancedForParry() : "balanced");
+                                oldMode.getBalancedForParry() != null ? oldMode.getBalancedForParry() :
+                                        BalancedForParry.B);
                         newMode.setMinimumStrength(oldMode.getMinimumStrength() != null ? oldMode.getMinimumStrength() :
                                 Integer.valueOf(0));
                         newMode.setRequiresTwoHands(
@@ -321,7 +324,7 @@ public class Helper {
         }
     }
 
-    public static int calculateSkillLevel(int skillPoints, int attributeValue, String difficultyLevel,
+    public static int calculateSkillLevel(int skillPoints, int attributeValue, DifficultyLevel difficultyLevel,
             String skillName) {
         int index;
         if (skillPoints <= 0) {
@@ -334,36 +337,30 @@ public class Helper {
             index = (skillPoints / 4) + 2;
         }
 
-        if (difficultyLevel != null && difficultyLevel.equals("E")) {
+        if (difficultyLevel == DifficultyLevel.E) {
             index -= 1;
-        } else if (difficultyLevel != null && difficultyLevel.equals("A")) {
+        } else if (difficultyLevel == DifficultyLevel.A) {
             index -= 2;
-        } else if (difficultyLevel != null && difficultyLevel.equals("H")) {
+        } else if (difficultyLevel == DifficultyLevel.H) {
             index -= 3;
-        } else if (difficultyLevel != null && difficultyLevel.equals("VH")) {
+        } else if (difficultyLevel == DifficultyLevel.VH) {
             index -= 4;
-        } else {
-            String msg = String.format("Illegal Difficulty Level %s found for Skill %s.", difficultyLevel, skillName);
-            throw new LoggingException(LOGGER, msg);
         }
 
         return index + attributeValue;
     }
 
-    public static int calculateSkillPoints(int skillLevel, int attributeValue, String difficultyLevel,
+    public static int calculateSkillPoints(int skillLevel, int attributeValue, DifficultyLevel difficultyLevel,
             String skillName) {
         int index = skillLevel - attributeValue;
-        if (difficultyLevel != null && difficultyLevel.equals("E")) {
+        if (difficultyLevel == DifficultyLevel.E) {
             index += 1;
-        } else if (difficultyLevel != null && difficultyLevel.equals("A")) {
+        } else if (difficultyLevel == DifficultyLevel.A) {
             index += 2;
-        } else if (difficultyLevel != null && difficultyLevel.equals("H")) {
+        } else if (difficultyLevel == DifficultyLevel.H) {
             index += 3;
-        } else if (difficultyLevel != null && difficultyLevel.equals("VH")) {
+        } else if (difficultyLevel == DifficultyLevel.VH) {
             index += 4;
-        } else {
-            String msg = String.format("Illegal Difficulty Level %s found for Skill %s.", difficultyLevel, skillName);
-            throw new LoggingException(LOGGER, msg);
         }
 
         if (index <= 0) {

@@ -1,7 +1,11 @@
 package norman.gurps.create.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import norman.gurps.create.LoggingException;
+import norman.gurps.create.model.BalancedForParry;
+import norman.gurps.create.model.ControllingAttribute;
+import norman.gurps.create.model.DamageBase;
+import norman.gurps.create.model.DamageType;
+import norman.gurps.create.model.DifficultyLevel;
 import norman.gurps.create.model.data.AdvantageData;
 import norman.gurps.create.model.data.DisadvantageData;
 import norman.gurps.create.model.data.EquipmentData;
@@ -14,7 +18,6 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class HelperTest {
     int[] strengths = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
@@ -128,10 +131,10 @@ class HelperTest {
         assertEquals(1, map.size());
         SkillData data = map.get("SkillName");
         assertEquals("SkillName", data.getName());
-        assertEquals("ST", data.getControllingAttribute());
-        assertEquals("E", data.getDifficultyLevel());
+        assertEquals(ControllingAttribute.ST, data.getControllingAttribute());
+        assertEquals(DifficultyLevel.E, data.getDifficultyLevel());
         assertEquals(2, data.getDefaults().size());
-        assertEquals("ST", data.getDefaults().get(0).getAttribute());
+        assertEquals(ControllingAttribute.ST, data.getDefaults().get(0).getAttribute());
         assertEquals(-4, data.getDefaults().get(0).getPenalty());
         assertEquals("DefaultSkill", data.getDefaults().get(1).getSkill());
         assertEquals("Specialty", data.getDefaults().get(1).getSpecialty());
@@ -151,29 +154,29 @@ class HelperTest {
 
         assertEquals("MeleeSkill", data.getMeleeWeapon().getSkill());
         assertEquals(1, data.getMeleeWeapon().getModes().size());
-        assertEquals("swing", data.getMeleeWeapon().getModes().get(0).getDamageBase());
+        assertEquals(DamageBase.sw, data.getMeleeWeapon().getModes().get(0).getDamageBase());
         assertEquals(0, data.getMeleeWeapon().getModes().get(0).getDamageDice());
         assertEquals(-2, data.getMeleeWeapon().getModes().get(0).getDamageAdds());
-        assertEquals("cut", data.getMeleeWeapon().getModes().get(0).getDamageType());
+        assertEquals(DamageType.cut, data.getMeleeWeapon().getModes().get(0).getDamageType());
         assertEquals(2, data.getMeleeWeapon().getModes().get(0).getReaches().size());
         assertEquals(0, data.getMeleeWeapon().getModes().get(0).getReaches().get(0));
         assertEquals(1, data.getMeleeWeapon().getModes().get(0).getReaches().get(1));
         assertEquals(-1, data.getMeleeWeapon().getModes().get(0).getParryAdjust());
-        assertEquals("balanced", data.getMeleeWeapon().getModes().get(0).getBalancedForParry());
+        assertEquals(BalancedForParry.B, data.getMeleeWeapon().getModes().get(0).getBalancedForParry());
         assertEquals(6, data.getMeleeWeapon().getModes().get(0).getMinimumStrength());
         assertEquals(false, data.getMeleeWeapon().getModes().get(0).getRequiresTwoHands());
         assertNull(data.getMeleeWeapon().getModes().get(0).getNote());
 
         assertEquals("RangedSkill", data.getRangedWeapon().getSkill());
         assertEquals(1, data.getRangedWeapon().getModes().size());
-        assertEquals("thrust", data.getRangedWeapon().getModes().get(0).getDamageBase());
+        assertEquals(DamageBase.thr, data.getRangedWeapon().getModes().get(0).getDamageBase());
         assertEquals(0, data.getRangedWeapon().getModes().get(0).getDamageDice());
         assertEquals(0, data.getRangedWeapon().getModes().get(0).getDamageAdds());
-        assertEquals("imp", data.getRangedWeapon().getModes().get(0).getDamageType());
+        assertEquals(DamageType.imp, data.getRangedWeapon().getModes().get(0).getDamageType());
         assertEquals(0, data.getRangedWeapon().getModes().get(0).getAccuracy());
-        assertEquals(0, data.getRangedWeapon().getModes().get(0).getHalfDamageRange());
+        assertNull(data.getRangedWeapon().getModes().get(0).getHalfDamageRange());
         assertEquals(0.8, data.getRangedWeapon().getModes().get(0).getHalfDamageRangeMultiplier());
-        assertEquals(0, data.getRangedWeapon().getModes().get(0).getMaximumDamageRange());
+        assertNull(data.getRangedWeapon().getModes().get(0).getMaximumDamageRange());
         assertEquals(1.5, data.getRangedWeapon().getModes().get(0).getMaximumDamageRangeMultiplier());
         assertEquals(1, data.getRangedWeapon().getModes().get(0).getRateOfFire());
         assertEquals(1, data.getRangedWeapon().getModes().get(0).getShots());
@@ -188,90 +191,80 @@ class HelperTest {
 
     @Test
     void calculateSkillLevel_HappyPath() {
-        assertEquals(10, Helper.calculateSkillLevel(1, 10, "E", "SkillName"));
-        assertEquals(11, Helper.calculateSkillLevel(2, 10, "E", "SkillName"));
-        assertEquals(12, Helper.calculateSkillLevel(4, 10, "E", "SkillName"));
-        assertEquals(13, Helper.calculateSkillLevel(8, 10, "E", "SkillName"));
-        assertEquals(14, Helper.calculateSkillLevel(12, 10, "E", "SkillName"));
-        assertEquals(15, Helper.calculateSkillLevel(16, 10, "E", "SkillName"));
+        assertEquals(10, Helper.calculateSkillLevel(1, 10, DifficultyLevel.E, "SkillName"));
+        assertEquals(11, Helper.calculateSkillLevel(2, 10, DifficultyLevel.E, "SkillName"));
+        assertEquals(12, Helper.calculateSkillLevel(4, 10, DifficultyLevel.E, "SkillName"));
+        assertEquals(13, Helper.calculateSkillLevel(8, 10, DifficultyLevel.E, "SkillName"));
+        assertEquals(14, Helper.calculateSkillLevel(12, 10, DifficultyLevel.E, "SkillName"));
+        assertEquals(15, Helper.calculateSkillLevel(16, 10, DifficultyLevel.E, "SkillName"));
 
-        assertEquals(9, Helper.calculateSkillLevel(1, 10, "A", "SkillName"));
-        assertEquals(10, Helper.calculateSkillLevel(2, 10, "A", "SkillName"));
-        assertEquals(11, Helper.calculateSkillLevel(4, 10, "A", "SkillName"));
-        assertEquals(12, Helper.calculateSkillLevel(8, 10, "A", "SkillName"));
-        assertEquals(13, Helper.calculateSkillLevel(12, 10, "A", "SkillName"));
-        assertEquals(14, Helper.calculateSkillLevel(16, 10, "A", "SkillName"));
+        assertEquals(9, Helper.calculateSkillLevel(1, 10, DifficultyLevel.A, "SkillName"));
+        assertEquals(10, Helper.calculateSkillLevel(2, 10, DifficultyLevel.A, "SkillName"));
+        assertEquals(11, Helper.calculateSkillLevel(4, 10, DifficultyLevel.A, "SkillName"));
+        assertEquals(12, Helper.calculateSkillLevel(8, 10, DifficultyLevel.A, "SkillName"));
+        assertEquals(13, Helper.calculateSkillLevel(12, 10, DifficultyLevel.A, "SkillName"));
+        assertEquals(14, Helper.calculateSkillLevel(16, 10, DifficultyLevel.A, "SkillName"));
 
-        assertEquals(8, Helper.calculateSkillLevel(1, 10, "H", "SkillName"));
-        assertEquals(9, Helper.calculateSkillLevel(2, 10, "H", "SkillName"));
-        assertEquals(10, Helper.calculateSkillLevel(4, 10, "H", "SkillName"));
-        assertEquals(11, Helper.calculateSkillLevel(8, 10, "H", "SkillName"));
-        assertEquals(12, Helper.calculateSkillLevel(12, 10, "H", "SkillName"));
-        assertEquals(13, Helper.calculateSkillLevel(16, 10, "H", "SkillName"));
+        assertEquals(8, Helper.calculateSkillLevel(1, 10, DifficultyLevel.H, "SkillName"));
+        assertEquals(9, Helper.calculateSkillLevel(2, 10, DifficultyLevel.H, "SkillName"));
+        assertEquals(10, Helper.calculateSkillLevel(4, 10, DifficultyLevel.H, "SkillName"));
+        assertEquals(11, Helper.calculateSkillLevel(8, 10, DifficultyLevel.H, "SkillName"));
+        assertEquals(12, Helper.calculateSkillLevel(12, 10, DifficultyLevel.H, "SkillName"));
+        assertEquals(13, Helper.calculateSkillLevel(16, 10, DifficultyLevel.H, "SkillName"));
 
-        assertEquals(7, Helper.calculateSkillLevel(1, 10, "VH", "SkillName"));
-        assertEquals(8, Helper.calculateSkillLevel(2, 10, "VH", "SkillName"));
-        assertEquals(9, Helper.calculateSkillLevel(4, 10, "VH", "SkillName"));
-        assertEquals(10, Helper.calculateSkillLevel(8, 10, "VH", "SkillName"));
-        assertEquals(11, Helper.calculateSkillLevel(12, 10, "VH", "SkillName"));
-        assertEquals(12, Helper.calculateSkillLevel(16, 10, "VH", "SkillName"));
+        assertEquals(7, Helper.calculateSkillLevel(1, 10, DifficultyLevel.VH, "SkillName"));
+        assertEquals(8, Helper.calculateSkillLevel(2, 10, DifficultyLevel.VH, "SkillName"));
+        assertEquals(9, Helper.calculateSkillLevel(4, 10, DifficultyLevel.VH, "SkillName"));
+        assertEquals(10, Helper.calculateSkillLevel(8, 10, DifficultyLevel.VH, "SkillName"));
+        assertEquals(11, Helper.calculateSkillLevel(12, 10, DifficultyLevel.VH, "SkillName"));
+        assertEquals(12, Helper.calculateSkillLevel(16, 10, DifficultyLevel.VH, "SkillName"));
     }
 
     @Test
     void calculateSkillLevel_ZeroPoints() {
-        assertEquals(0, Helper.calculateSkillLevel(0, 10, "E", "SkillName"));
-    }
-
-    @Test
-    void calculateSkillLevel_BadDifficultyLevel() {
-        assertThrows(LoggingException.class, () -> Helper.calculateSkillLevel(1, 10, "X", "SkillName"));
+        assertEquals(0, Helper.calculateSkillLevel(0, 10, DifficultyLevel.E, "SkillName"));
     }
 
     @Test
     void calculateSkillPoints_HappyPath() {
-        assertEquals(0, Helper.calculateSkillPoints(7, 10, "E", "SkillName"));
-        assertEquals(0, Helper.calculateSkillPoints(8, 10, "E", "SkillName"));
-        assertEquals(0, Helper.calculateSkillPoints(9, 10, "E", "SkillName"));
-        assertEquals(1, Helper.calculateSkillPoints(10, 10, "E", "SkillName"));
-        assertEquals(2, Helper.calculateSkillPoints(11, 10, "E", "SkillName"));
-        assertEquals(4, Helper.calculateSkillPoints(12, 10, "E", "SkillName"));
-        assertEquals(8, Helper.calculateSkillPoints(13, 10, "E", "SkillName"));
-        assertEquals(12, Helper.calculateSkillPoints(14, 10, "E", "SkillName"));
-        assertEquals(16, Helper.calculateSkillPoints(15, 10, "E", "SkillName"));
+        assertEquals(0, Helper.calculateSkillPoints(7, 10, DifficultyLevel.E, "SkillName"));
+        assertEquals(0, Helper.calculateSkillPoints(8, 10, DifficultyLevel.E, "SkillName"));
+        assertEquals(0, Helper.calculateSkillPoints(9, 10, DifficultyLevel.E, "SkillName"));
+        assertEquals(1, Helper.calculateSkillPoints(10, 10, DifficultyLevel.E, "SkillName"));
+        assertEquals(2, Helper.calculateSkillPoints(11, 10, DifficultyLevel.E, "SkillName"));
+        assertEquals(4, Helper.calculateSkillPoints(12, 10, DifficultyLevel.E, "SkillName"));
+        assertEquals(8, Helper.calculateSkillPoints(13, 10, DifficultyLevel.E, "SkillName"));
+        assertEquals(12, Helper.calculateSkillPoints(14, 10, DifficultyLevel.E, "SkillName"));
+        assertEquals(16, Helper.calculateSkillPoints(15, 10, DifficultyLevel.E, "SkillName"));
 
-        assertEquals(0, Helper.calculateSkillPoints(7, 10, "A", "SkillName"));
-        assertEquals(0, Helper.calculateSkillPoints(8, 10, "A", "SkillName"));
-        assertEquals(1, Helper.calculateSkillPoints(9, 10, "A", "SkillName"));
-        assertEquals(2, Helper.calculateSkillPoints(10, 10, "A", "SkillName"));
-        assertEquals(4, Helper.calculateSkillPoints(11, 10, "A", "SkillName"));
-        assertEquals(8, Helper.calculateSkillPoints(12, 10, "A", "SkillName"));
-        assertEquals(12, Helper.calculateSkillPoints(13, 10, "A", "SkillName"));
-        assertEquals(16, Helper.calculateSkillPoints(14, 10, "A", "SkillName"));
-        assertEquals(20, Helper.calculateSkillPoints(15, 10, "A", "SkillName"));
+        assertEquals(0, Helper.calculateSkillPoints(7, 10, DifficultyLevel.A, "SkillName"));
+        assertEquals(0, Helper.calculateSkillPoints(8, 10, DifficultyLevel.A, "SkillName"));
+        assertEquals(1, Helper.calculateSkillPoints(9, 10, DifficultyLevel.A, "SkillName"));
+        assertEquals(2, Helper.calculateSkillPoints(10, 10, DifficultyLevel.A, "SkillName"));
+        assertEquals(4, Helper.calculateSkillPoints(11, 10, DifficultyLevel.A, "SkillName"));
+        assertEquals(8, Helper.calculateSkillPoints(12, 10, DifficultyLevel.A, "SkillName"));
+        assertEquals(12, Helper.calculateSkillPoints(13, 10, DifficultyLevel.A, "SkillName"));
+        assertEquals(16, Helper.calculateSkillPoints(14, 10, DifficultyLevel.A, "SkillName"));
+        assertEquals(20, Helper.calculateSkillPoints(15, 10, DifficultyLevel.A, "SkillName"));
 
-        assertEquals(0, Helper.calculateSkillPoints(7, 10, "H", "SkillName"));
-        assertEquals(1, Helper.calculateSkillPoints(8, 10, "H", "SkillName"));
-        assertEquals(2, Helper.calculateSkillPoints(9, 10, "H", "SkillName"));
-        assertEquals(4, Helper.calculateSkillPoints(10, 10, "H", "SkillName"));
-        assertEquals(8, Helper.calculateSkillPoints(11, 10, "H", "SkillName"));
-        assertEquals(12, Helper.calculateSkillPoints(12, 10, "H", "SkillName"));
-        assertEquals(16, Helper.calculateSkillPoints(13, 10, "H", "SkillName"));
-        assertEquals(20, Helper.calculateSkillPoints(14, 10, "H", "SkillName"));
-        assertEquals(24, Helper.calculateSkillPoints(15, 10, "H", "SkillName"));
+        assertEquals(0, Helper.calculateSkillPoints(7, 10, DifficultyLevel.H, "SkillName"));
+        assertEquals(1, Helper.calculateSkillPoints(8, 10, DifficultyLevel.H, "SkillName"));
+        assertEquals(2, Helper.calculateSkillPoints(9, 10, DifficultyLevel.H, "SkillName"));
+        assertEquals(4, Helper.calculateSkillPoints(10, 10, DifficultyLevel.H, "SkillName"));
+        assertEquals(8, Helper.calculateSkillPoints(11, 10, DifficultyLevel.H, "SkillName"));
+        assertEquals(12, Helper.calculateSkillPoints(12, 10, DifficultyLevel.H, "SkillName"));
+        assertEquals(16, Helper.calculateSkillPoints(13, 10, DifficultyLevel.H, "SkillName"));
+        assertEquals(20, Helper.calculateSkillPoints(14, 10, DifficultyLevel.H, "SkillName"));
+        assertEquals(24, Helper.calculateSkillPoints(15, 10, DifficultyLevel.H, "SkillName"));
 
-        assertEquals(1, Helper.calculateSkillPoints(7, 10, "VH", "SkillName"));
-        assertEquals(2, Helper.calculateSkillPoints(8, 10, "VH", "SkillName"));
-        assertEquals(4, Helper.calculateSkillPoints(9, 10, "VH", "SkillName"));
-        assertEquals(8, Helper.calculateSkillPoints(10, 10, "VH", "SkillName"));
-        assertEquals(12, Helper.calculateSkillPoints(11, 10, "VH", "SkillName"));
-        assertEquals(16, Helper.calculateSkillPoints(12, 10, "VH", "SkillName"));
-        assertEquals(20, Helper.calculateSkillPoints(13, 10, "VH", "SkillName"));
-        assertEquals(24, Helper.calculateSkillPoints(14, 10, "VH", "SkillName"));
-        assertEquals(28, Helper.calculateSkillPoints(15, 10, "VH", "SkillName"));
-    }
-
-    @Test
-    void calculateSkillPoints_BadDifficultyLevel() {
-        assertThrows(LoggingException.class, () -> Helper.calculateSkillPoints(7, 10, "X", "SkillName"));
+        assertEquals(1, Helper.calculateSkillPoints(7, 10, DifficultyLevel.VH, "SkillName"));
+        assertEquals(2, Helper.calculateSkillPoints(8, 10, DifficultyLevel.VH, "SkillName"));
+        assertEquals(4, Helper.calculateSkillPoints(9, 10, DifficultyLevel.VH, "SkillName"));
+        assertEquals(8, Helper.calculateSkillPoints(10, 10, DifficultyLevel.VH, "SkillName"));
+        assertEquals(12, Helper.calculateSkillPoints(11, 10, DifficultyLevel.VH, "SkillName"));
+        assertEquals(16, Helper.calculateSkillPoints(12, 10, DifficultyLevel.VH, "SkillName"));
+        assertEquals(20, Helper.calculateSkillPoints(13, 10, DifficultyLevel.VH, "SkillName"));
+        assertEquals(24, Helper.calculateSkillPoints(14, 10, DifficultyLevel.VH, "SkillName"));
+        assertEquals(28, Helper.calculateSkillPoints(15, 10, DifficultyLevel.VH, "SkillName"));
     }
 }

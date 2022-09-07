@@ -1,18 +1,20 @@
 package norman.gurps.create.model.response;
 
+import norman.gurps.create.model.ControllingAttribute;
+
 public class DefaultResponse {
-    private String attribute;
+    private ControllingAttribute attribute;
     private String skill;
     private String specialty;
     private Integer penalty;
     private Integer level;
     private Integer points;
 
-    public String getAttribute() {
+    public ControllingAttribute getAttribute() {
         return attribute;
     }
 
-    public void setAttribute(String attribute) {
+    public void setAttribute(ControllingAttribute attribute) {
         this.attribute = attribute;
     }
 

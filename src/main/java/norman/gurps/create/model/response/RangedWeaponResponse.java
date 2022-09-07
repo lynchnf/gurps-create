@@ -1,11 +1,13 @@
 package norman.gurps.create.model.response;
 
+import norman.gurps.create.model.DamageType;
+
 public class RangedWeaponResponse {
     private String name;
     private Integer skill;
     private Integer damageDice;
     private Integer damageAdds;
-    private String damageType;
+    private DamageType damageType;
     private Integer accuracy;
     private Integer halfDamageRange;
     private Integer maximumDamageRange;
@@ -49,11 +51,11 @@ public class RangedWeaponResponse {
         this.damageAdds = damageAdds;
     }
 
-    public String getDamageType() {
+    public DamageType getDamageType() {
         return damageType;
     }
 
-    public void setDamageType(String damageType) {
+    public void setDamageType(DamageType damageType) {
         this.damageType = damageType;
     }
 

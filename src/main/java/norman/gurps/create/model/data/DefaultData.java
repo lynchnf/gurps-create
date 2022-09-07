@@ -1,16 +1,18 @@
 package norman.gurps.create.model.data;
 
+import norman.gurps.create.model.ControllingAttribute;
+
 public class DefaultData {
-    private String attribute;
+    private ControllingAttribute attribute;
     private String skill;
     private String specialty;
     private Integer penalty;
 
-    public String getAttribute() {
+    public ControllingAttribute getAttribute() {
         return attribute;
     }
 
-    public void setAttribute(String attribute) {
+    public void setAttribute(ControllingAttribute attribute) {
         this.attribute = attribute;
     }
 

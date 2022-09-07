@@ -1,10 +1,13 @@
 package norman.gurps.create.model.data;
 
+import norman.gurps.create.model.DamageBase;
+import norman.gurps.create.model.DamageType;
+
 public class RangedWeaponModeData {
-    private String damageBase;
+    private DamageBase damageBase;
     private Integer damageDice;
     private Integer damageAdds;
-    private String damageType;
+    private DamageType damageType;
     private Integer accuracy;
     private Integer halfDamageRange;
     private Double halfDamageRangeMultiplier;
@@ -18,11 +21,11 @@ public class RangedWeaponModeData {
     private Integer bulk;
     private String note;
 
-    public String getDamageBase() {
+    public DamageBase getDamageBase() {
         return damageBase;
     }
 
-    public void setDamageBase(String damageBase) {
+    public void setDamageBase(DamageBase damageBase) {
         this.damageBase = damageBase;
     }
 
@@ -42,11 +45,11 @@ public class RangedWeaponModeData {
         this.damageAdds = damageAdds;
     }
 
-    public String getDamageType() {
+    public DamageType getDamageType() {
         return damageType;
     }
 
-    public void setDamageType(String damageType) {
+    public void setDamageType(DamageType damageType) {
         this.damageType = damageType;
     }
 

@@ -1,9 +1,12 @@
 package norman.gurps.create.model.response;
 
+import norman.gurps.create.model.ControllingAttribute;
+import norman.gurps.create.model.DifficultyLevel;
+
 public class SkillResponse {
     private String name;
-    private String controllingAttribute;
-    private String difficultyLevel;
+    private ControllingAttribute controllingAttribute;
+    private DifficultyLevel difficultyLevel;
     private String specialty;
     private Integer minLevel;
     private Integer maxPoints;
@@ -20,19 +23,19 @@ public class SkillResponse {
         this.name = name;
     }
 
-    public String getControllingAttribute() {
+    public ControllingAttribute getControllingAttribute() {
         return controllingAttribute;
     }
 
-    public void setControllingAttribute(String controllingAttribute) {
+    public void setControllingAttribute(ControllingAttribute controllingAttribute) {
         this.controllingAttribute = controllingAttribute;
     }
 
-    public String getDifficultyLevel() {
+    public DifficultyLevel getDifficultyLevel() {
         return difficultyLevel;
     }
 
-    public void setDifficultyLevel(String difficultyLevel) {
+    public void setDifficultyLevel(DifficultyLevel difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
     }
 

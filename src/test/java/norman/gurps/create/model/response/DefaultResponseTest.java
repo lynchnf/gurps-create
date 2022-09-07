@@ -1,5 +1,6 @@
 package norman.gurps.create.model.response;
 
+import norman.gurps.create.model.ControllingAttribute;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ class DefaultResponseTest {
     @BeforeEach
     void setUp() {
         model = new DefaultResponse();
-        model.setAttribute("Attribute");
+        model.setAttribute(ControllingAttribute.ST);
         model.setSkill("Skill");
         model.setSpecialty("Specialty");
         model.setPenalty(123);
@@ -26,7 +27,7 @@ class DefaultResponseTest {
 
     @Test
     void getAttribute() {
-        assertEquals("Attribute", model.getAttribute());
+        assertEquals(ControllingAttribute.ST, model.getAttribute());
     }
 
     @Test

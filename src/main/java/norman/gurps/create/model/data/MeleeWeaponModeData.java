@@ -1,25 +1,29 @@
 package norman.gurps.create.model.data;
 
+import norman.gurps.create.model.BalancedForParry;
+import norman.gurps.create.model.DamageBase;
+import norman.gurps.create.model.DamageType;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MeleeWeaponModeData {
-    private String damageBase;
+    private DamageBase damageBase;
     private Integer damageDice;
     private Integer damageAdds;
-    private String damageType;
+    private DamageType damageType;
     private List<Integer> reaches = new ArrayList<>();
     private Integer parryAdjust;
-    private String balancedForParry;
+    private BalancedForParry balancedForParry;
     private Integer minimumStrength;
     private Boolean requiresTwoHands;
     private String note;
 
-    public String getDamageBase() {
+    public DamageBase getDamageBase() {
         return damageBase;
     }
 
-    public void setDamageBase(String damageBase) {
+    public void setDamageBase(DamageBase damageBase) {
         this.damageBase = damageBase;
     }
 
@@ -39,11 +43,11 @@ public class MeleeWeaponModeData {
         this.damageAdds = damageAdds;
     }
 
-    public String getDamageType() {
+    public DamageType getDamageType() {
         return damageType;
     }
 
-    public void setDamageType(String damageType) {
+    public void setDamageType(DamageType damageType) {
         this.damageType = damageType;
     }
 
@@ -63,11 +67,11 @@ public class MeleeWeaponModeData {
         this.parryAdjust = parryAdjust;
     }
 
-    public String getBalancedForParry() {
+    public BalancedForParry getBalancedForParry() {
         return balancedForParry;
     }
 
-    public void setBalancedForParry(String balancedForParry) {
+    public void setBalancedForParry(BalancedForParry balancedForParry) {
         this.balancedForParry = balancedForParry;
     }
 

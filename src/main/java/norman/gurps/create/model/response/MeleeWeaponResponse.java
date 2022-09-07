@@ -1,5 +1,8 @@
 package norman.gurps.create.model.response;
 
+import norman.gurps.create.model.BalancedForParry;
+import norman.gurps.create.model.DamageType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,10 +11,10 @@ public class MeleeWeaponResponse {
     private Integer skill;
     private Integer damageDice;
     private Integer damageAdds;
-    private String damageType;
+    private DamageType damageType;
     private List<Integer> reaches = new ArrayList<>();
     private Integer parry;
-    private String balancedForParry;
+    private BalancedForParry balancedForParry;
     private Integer minimumStrength;
     private Boolean requiresTwoHands;
     private String note;
@@ -48,11 +51,11 @@ public class MeleeWeaponResponse {
         this.damageAdds = damageAdds;
     }
 
-    public String getDamageType() {
+    public DamageType getDamageType() {
         return damageType;
     }
 
-    public void setDamageType(String damageType) {
+    public void setDamageType(DamageType damageType) {
         this.damageType = damageType;
     }
 
@@ -72,11 +75,11 @@ public class MeleeWeaponResponse {
         this.parry = parry;
     }
 
-    public String getBalancedForParry() {
+    public BalancedForParry getBalancedForParry() {
         return balancedForParry;
     }
 
-    public void setBalancedForParry(String balancedForParry) {
+    public void setBalancedForParry(BalancedForParry balancedForParry) {
         this.balancedForParry = balancedForParry;
     }
 

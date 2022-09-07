@@ -1,5 +1,7 @@
 package norman.gurps.create.model.response;
 
+import norman.gurps.create.model.ControllingAttribute;
+import norman.gurps.create.model.DifficultyLevel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,8 +15,8 @@ class SkillResponseTest {
     void setUp() {
         model = new SkillResponse();
         model.setName("Name");
-        model.setControllingAttribute("ControllingAttribute");
-        model.setDifficultyLevel("DifficultyLevel");
+        model.setControllingAttribute(ControllingAttribute.ST);
+        model.setDifficultyLevel(DifficultyLevel.E);
         model.setSpecialty("Specialty");
         model.setMinLevel(123);
         model.setMaxPoints(234);
@@ -37,12 +39,12 @@ class SkillResponseTest {
 
     @Test
     void getControllingAttribute() {
-        assertEquals("ControllingAttribute", model.getControllingAttribute());
+        assertEquals(ControllingAttribute.ST, model.getControllingAttribute());
     }
 
     @Test
     void getDifficultyLevel() {
-        assertEquals("DifficultyLevel", model.getDifficultyLevel());
+        assertEquals(DifficultyLevel.E, model.getDifficultyLevel());
     }
 
     @Test
