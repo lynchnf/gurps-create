@@ -2,7 +2,6 @@ package norman.gurps.create.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import norman.gurps.create.Application;
-import norman.gurps.create.LoggingException;
 import norman.gurps.create.model.BalancedForParry;
 import norman.gurps.create.model.DifficultyLevel;
 import norman.gurps.create.model.data.AdvantageData;
@@ -18,8 +17,8 @@ import norman.gurps.create.model.data.SkillData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,247 +80,172 @@ public class Helper {
         return (dexterity + health) / 4.0;
     }
 
-    public static Map<String, AdvantageData> getAdvantageDataMap(ClassLoader loader, ObjectMapper mapper) {
-        String resourceName = "advantageData.json";
-        InputStream stream = loader.getResourceAsStream(resourceName);
-        try {
-            AdvantageData[] dataArray = mapper.readValue(stream, AdvantageData[].class);
-
-            Map<String, AdvantageData> dataMap = new HashMap<>();
-            for (AdvantageData oldData : dataArray) {
-                AdvantageData newData = new AdvantageData();
-                newData.setName(oldData.getName());
-                newData.setMultiLevel(oldData.getMultiLevel() != null && oldData.getMultiLevel());
-                newData.setFirstLevel(oldData.getFirstLevel() != null ? oldData.getFirstLevel() : Integer.valueOf(1));
-                newData.setFirstLevelCost(
-                        oldData.getFirstLevelCost() != null ? oldData.getFirstLevelCost() : oldData.getCostPerLevel());
-                newData.setCostPerLevel(oldData.getCostPerLevel());
-                dataMap.put(newData.getName(), newData);
-            }
-            return dataMap;
-        } catch (IOException e) {
-            String msg = String.format("Invalid data found in file %s. Unable to map to class AdvantageData[].",
-                    resourceName);
-            throw new LoggingException(LOGGER, msg, e);
-        } finally {
-            if (stream != null) {
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    String msg = String.format("Unable to close input stream from file %s.", resourceName);
-                    LOGGER.warn(msg, e);
-                }
-            }
+    public static Map<String, AdvantageData> getAdvantageDataMap(File file, ObjectMapper mapper) throws IOException {
+        AdvantageData[] dataArray = mapper.readValue(file, AdvantageData[].class);
+        Map<String, AdvantageData> dataMap = new HashMap<>();
+        for (AdvantageData oldData : dataArray) {
+            AdvantageData newData = new AdvantageData();
+            newData.setName(oldData.getName());
+            newData.setMultiLevel(oldData.getMultiLevel() != null && oldData.getMultiLevel());
+            newData.setFirstLevel(oldData.getFirstLevel() != null ? oldData.getFirstLevel() : Integer.valueOf(1));
+            newData.setFirstLevelCost(
+                    oldData.getFirstLevelCost() != null ? oldData.getFirstLevelCost() : oldData.getCostPerLevel());
+            newData.setCostPerLevel(oldData.getCostPerLevel());
+            dataMap.put(newData.getName(), newData);
         }
+        return dataMap;
     }
 
-    public static Map<String, DisadvantageData> getDisadvantageDataMap(ClassLoader loader, ObjectMapper mapper) {
-        String resourceName = "disadvantageData.json";
-        InputStream stream = loader.getResourceAsStream(resourceName);
-        try {
-            DisadvantageData[] dataArray = mapper.readValue(stream, DisadvantageData[].class);
-
-            Map<String, DisadvantageData> dataMap = new HashMap<>();
-            for (DisadvantageData oldData : dataArray) {
-                DisadvantageData newData = new DisadvantageData();
-                newData.setName(oldData.getName());
-                newData.setSelfControlAllowed(
-                        oldData.getSelfControlAllowed() != null && oldData.getSelfControlAllowed());
-                newData.setMultiLevel(oldData.getMultiLevel() != null && oldData.getMultiLevel());
-                newData.setCostPerLevel(oldData.getCostPerLevel());
-                dataMap.put(newData.getName(), newData);
-            }
-            return dataMap;
-        } catch (IOException e) {
-            String msg = String.format("Invalid data found in file %s. Unable to map to class DisadvantageData[].",
-                    resourceName);
-            throw new LoggingException(LOGGER, msg, e);
-        } finally {
-            if (stream != null) {
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    String msg = String.format("Unable to close input stream from file %s.", resourceName);
-                    LOGGER.warn(msg, e);
-                }
-            }
+    public static Map<String, DisadvantageData> getDisadvantageDataMap(File file, ObjectMapper mapper)
+            throws IOException {
+        DisadvantageData[] dataArray = mapper.readValue(file, DisadvantageData[].class);
+        Map<String, DisadvantageData> dataMap = new HashMap<>();
+        for (DisadvantageData oldData : dataArray) {
+            DisadvantageData newData = new DisadvantageData();
+            newData.setName(oldData.getName());
+            newData.setSelfControlAllowed(oldData.getSelfControlAllowed() != null && oldData.getSelfControlAllowed());
+            newData.setMultiLevel(oldData.getMultiLevel() != null && oldData.getMultiLevel());
+            newData.setCostPerLevel(oldData.getCostPerLevel());
+            dataMap.put(newData.getName(), newData);
         }
+        return dataMap;
     }
 
-    public static Map<String, SkillData> getSkillDataMap(ClassLoader loader, ObjectMapper mapper) {
-        String resourceName = "skillData.json";
-        InputStream stream = loader.getResourceAsStream(resourceName);
-        try {
-            SkillData[] dataArray = mapper.readValue(stream, SkillData[].class);
-
-            Map<String, SkillData> dataMap = new HashMap<>();
-            for (SkillData oldData : dataArray) {
-                SkillData newData = new SkillData();
-                newData.setName(oldData.getName());
-                newData.setControllingAttribute(oldData.getControllingAttribute());
-                newData.setDifficultyLevel(oldData.getDifficultyLevel());
-                for (DefaultData oldDft : oldData.getDefaults()) {
-                    DefaultData newDft = new DefaultData();
-                    if (oldDft.getAttribute() != null) {
-                        newDft.setAttribute(oldDft.getAttribute());
-                    }
-                    if (oldDft.getSkill() != null) {
-                        newDft.setSkill(oldDft.getSkill());
-                    }
-                    if (oldDft.getSpecialty() != null) {
-                        newDft.setSpecialty(oldDft.getSpecialty());
-                    }
-                    newDft.setPenalty(oldDft.getPenalty() != null ? oldDft.getPenalty() : Integer.valueOf(0));
-                    newData.getDefaults().add(newDft);
+    public static Map<String, SkillData> getSkillDataMap(File file, ObjectMapper mapper) throws IOException {
+        SkillData[] dataArray = mapper.readValue(file, SkillData[].class);
+        Map<String, SkillData> dataMap = new HashMap<>();
+        for (SkillData oldData : dataArray) {
+            SkillData newData = new SkillData();
+            newData.setName(oldData.getName());
+            newData.setControllingAttribute(oldData.getControllingAttribute());
+            newData.setDifficultyLevel(oldData.getDifficultyLevel());
+            for (DefaultData oldDft : oldData.getDefaults()) {
+                DefaultData newDft = new DefaultData();
+                if (oldDft.getAttribute() != null) {
+                    newDft.setAttribute(oldDft.getAttribute());
                 }
-
-                dataMap.put(newData.getName(), newData);
-            }
-            return dataMap;
-        } catch (IOException e) {
-            String msg = String.format("Invalid data found in file %s. Unable to map to class SkillData[].",
-                    resourceName);
-            throw new LoggingException(LOGGER, msg, e);
-        } finally {
-            if (stream != null) {
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    String msg = String.format("Unable to close input stream from file %s.", resourceName);
-                    LOGGER.warn(msg, e);
+                if (oldDft.getSkill() != null) {
+                    newDft.setSkill(oldDft.getSkill());
                 }
+                if (oldDft.getSpecialty() != null) {
+                    newDft.setSpecialty(oldDft.getSpecialty());
+                }
+                newDft.setPenalty(oldDft.getPenalty() != null ? oldDft.getPenalty() : Integer.valueOf(0));
+                newData.getDefaults().add(newDft);
             }
+            dataMap.put(newData.getName(), newData);
         }
+        return dataMap;
     }
 
-    public static Map<String, EquipmentData> getEquipmentDataMap(ClassLoader loader, ObjectMapper mapper) {
-        String resourceName = "equipmentData.json";
-        InputStream stream = loader.getResourceAsStream(resourceName);
-        try {
-            EquipmentData[] dataArray = mapper.readValue(stream, EquipmentData[].class);
-
-            Map<String, EquipmentData> dataMap = new HashMap<>();
-            for (EquipmentData oldData : dataArray) {
-                EquipmentData newData = new EquipmentData();
-                newData.setName(oldData.getName());
-                newData.setCost(oldData.getCost() != null ? oldData.getCost() : Integer.valueOf(0));
-                newData.setWeight(oldData.getWeight() != null ? oldData.getWeight() : Double.valueOf(0.0));
-                newData.setQuantity(oldData.getQuantity() != null ? oldData.getQuantity() : Integer.valueOf(1));
-                if (oldData.getNotes() != null) {
-                    newData.setNotes(oldData.getNotes());
-                }
-
-                // Melee Weapon
-                MeleeWeaponData oldMelee = oldData.getMeleeWeapon();
-                if (oldMelee != null) {
-                    MeleeWeaponData newMelee = new MeleeWeaponData();
-                    newMelee.setSkill(oldMelee.getSkill());
-                    for (MeleeWeaponModeData oldMode : oldMelee.getModes()) {
-                        MeleeWeaponModeData newMode = new MeleeWeaponModeData();
-                        if (oldMode.getDamageBase() != null) {
-                            newMode.setDamageBase(oldMode.getDamageBase());
-                        }
-                        newMode.setDamageDice(
-                                oldMode.getDamageDice() != null ? oldMode.getDamageDice() : Integer.valueOf(0));
-                        newMode.setDamageAdds(
-                                oldMode.getDamageAdds() != null ? oldMode.getDamageAdds() : Integer.valueOf(0));
-                        newMode.setDamageType(oldMode.getDamageType());
-                        if (oldMode.getReaches() != null && !oldMode.getReaches().isEmpty()) {
-                            for (Integer reach : oldMode.getReaches()) {
-                                newMode.getReaches().add(reach);
-                            }
-                        } else {
-                            newMode.getReaches().add(1);
-                        }
-                        newMode.setParryAdjust(
-                                oldMode.getParryAdjust() != null ? oldMode.getParryAdjust() : Integer.valueOf(0));
-                        newMode.setBalancedForParry(
-                                oldMode.getBalancedForParry() != null ? oldMode.getBalancedForParry() :
-                                        BalancedForParry.B);
-                        newMode.setMinimumStrength(oldMode.getMinimumStrength() != null ? oldMode.getMinimumStrength() :
-                                Integer.valueOf(0));
-                        newMode.setRequiresTwoHands(
-                                oldMode.getRequiresTwoHands() != null ? oldMode.getRequiresTwoHands() : Boolean.FALSE);
-                        if (oldMode.getNote() != null) {
-                            newMode.setNote(oldMode.getNote());
-                        }
-                        newMelee.getModes().add(newMode);
-                    }
-                    newData.setMeleeWeapon(newMelee);
-                }
-
-                // Ranged Weapon
-                RangedWeaponData oldRanged = oldData.getRangedWeapon();
-                if (oldRanged != null) {
-                    RangedWeaponData newRanged = new RangedWeaponData();
-                    newRanged.setSkill(oldRanged.getSkill());
-                    for (RangedWeaponModeData oldMode : oldRanged.getModes()) {
-                        RangedWeaponModeData newMode = new RangedWeaponModeData();
-                        if (oldMode.getDamageBase() != null) {
-                            newMode.setDamageBase(oldMode.getDamageBase());
-                        }
-                        newMode.setDamageDice(
-                                oldMode.getDamageDice() != null ? oldMode.getDamageDice() : Integer.valueOf(0));
-                        newMode.setDamageAdds(
-                                oldMode.getDamageAdds() != null ? oldMode.getDamageAdds() : Integer.valueOf(0));
-                        newMode.setDamageType(oldMode.getDamageType());
-                        newMode.setAccuracy(oldMode.getAccuracy() != null ? oldMode.getAccuracy() : Integer.valueOf(0));
-                        if (oldMode.getHalfDamageRange() != null) {
-                            newMode.setHalfDamageRange(oldMode.getHalfDamageRange());
-                        }
-                        if (oldMode.getHalfDamageRangeMultiplier() != null) {
-                            newMode.setHalfDamageRangeMultiplier(oldMode.getHalfDamageRangeMultiplier());
-                        }
-                        if (oldMode.getMaximumDamageRange() != null) {
-                            newMode.setMaximumDamageRange(oldMode.getMaximumDamageRange());
-                        }
-                        if (oldMode.getMaximumDamageRangeMultiplier() != null) {
-                            newMode.setMaximumDamageRangeMultiplier(oldMode.getMaximumDamageRangeMultiplier());
-                        }
-                        newMode.setRateOfFire(
-                                oldMode.getRateOfFire() != null ? oldMode.getRateOfFire() : Integer.valueOf(1));
-                        newMode.setShots(oldMode.getShots() != null ? oldMode.getShots() : Integer.valueOf(1));
-                        newMode.setTimeToReload(
-                                oldMode.getTimeToReload() != null ? oldMode.getTimeToReload() : Integer.valueOf(0));
-                        newMode.setMinimumStrength(oldMode.getMinimumStrength() != null ? oldMode.getMinimumStrength() :
-                                Integer.valueOf(0));
-                        newMode.setRequiresTwoHands(
-                                oldMode.getRequiresTwoHands() != null ? oldMode.getRequiresTwoHands() : Boolean.FALSE);
-                        newMode.setBulk(oldMode.getBulk() != null ? oldMode.getBulk() : Integer.valueOf(0));
-                        if (oldMode.getNote() != null) {
-                            newMode.setNote(oldMode.getNote());
-                        }
-                        newRanged.getModes().add(newMode);
-                    }
-                    newData.setRangedWeapon(newRanged);
-                }
-
-                // Armor
-                ArmorData oldArmor = oldData.getArmor();
-                if (oldArmor != null) {
-                    ArmorData newArmor = new ArmorData();
-                    newArmor.setDamageResistance(
-                            oldArmor.getDamageResistance() != null ? oldArmor.getDamageResistance() :
-                                    Integer.valueOf(0));
-                    newData.setArmor(newArmor);
-                }
-                dataMap.put(newData.getName(), newData);
+    public static Map<String, EquipmentData> getEquipmentDataMap(File file, ObjectMapper mapper) throws IOException {
+        EquipmentData[] dataArray = mapper.readValue(file, EquipmentData[].class);
+        Map<String, EquipmentData> dataMap = new HashMap<>();
+        for (EquipmentData oldData : dataArray) {
+            EquipmentData newData = new EquipmentData();
+            newData.setName(oldData.getName());
+            newData.setCost(oldData.getCost() != null ? oldData.getCost() : Integer.valueOf(0));
+            newData.setWeight(oldData.getWeight() != null ? oldData.getWeight() : Double.valueOf(0.0));
+            newData.setQuantity(oldData.getQuantity() != null ? oldData.getQuantity() : Integer.valueOf(1));
+            if (oldData.getNotes() != null) {
+                newData.setNotes(oldData.getNotes());
             }
-            return dataMap;
-        } catch (IOException e) {
-            String msg = String.format("Invalid data found in file %s. Unable to map to class EquipmentData[].",
-                    resourceName);
-            throw new LoggingException(LOGGER, msg, e);
-        } finally {
-            if (stream != null) {
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    String msg = String.format("Unable to close input stream from file %s.", resourceName);
-                    LOGGER.warn(msg, e);
+
+            // Melee Weapon
+            MeleeWeaponData oldMelee = oldData.getMeleeWeapon();
+            if (oldMelee != null) {
+                MeleeWeaponData newMelee = new MeleeWeaponData();
+                newMelee.setSkill(oldMelee.getSkill());
+                for (MeleeWeaponModeData oldMode : oldMelee.getModes()) {
+                    MeleeWeaponModeData newMode = new MeleeWeaponModeData();
+                    if (oldMode.getDamageBase() != null) {
+                        newMode.setDamageBase(oldMode.getDamageBase());
+                    }
+                    newMode.setDamageDice(
+                            oldMode.getDamageDice() != null ? oldMode.getDamageDice() : Integer.valueOf(0));
+                    newMode.setDamageAdds(
+                            oldMode.getDamageAdds() != null ? oldMode.getDamageAdds() : Integer.valueOf(0));
+                    newMode.setDamageType(oldMode.getDamageType());
+                    if (oldMode.getReaches() != null && !oldMode.getReaches().isEmpty()) {
+                        for (Integer reach : oldMode.getReaches()) {
+                            newMode.getReaches().add(reach);
+                        }
+                    } else {
+                        newMode.getReaches().add(1);
+                    }
+                    newMode.setParryAdjust(
+                            oldMode.getParryAdjust() != null ? oldMode.getParryAdjust() : Integer.valueOf(0));
+                    newMode.setBalancedForParry(
+                            oldMode.getBalancedForParry() != null ? oldMode.getBalancedForParry() : BalancedForParry.B);
+                    newMode.setMinimumStrength(
+                            oldMode.getMinimumStrength() != null ? oldMode.getMinimumStrength() : Integer.valueOf(0));
+                    newMode.setRequiresTwoHands(
+                            oldMode.getRequiresTwoHands() != null ? oldMode.getRequiresTwoHands() : Boolean.FALSE);
+                    if (oldMode.getNote() != null) {
+                        newMode.setNote(oldMode.getNote());
+                    }
+                    newMelee.getModes().add(newMode);
                 }
+                newData.setMeleeWeapon(newMelee);
             }
+
+            // Ranged Weapon
+            RangedWeaponData oldRanged = oldData.getRangedWeapon();
+            if (oldRanged != null) {
+                RangedWeaponData newRanged = new RangedWeaponData();
+                newRanged.setSkill(oldRanged.getSkill());
+                for (RangedWeaponModeData oldMode : oldRanged.getModes()) {
+                    RangedWeaponModeData newMode = new RangedWeaponModeData();
+                    if (oldMode.getDamageBase() != null) {
+                        newMode.setDamageBase(oldMode.getDamageBase());
+                    }
+                    newMode.setDamageDice(
+                            oldMode.getDamageDice() != null ? oldMode.getDamageDice() : Integer.valueOf(0));
+                    newMode.setDamageAdds(
+                            oldMode.getDamageAdds() != null ? oldMode.getDamageAdds() : Integer.valueOf(0));
+                    newMode.setDamageType(oldMode.getDamageType());
+                    newMode.setAccuracy(oldMode.getAccuracy() != null ? oldMode.getAccuracy() : Integer.valueOf(0));
+                    if (oldMode.getHalfDamageRange() != null) {
+                        newMode.setHalfDamageRange(oldMode.getHalfDamageRange());
+                    }
+                    if (oldMode.getHalfDamageRangeMultiplier() != null) {
+                        newMode.setHalfDamageRangeMultiplier(oldMode.getHalfDamageRangeMultiplier());
+                    }
+                    if (oldMode.getMaximumDamageRange() != null) {
+                        newMode.setMaximumDamageRange(oldMode.getMaximumDamageRange());
+                    }
+                    if (oldMode.getMaximumDamageRangeMultiplier() != null) {
+                        newMode.setMaximumDamageRangeMultiplier(oldMode.getMaximumDamageRangeMultiplier());
+                    }
+                    newMode.setRateOfFire(
+                            oldMode.getRateOfFire() != null ? oldMode.getRateOfFire() : Integer.valueOf(1));
+                    newMode.setShots(oldMode.getShots() != null ? oldMode.getShots() : Integer.valueOf(1));
+                    newMode.setTimeToReload(
+                            oldMode.getTimeToReload() != null ? oldMode.getTimeToReload() : Integer.valueOf(0));
+                    newMode.setMinimumStrength(
+                            oldMode.getMinimumStrength() != null ? oldMode.getMinimumStrength() : Integer.valueOf(0));
+                    newMode.setRequiresTwoHands(
+                            oldMode.getRequiresTwoHands() != null ? oldMode.getRequiresTwoHands() : Boolean.FALSE);
+                    newMode.setBulk(oldMode.getBulk() != null ? oldMode.getBulk() : Integer.valueOf(0));
+                    if (oldMode.getNote() != null) {
+                        newMode.setNote(oldMode.getNote());
+                    }
+                    newRanged.getModes().add(newMode);
+                }
+                newData.setRangedWeapon(newRanged);
+            }
+
+            // Armor
+            ArmorData oldArmor = oldData.getArmor();
+            if (oldArmor != null) {
+                ArmorData newArmor = new ArmorData();
+                newArmor.setDamageResistance(
+                        oldArmor.getDamageResistance() != null ? oldArmor.getDamageResistance() : Integer.valueOf(0));
+                newData.setArmor(newArmor);
+            }
+            dataMap.put(newData.getName(), newData);
         }
+        return dataMap;
     }
 
     public static int calculateSkillLevel(int skillPoints, int attributeValue, DifficultyLevel difficultyLevel,

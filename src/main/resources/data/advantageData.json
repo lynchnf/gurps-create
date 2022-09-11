@@ -1,0 +1,239 @@
+[
+  {
+    "name": "Appearance, (Attractive)",
+    "costPerLevel": 4
+  },
+  {
+    "name": "Appearance,(Handsome or Beautiful)",
+    "costPerLevel": 12
+  },
+  {
+    "name": "Appearance (Very Handsome or Beautiful)",
+    "costPerLevel": 16
+  },
+  {
+    "name": "Charisma",
+    "multiLevel": true,
+    "costPerLevel": 5
+  },
+  {
+    "name": "Voice",
+    "costPerLevel": 10
+  },
+  {
+    "name": "High TL",
+    "multiLevel": true,
+    "costPerLevel": 5
+  },
+  {
+    "name": "Wealth (Comfortable)",
+    "costPerLevel": 10
+  },
+  {
+    "name": "Wealth (Wealthy)",
+    "costPerLevel": 20
+  },
+  {
+    "name": "Wealth (Very Wealthy)",
+    "costPerLevel": 30
+  },
+  {
+    "name": "Wealth (Filthy Rich)",
+    "costPerLevel": 50
+  },
+  {
+    "name": "High Status",
+    "multiLevel": true,
+    "costPerLevel": 5
+  },
+  {
+    "name": "Acute Senses (Hearing)",
+    "multiLevel": true,
+    "costPerLevel": 2
+  },
+  {
+    "name": "Acute Senses (Taste and Smell)",
+    "multiLevel": true,
+    "costPerLevel": 2
+  },
+  {
+    "name": "Acute Senses (Touch)",
+    "multiLevel": true,
+    "costPerLevel": 2
+  },
+  {
+    "name": "Acute Senses (Vision)",
+    "multiLevel": true,
+    "costPerLevel": 2
+  },
+  {
+    "name": "Ambidexterity",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Animal Empathy",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Catfall",
+    "costPerLevel": 10
+  },
+  {
+    "name": "Combat Reflexes",
+    "costPerLevel": 15
+  },
+  {
+    "name": "Danger Sense",
+    "costPerLevel": 15
+  },
+  {
+    "name": "Daredevil",
+    "costPerLevel": 15
+  },
+  {
+    "name": "Empathy",
+    "costPerLevel": 15
+  },
+  {
+    "name": "Enhanced Defenses (Block)",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Enhanced Defenses (Dodge)",
+    "costPerLevel": 15
+  },
+  {
+    "name": "Enhanced Defenses (All Parry)",
+    "costPerLevel": 10
+  },
+  {
+    "name": "Enhanced Defenses (Bare Hands Parry)",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Enhanced Defenses (Rapier Parry)",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Enhanced Defenses (Smallsword Parry)",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Enhanced Defenses (Flail Parry)",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Enhanced Defenses (Axe/Mace Parry)",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Enhanced Defenses (Polearm Parry)",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Enhanced Defenses (Spear Parry)",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Enhanced Defenses (Staff Parry)",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Enhanced Defenses (Broadsword Parry)",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Enhanced Defenses (Knife Parry)",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Enhanced Defenses (Shortsword Parry)",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Enhanced Defenses (Two-Handed Sword Parry)",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Fearlessness",
+    "multiLevel": true,
+    "costPerLevel": 2
+  },
+  {
+    "name": "Flexibility",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Flexibility (Double-Jointed)",
+    "costPerLevel": 15
+  },
+  {
+    "name": "Hard to Kill",
+    "multiLevel": true,
+    "costPerLevel": 2
+  },
+  {
+    "name": "High Pain Threshold",
+    "costPerLevel": 10
+  },
+  {
+    "name": "Jumper (Time)",
+    "costPerLevel": 100
+  },
+  {
+    "name": "Jumper (World)",
+    "costPerLevel": 100
+  },
+  {
+    "name": "Language Talent",
+    "costPerLevel": 10
+  },
+  {
+    "name": "Luck",
+    "costPerLevel": 15
+  },
+  {
+    "name": "Luck (Extraordinary)",
+    "costPerLevel": 30
+  },
+  {
+    "name": "Luck (Ridiculous)",
+    "costPerLevel": 60
+  },
+  {
+    "name": "Night Vision",
+    "multiLevel": true,
+    "costPerLevel": 1
+  },
+  {
+    "name": "Perfect Balance",
+    "costPerLevel": 15
+  },
+  {
+    "name": "Resistant to Disease",
+    "costPerLevel": 3
+  },
+  {
+    "name": "Resistant to Disease (Enhanced)",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Resistant to Poison",
+    "costPerLevel": 5
+  },
+  {
+    "name": "Talent (Artificer)",
+    "multiLevel": true,
+    "costPerLevel": 10
+  },
+  {
+    "name": "Talent (Outdoorsman)",
+    "multiLevel": true,
+    "costPerLevel": 10
+  },
+  {
+    "name": "Talent (Smooth Operator)",
+    "multiLevel": true,
+    "costPerLevel": 15
+  }
+]

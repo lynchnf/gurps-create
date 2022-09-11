@@ -14,6 +14,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.net.URL;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -103,8 +105,10 @@ class HelperTest {
     }
 
     @Test
-    void getAdvantageDataMap() {
-        Map<String, AdvantageData> map = Helper.getAdvantageDataMap(loader, mapper);
+    void getAdvantageDataMap() throws Exception {
+        URL resource = loader.getResource("test-data/advantageData.json");
+        File file = new File(resource.toURI().getPath());
+        Map<String, AdvantageData> map = Helper.getAdvantageDataMap(file, mapper);
         assertEquals(1, map.size());
         AdvantageData data = map.get("AdvantageName");
         assertEquals("AdvantageName", data.getName());
@@ -115,8 +119,10 @@ class HelperTest {
     }
 
     @Test
-    void getDisadvantageDataMap() {
-        Map<String, DisadvantageData> map = Helper.getDisadvantageDataMap(loader, mapper);
+    void getDisadvantageDataMap() throws Exception {
+        URL resource = loader.getResource("test-data/disadvantageData.json");
+        File file = new File(resource.toURI().getPath());
+        Map<String, DisadvantageData> map = Helper.getDisadvantageDataMap(file, mapper);
         assertEquals(1, map.size());
         DisadvantageData data = map.get("DisadvantageName");
         assertEquals("DisadvantageName", data.getName());
@@ -126,8 +132,10 @@ class HelperTest {
     }
 
     @Test
-    void getSkillDataMap() {
-        Map<String, SkillData> map = Helper.getSkillDataMap(loader, mapper);
+    void getSkillDataMap() throws Exception {
+        URL resource = loader.getResource("test-data/skillData.json");
+        File file = new File(resource.toURI().getPath());
+        Map<String, SkillData> map = Helper.getSkillDataMap(file, mapper);
         assertEquals(1, map.size());
         SkillData data = map.get("SkillName");
         assertEquals("SkillName", data.getName());
@@ -142,8 +150,10 @@ class HelperTest {
     }
 
     @Test
-    void getEquipmentDataMap() {
-        Map<String, EquipmentData> map = Helper.getEquipmentDataMap(loader, mapper);
+    void getEquipmentDataMap() throws Exception {
+        URL resource = loader.getResource("test-data/equipmentData.json");
+        File file = new File(resource.toURI().getPath());
+        Map<String, EquipmentData> map = Helper.getEquipmentDataMap(file, mapper);
         assertEquals(1, map.size());
         EquipmentData data = map.get("EquipmentName");
         assertEquals("EquipmentName", data.getName());

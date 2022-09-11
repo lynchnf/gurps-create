@@ -1,0 +1,109 @@
+{
+  "characterName": "Primary Attributes Guy",
+  "primaryAttributes": {
+    "strength": {
+      "base": 10,
+      "adjustment": -2,
+      "rate": 10,
+      "value": 8,
+      "points": -20
+    },
+    "dexterity": {
+      "base": 10,
+      "adjustment": 1,
+      "rate": 20,
+      "value": 11,
+      "points": 20
+    },
+    "intelligence": {
+      "base": 10,
+      "adjustment": 2,
+      "rate": 20,
+      "value": 12,
+      "points": 40
+    },
+    "health": {
+      "base": 10,
+      "adjustment": -1,
+      "rate": 10,
+      "value": 9,
+      "points": -10
+    },
+    "points": 30
+  },
+  "secondaryAttributes": {
+    "hitPoints": {
+      "base": 8,
+      "adjustment": 0,
+      "rate": 2,
+      "value": 8,
+      "points": 0
+    },
+    "will": {
+      "base": 12,
+      "adjustment": 0,
+      "rate": 5,
+      "value": 12,
+      "points": 0
+    },
+    "perception": {
+      "base": 12,
+      "adjustment": 0,
+      "rate": 5,
+      "value": 12,
+      "points": 0
+    },
+    "fatiguePoints": {
+      "base": 9,
+      "adjustment": 0,
+      "rate": 3,
+      "value": 9,
+      "points": 0
+    },
+    "thrustDamageDice": 1,
+    "thrustDamageAdds": -3,
+    "thrustDamage": "1d-3",
+    "swingDamageDice": 1,
+    "swingDamageAdds": -2,
+    "swingDamage": "1d-2",
+    "basicLift": 13.0,
+    "basicSpeed": {
+      "base": 5.0,
+      "adjustment": 0.0,
+      "rate": 20,
+      "value": 5.0,
+      "points": 0
+    },
+    "basicMove": {
+      "base": 5,
+      "adjustment": 0,
+      "rate": 5,
+      "value": 5,
+      "points": 0
+    },
+    "points": 0
+  },
+  "otherAttributes": {
+    "encumbranceLevel": 0,
+    "encumberedMove": 5,
+    "damageResistance": 0,
+    "dodge": 8,
+    "frightCheck": 12,
+    "mentalStunCheck": 12,
+    "physicalStunCheck": 9,
+    "deathCheck": 9
+  },
+  "advantages": [],
+  "disadvantages": [],
+  "quirks": [],
+  "skills": [],
+  "equipmentList": [],
+  "meleeWeapons": [],
+  "rangedWeapons": [],
+  "totalPoints": 30,
+  "equipmentWeight": 0.0,
+  "disadvantagePoints": 0,
+  "quirkPoints": 0,
+  "advantagePoints": 0,
+  "skillPoints": 0
+}

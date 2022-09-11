@@ -1,0 +1,218 @@
+[
+  {
+    "name": "Appearance (Unattractive)",
+    "costPerLevel": -4
+  },
+  {
+    "name": "Appearance (Ugly)",
+    "costPerLevel": -8
+  },
+  {
+    "name": "Appearance (Hideous)",
+    "costPerLevel": -16
+  },
+  {
+    "name": "Odious Personal Habits",
+    "multiLevel": true,
+    "costPerLevel": -5
+  },
+  {
+    "name": "Low TL",
+    "multiLevel": true,
+    "costPerLevel": -5
+  },
+  {
+    "name": "Wealth (Struggling)",
+    "costPerLevel": -10
+  },
+  {
+    "name": "Wealth (Poor)",
+    "costPerLevel": -15
+  },
+  {
+    "name": "Wealth (Dead Broke)",
+    "costPerLevel": -25
+  },
+  {
+    "name": "Low Status",
+    "multiLevel": true,
+    "costPerLevel": -5
+  },
+  {
+    "name": "Bad Sight",
+    "costPerLevel": -25
+  },
+  {
+    "name": "Bad Sight (Correctable)",
+    "costPerLevel": -10
+  },
+  {
+    "name": "Bad Temper",
+    "selfControlAllowed": true,
+    "costPerLevel": -10
+  },
+  {
+    "name": "Bloodlust",
+    "selfControlAllowed": true,
+    "costPerLevel": -10
+  },
+  {
+    "name": "Code of Honor (Pirate's)",
+    "costPerLevel": -5
+  },
+  {
+    "name": "Code of Honor (Gentleman's)",
+    "costPerLevel": -10
+  },
+  {
+    "name": "Curious",
+    "selfControlAllowed": true,
+    "costPerLevel": -5
+  },
+  {
+    "name": "Delusions (Minor)",
+    "costPerLevel": -5
+  },
+  {
+    "name": "Delusions (Major)",
+    "costPerLevel": -10
+  },
+  {
+    "name": "Delusions (Severe)",
+    "costPerLevel": -15
+  },
+  {
+    "name": "Gluttony",
+    "selfControlAllowed": true,
+    "costPerLevel": -5
+  },
+  {
+    "name": "Greed",
+    "selfControlAllowed": true,
+    "costPerLevel": -15
+  },
+  {
+    "name": "Hard of Hearing",
+    "costPerLevel": -10
+  },
+  {
+    "name": "Honesty",
+    "selfControlAllowed": true,
+    "costPerLevel": -10
+  },
+  {
+    "name": "Impulsiveness",
+    "selfControlAllowed": true,
+    "costPerLevel": -10
+  },
+  {
+    "name": "Intolerance (All)",
+    "costPerLevel": -10
+  },
+  {
+    "name": "Intolerance (Specific)",
+    "costPerLevel": -5
+  },
+  {
+    "name": "Intolerance (Rare)",
+    "costPerLevel": -1
+  },
+  {
+    "name": "Jealousy",
+    "costPerLevel": -10
+  },
+  {
+    "name": "Lecherousness",
+    "selfControlAllowed": true,
+    "costPerLevel": -15
+  },
+  {
+    "name": "Obsession (Short-Term)",
+    "selfControlAllowed": true,
+    "costPerLevel": -5
+  },
+  {
+    "name": "Obsession (Long-Term)",
+    "selfControlAllowed": true,
+    "costPerLevel": -10
+  },
+  {
+    "name": "Overconfidence",
+    "selfControlAllowed": true,
+    "costPerLevel": -5
+  },
+  {
+    "name": "Pacifism (Reluctant Killer)",
+    "costPerLevel": -5
+  },
+  {
+    "name": "Pacifism (Cannot Harm Innocents)",
+    "costPerLevel": -10
+  },
+  {
+    "name": "Phobias (Blood)",
+    "selfControlAllowed": true,
+    "costPerLevel": -10
+  },
+  {
+    "name": "Phobias (Darkness)",
+    "selfControlAllowed": true,
+    "costPerLevel": -15
+  },
+  {
+    "name": "Phobias (Heights)",
+    "selfControlAllowed": true,
+    "costPerLevel": -10
+  },
+  {
+    "name": "Phobias (Number 13)",
+    "selfControlAllowed": true,
+    "costPerLevel": -5
+  },
+  {
+    "name": "Phobias (Spiders)",
+    "selfControlAllowed": true,
+    "costPerLevel": -5
+  },
+  {
+    "name": "Sense of Duty (Individual)",
+    "costPerLevel": -2
+  },
+  {
+    "name": "Sense of Duty (Small Group)",
+    "costPerLevel": -5
+  },
+  {
+    "name": "Sense of Duty (Large Group)",
+    "costPerLevel": -10
+  },
+  {
+    "name": "Sense of Duty (Entire Race)",
+    "costPerLevel": -15
+  },
+  {
+    "name": "Sense of Duty (Every Living Being)",
+    "costPerLevel": -20
+  },
+  {
+    "name": "Truthfulness",
+    "selfControlAllowed": true,
+    "costPerLevel": -5
+  },
+  {
+    "name": "Unluckiness",
+    "costPerLevel": -10
+  },
+  {
+    "name": "Vow (Minor)",
+    "costPerLevel": -5
+  },
+  {
+    "name": "Vow (Major)",
+    "costPerLevel": -10
+  },
+  {
+    "name": "Vow (Great)",
+    "costPerLevel": -15
+  }
+]

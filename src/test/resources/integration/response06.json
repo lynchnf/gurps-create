@@ -1,0 +1,189 @@
+{
+  "characterName": "Quirks Guy",
+  "primaryAttributes": {
+    "strength": {
+      "base": 10,
+      "adjustment": -2,
+      "rate": 10,
+      "value": 8,
+      "points": -20
+    },
+    "dexterity": {
+      "base": 10,
+      "adjustment": 1,
+      "rate": 20,
+      "value": 11,
+      "points": 20
+    },
+    "intelligence": {
+      "base": 10,
+      "adjustment": 2,
+      "rate": 20,
+      "value": 12,
+      "points": 40
+    },
+    "health": {
+      "base": 10,
+      "adjustment": -1,
+      "rate": 10,
+      "value": 9,
+      "points": -10
+    },
+    "points": 30
+  },
+  "secondaryAttributes": {
+    "hitPoints": {
+      "base": 8,
+      "adjustment": 3,
+      "rate": 2,
+      "value": 11,
+      "points": 6
+    },
+    "will": {
+      "base": 12,
+      "adjustment": -2,
+      "rate": 5,
+      "value": 10,
+      "points": -10
+    },
+    "perception": {
+      "base": 12,
+      "adjustment": -3,
+      "rate": 5,
+      "value": 9,
+      "points": -15
+    },
+    "fatiguePoints": {
+      "base": 9,
+      "adjustment": 2,
+      "rate": 3,
+      "value": 11,
+      "points": 6
+    },
+    "thrustDamageDice": 1,
+    "thrustDamageAdds": -3,
+    "thrustDamage": "1d-3",
+    "swingDamageDice": 1,
+    "swingDamageAdds": -2,
+    "swingDamage": "1d-2",
+    "basicLift": 13.0,
+    "basicSpeed": {
+      "base": 5.0,
+      "adjustment": 0.25,
+      "rate": 20,
+      "value": 5.25,
+      "points": 5
+    },
+    "basicMove": {
+      "base": 5,
+      "adjustment": -1,
+      "rate": 5,
+      "value": 4,
+      "points": -5
+    },
+    "points": -13
+  },
+  "otherAttributes": {
+    "encumbranceLevel": 0,
+    "encumberedMove": 4,
+    "damageResistance": 0,
+    "dodge": 8,
+    "frightCheck": 12,
+    "mentalStunCheck": 12,
+    "physicalStunCheck": 9,
+    "deathCheck": 9
+  },
+  "advantages": [
+    {
+      "name": "Combat Reflexes",
+      "multiLevel": false,
+      "firstLevel": 1,
+      "firstLevelCost": 15,
+      "costPerLevel": 15,
+      "level": 1,
+      "points": 15
+    },
+    {
+      "name": "Enhanced Defenses (Broadsword Parry)",
+      "multiLevel": false,
+      "firstLevel": 1,
+      "firstLevelCost": 5,
+      "costPerLevel": 5,
+      "level": 2,
+      "points": 5
+    },
+    {
+      "name": "Hard to Kill",
+      "multiLevel": true,
+      "firstLevel": 1,
+      "firstLevelCost": 2,
+      "costPerLevel": 2,
+      "level": 3,
+      "points": 6
+    },
+    {
+      "name": "High Pain Threshold",
+      "multiLevel": false,
+      "firstLevel": 1,
+      "firstLevelCost": 10,
+      "costPerLevel": 10,
+      "level": 1,
+      "points": 10
+    },
+    {
+      "name": "Talent (Smooth Operator)",
+      "multiLevel": true,
+      "firstLevel": 1,
+      "firstLevelCost": 15,
+      "costPerLevel": 15,
+      "level": 1,
+      "points": 15
+    }
+  ],
+  "disadvantages": [
+    {
+      "name": "Greed",
+      "selfControlAllowed": true,
+      "multiLevel": false,
+      "costPerLevel": -15,
+      "selfControlLevel": 15,
+      "level": 1,
+      "points": -7
+    },
+    {
+      "name": "Lecherousness",
+      "selfControlAllowed": true,
+      "multiLevel": false,
+      "costPerLevel": -15,
+      "selfControlLevel": 12,
+      "level": 1,
+      "points": -15
+    },
+    {
+      "name": "Overconfidence",
+      "selfControlAllowed": true,
+      "multiLevel": false,
+      "costPerLevel": -5,
+      "selfControlLevel": 6,
+      "level": 1,
+      "points": -10
+    }
+  ],
+  "quirks": [
+    "First quirk.",
+    "Fourth quirk.",
+    "Last quirk.",
+    "Second quirk.",
+    "Third quirk."
+  ],
+  "skills": [],
+  "equipmentList": [],
+  "meleeWeapons": [],
+  "rangedWeapons": [],
+  "disadvantagePoints": -32,
+  "equipmentWeight": 0.0,
+  "totalPoints": 31,
+  "quirkPoints": -5,
+  "skillPoints": 0,
+  "advantagePoints": 51
+}

@@ -1,0 +1,13 @@
+{
+  "characterName": "Secondary Attributes Guy",
+  "strengthAdjustment": -2,
+  "dexterityAdjustment": 1,
+  "intelligenceAdjustment": 2,
+  "healthAdjustment": -1,
+  "hitPointsAdjustment": 3,
+  "willAdjustment": -2,
+  "perceptionAdjustment": -3,
+  "fatiguePointsAdjustment": 2,
+  "basicSpeedAdjustment": 0.25,
+  "basicMoveAdjustment": -1
+}
