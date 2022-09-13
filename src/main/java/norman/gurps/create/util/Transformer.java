@@ -3,10 +3,12 @@ package norman.gurps.create.util;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import norman.gurps.create.Affected;
 import norman.gurps.create.LoggingException;
 import norman.gurps.create.model.ControllingAttribute;
 import norman.gurps.create.model.data.AdvantageData;
 import norman.gurps.create.model.data.DisadvantageData;
+import norman.gurps.create.model.data.EffectData;
 import norman.gurps.create.model.data.EquipmentData;
 import norman.gurps.create.model.data.SkillData;
 import norman.gurps.create.model.request.AdvantageRequest;
@@ -36,6 +38,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -60,17 +63,6 @@ public class Transformer {
     public static final int BASIC_SPEED_RATE = 20;
     public static final int BASIC_MOVE_RATE = 5;
     public static final int DISADVANTAGE_DEFAULT_SELF_CONTROL_LEVEL = 12;
-    public static final double ENCUMBRANCE_WEIGHT_LIMIT_1 = 2.0;
-    public static final double ENCUMBRANCE_MOVE_MULTIPLIER_1 = 0.8;
-    public static final double ENCUMBRANCE_WEIGHT_LIMIT_2 = 3.0;
-    public static final double ENCUMBRANCE_MOVE_MULTIPLIER_2 = 0.6;
-    public static final double ENCUMBRANCE_WEIGHT_LIMIT_3 = 6.0;
-    public static final double ENCUMBRANCE_MOVE_MULTIPLIER_3 = 0.4;
-    public static final double ENCUMBRANCE_WEIGHT_LIMIT_4 = 10.0;
-    public static final double ENCUMBRANCE_MOVE_MULTIPLIER_4 = 0.2;
-    public static final int ENCUMBRANCE_LEVEL_MAXIMUM = 5;
-    public static final int ENCUMBRANCE_MOVE_MINIMUM = 0;
-    public static final int DODGE_ADD = 3;
     public static final String CAMPAIGN_NAME_KEY = "campaign.name";
     public static final String ADVANTAGE_DATA_FILE_NAMES_KEY = "advantage.data.file.names";
     public static final String DISADVANTAGE_DATA_FILE_NAMES_KEY = "disadvantage.data.file.names";
@@ -112,6 +104,9 @@ public class Transformer {
         cleanRequest(req);
         GameCharacterResponse resp = new GameCharacterResponse();
         resp.setCharacterName(req.getCharacterName());
+        resp.setPlayerName(req.getPlayerName());
+        resp.setCharacterType(req.getCharacterType());
+        resp.setCampaignName(campaignName);
 
         // Primary Attributes
         transformPrimaryAttributes(req, resp);
@@ -127,6 +122,9 @@ public class Transformer {
         int willValue = resp.getSecondaryAttributes().getWill().getValue();
         int perceptionValue = resp.getSecondaryAttributes().getPerception().getValue();
 
+        // Other Attributes
+        constructOtherAttributes(resp, intelligenceValue, healthValue);
+
         // Advantages
         String[] advantageDataFileNameArray = StringUtils.split(advantageDataFileNames, ',');
         Map<String, AdvantageData> advMap = new HashMap<>();
@@ -138,6 +136,9 @@ public class Transformer {
             }
         }
         transformAdvantages(req, resp, advMap);
+
+        // Apply bonuses from Advantages.
+        applyAdvantageEffects(resp, resp.getAdvantages(), advMap);
 
         // Disadvantages
         String[] disadvantageDataFileNameArray = StringUtils.split(disadvantageDataFileNames, ',');
@@ -181,9 +182,6 @@ public class Transformer {
         }
         transformEquipment(req, resp, equipMap);
 
-        // Other Attributes
-        constructOtherAttributes(resp, intelligenceValue, healthValue);
-
         // Sort
         sortForOutput(resp);
 
@@ -197,34 +195,34 @@ public class Transformer {
 
     private void cleanRequest(GameCharacterRequest req) {
         if (req.getStrengthAdjustment() == null) {
-            req.setStrengthAdjustment(NumberUtils.INTEGER_ZERO);
+            req.setStrengthAdjustment(0);
         }
         if (req.getDexterityAdjustment() == null) {
-            req.setDexterityAdjustment(NumberUtils.INTEGER_ZERO);
+            req.setDexterityAdjustment(0);
         }
         if (req.getIntelligenceAdjustment() == null) {
-            req.setIntelligenceAdjustment(NumberUtils.INTEGER_ZERO);
+            req.setIntelligenceAdjustment(0);
         }
         if (req.getHealthAdjustment() == null) {
-            req.setHealthAdjustment(NumberUtils.INTEGER_ZERO);
+            req.setHealthAdjustment(0);
         }
         if (req.getHitPointsAdjustment() == null) {
-            req.setHitPointsAdjustment(NumberUtils.INTEGER_ZERO);
+            req.setHitPointsAdjustment(0);
         }
         if (req.getWillAdjustment() == null) {
-            req.setWillAdjustment(NumberUtils.INTEGER_ZERO);
+            req.setWillAdjustment(0);
         }
         if (req.getPerceptionAdjustment() == null) {
-            req.setPerceptionAdjustment(NumberUtils.INTEGER_ZERO);
+            req.setPerceptionAdjustment(0);
         }
         if (req.getFatiguePointsAdjustment() == null) {
-            req.setFatiguePointsAdjustment(NumberUtils.INTEGER_ZERO);
+            req.setFatiguePointsAdjustment(0);
         }
         if (req.getBasicSpeedAdjustment() == null) {
-            req.setBasicSpeedAdjustment(NumberUtils.DOUBLE_ZERO);
+            req.setBasicSpeedAdjustment(0.0);
         }
         if (req.getBasicMoveAdjustment() == null) {
-            req.setBasicMoveAdjustment(NumberUtils.INTEGER_ZERO);
+            req.setBasicMoveAdjustment(0);
         }
     }
 
@@ -285,6 +283,7 @@ public class Transformer {
         fatiguePoints.setRate(FATIGUE_POINTS_RATE);
         secondary.setFatiguePoints(fatiguePoints);
 
+        // TODO Are there any advantages or disadvantages which change basic damage?
         secondary.setThrustDamageDice(Helper.calculateThrustDamageDice(strengthValue));
         secondary.setThrustDamageAdds(Helper.calculateThrustDamageAdds(strengthValue));
         secondary.setThrustDamage(
@@ -293,6 +292,8 @@ public class Transformer {
         secondary.setSwingDamageAdds(Helper.calculateSwingDamageAdds(strengthValue));
         secondary.setSwingDamage(
                 Helper.calculateDamage(secondary.getSwingDamageDice(), secondary.getSwingDamageAdds()));
+
+        // TODO Are there any advantages or disadvantages which change basic lift?
         secondary.setBasicLift(Helper.calculateBasicLift(strengthValue));
 
         DoubleAttribute basicSpeed = new DoubleAttribute();
@@ -310,6 +311,22 @@ public class Transformer {
         resp.setSecondaryAttributes(secondary);
     }
 
+    private static void constructOtherAttributes(GameCharacterResponse resp, int intelligenceValue, int healthValue) {
+        OtherAttributes other = new OtherAttributes();
+        int encumbranceLevel = Helper.calculateEncumbranceLevel(0.0, resp.getSecondaryAttributes().getBasicLift());
+        other.setEncumbranceLevel(encumbranceLevel);
+        other.setEncumberedMove(Helper.calculateEncumberedMove(resp.getSecondaryAttributes().getBasicMove().getValue(),
+                encumbranceLevel));
+        other.setDamageResistance(0);
+        other.setDodge(
+                Helper.calculateDodge(resp.getSecondaryAttributes().getBasicSpeed().getValue(), encumbranceLevel));
+        other.setFrightCheck(intelligenceValue);
+        other.setMentalStunCheck(intelligenceValue);
+        other.setPhysicalStunCheck(healthValue);
+        other.setDeathCheck(healthValue);
+        resp.setOtherAttributes(other);
+    }
+
     private void transformAdvantages(GameCharacterRequest req, GameCharacterResponse resp,
             Map<String, AdvantageData> advMap) {
         for (AdvantageRequest advReq : req.getAdvantages()) {
@@ -325,6 +342,29 @@ public class Transformer {
             }
             advResp.setLevel(advReq.getLevel() != null ? advReq.getLevel() : NumberUtils.INTEGER_ONE);
             resp.getAdvantages().add(advResp);
+        }
+    }
+
+    private void applyAdvantageEffects(GameCharacterResponse resp, List<AdvantageResponse> advResps,
+            Map<String, AdvantageData> advMap) {
+        for (AdvantageResponse advResp : advResps) {
+            AdvantageData advData = advMap.get(advResp.getName());
+            for (EffectData effData : advData.getEffects()) {
+                Affected affected = effData.getAffected();
+                if (affected == Affected.OTHER_ATTRIBUTES_DODGE) {
+                    resp.getOtherAttributes().setDodge(resp.getOtherAttributes().getDodge() + effData.getAdjustment());
+                } else if (affected == Affected.OTHER_ATTRIBUTES_FRIGHT_CHECK) {
+                    resp.getOtherAttributes()
+                            .setFrightCheck(resp.getOtherAttributes().getFrightCheck() + effData.getAdjustment());
+                } else if (affected == Affected.OTHER_ATTRIBUTES_MENTAL_STUN_CHECK) {
+                    resp.getOtherAttributes().setMentalStunCheck(
+                            resp.getOtherAttributes().getMentalStunCheck() + effData.getAdjustment());
+                } else {
+                    String msg = String.format("Illegal Affected %s found for Advantage %s.", affected,
+                            advResp.getName());
+                    throw new LoggingException(LOGGER, msg);
+                }
+            }
         }
     }
 
@@ -395,8 +435,8 @@ public class Transformer {
                         skillData.getDifficultyLevel(), skillReq.getName());
                 skillResp.setLevel(level);
             } else {
-                skillResp.setLevel(NumberUtils.INTEGER_ZERO);
-                skillResp.setPoints(NumberUtils.INTEGER_ZERO);
+                skillResp.setLevel(0);
+                skillResp.setPoints(0);
             }
             resp.getSkills().add(skillResp);
         }
@@ -409,52 +449,13 @@ public class Transformer {
             EquipmentData equipData = equipMap.get(equipReq.getName());
             equipResp.setName(equipReq.getName());
             equipResp.setQuantity(equipReq.getQuantity() != null ? equipReq.getQuantity() : Integer.valueOf(1));
-            equipResp.setWeight(equipData.getWeight() != NumberUtils.DOUBLE_ZERO ?
-                    equipData.getWeight() * equipResp.getQuantity() / equipData.getQuantity() :
-                    NumberUtils.DOUBLE_ZERO);
+            equipResp.setWeight(equipData.getWeight() != 0.0 ?
+                    equipData.getWeight() * equipResp.getQuantity() / equipData.getQuantity() : 0.0);
             if (equipData.getNotes() != null) {
                 equipResp.setNotes(equipData.getNotes());
             }
             resp.getEquipmentList().add(equipResp);
         }
-    }
-
-    private static void constructOtherAttributes(GameCharacterResponse resp, int intelligenceValue, int healthValue) {
-        OtherAttributes other = new OtherAttributes();
-        int move;
-        if (resp.getEquipmentWeight() <= resp.getSecondaryAttributes().getBasicLift()) {
-            other.setEncumbranceLevel(0);
-            move = resp.getSecondaryAttributes().getBasicMove().getValue();
-        } else if (resp.getEquipmentWeight() <=
-                ENCUMBRANCE_WEIGHT_LIMIT_1 * resp.getSecondaryAttributes().getBasicLift()) {
-            other.setEncumbranceLevel(1);
-            move = (int) (ENCUMBRANCE_MOVE_MULTIPLIER_1 * resp.getSecondaryAttributes().getBasicMove().getValue());
-        } else if (resp.getEquipmentWeight() <=
-                ENCUMBRANCE_WEIGHT_LIMIT_2 * resp.getSecondaryAttributes().getBasicLift()) {
-            other.setEncumbranceLevel(2);
-            move = (int) (ENCUMBRANCE_MOVE_MULTIPLIER_2 * resp.getSecondaryAttributes().getBasicMove().getValue());
-        } else if (resp.getEquipmentWeight() <=
-                ENCUMBRANCE_WEIGHT_LIMIT_3 * resp.getSecondaryAttributes().getBasicLift()) {
-            other.setEncumbranceLevel(3);
-            move = (int) (ENCUMBRANCE_MOVE_MULTIPLIER_3 * resp.getSecondaryAttributes().getBasicMove().getValue());
-        } else if (resp.getEquipmentWeight() <=
-                ENCUMBRANCE_WEIGHT_LIMIT_4 * resp.getSecondaryAttributes().getBasicLift()) {
-            other.setEncumbranceLevel(4);
-            move = (int) (ENCUMBRANCE_MOVE_MULTIPLIER_4 * resp.getSecondaryAttributes().getBasicMove().getValue());
-        } else {
-            other.setEncumbranceLevel(ENCUMBRANCE_LEVEL_MAXIMUM);
-            move = ENCUMBRANCE_MOVE_MINIMUM;
-        }
-        other.setEncumberedMove(Math.max(move, NumberUtils.INTEGER_ONE));
-        other.setDamageResistance(0);
-        int dodge = (int) (resp.getSecondaryAttributes().getBasicSpeed().getValue() + DODGE_ADD -
-                other.getEncumbranceLevel());
-        other.setDodge(Math.max(dodge, NumberUtils.INTEGER_ONE));
-        other.setFrightCheck(intelligenceValue);
-        other.setMentalStunCheck(intelligenceValue);
-        other.setPhysicalStunCheck(healthValue);
-        other.setDeathCheck(healthValue);
-        resp.setOtherAttributes(other);
     }
 
     private void sortForOutput(GameCharacterResponse resp) {

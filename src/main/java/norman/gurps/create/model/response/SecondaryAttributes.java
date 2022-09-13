@@ -20,6 +20,7 @@ public class SecondaryAttributes {
                 basicSpeed.getPoints() + basicMove.getPoints();
     }
 
+    // Generated Getters and Setters //////////////////////////////////////////////////////////////////////////////////
     public IntegerAttribute getHitPoints() {
         return hitPoints;
     }

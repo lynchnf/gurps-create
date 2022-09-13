@@ -17,4 +17,4 @@ Note: This is a Proof of Concept project. Once I get it all working, I'll clean 
 * Validation, validation, validation!
 * Add validation messages to gameChar output.
 * Add allowed advantages, disadvantages, skills, and equipment to campaign file.
-* Add limits for mulitlevel advantages and disadvantages to campaign file.
+* Add limits for mulitlevel advantages & disadvantages to campaign file.

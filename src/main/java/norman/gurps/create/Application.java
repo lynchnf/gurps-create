@@ -2,8 +2,8 @@ package norman.gurps.create;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import norman.gurps.create.model.GameCharacterType;
 import norman.gurps.create.model.request.AdvantageRequest;
-import norman.gurps.create.model.request.DisadvantageRequest;
 import norman.gurps.create.model.request.GameCharacterRequest;
 import norman.gurps.create.util.Transformer;
 import org.slf4j.Logger;
@@ -23,9 +23,14 @@ public class Application {
 
         // Create example request object.
         GameCharacterRequest req = new GameCharacterRequest();
-        //req.setCharacterName("Advantages Guy");
+        req.setPlayerName("Norman Lynch");
+        req.setCharacterType(GameCharacterType.PLAYER);
+        //req.setCharacterName("Default Values Guy");
+        //req.setCharacterName("Primary Attributes Guy");
+        //req.setCharacterName("Secondary Attributes Guy");
+        req.setCharacterName("Advantages Guy");
         //req.setCharacterName("Disadvantages Guy");
-        req.setCharacterName("Quirks Guy");
+        //req.setCharacterName("Quirks Guy");
         //req.setCharacterName("Skills Guy");
 
         req.setStrengthAdjustment(-2);
@@ -41,20 +46,21 @@ public class Application {
         req.setBasicMoveAdjustment(-1);
 
         req.getAdvantages().add(new AdvantageRequest("Combat Reflexes"));
-        req.getAdvantages().add(new AdvantageRequest("Enhanced Defenses (Broadsword Parry)", 2));
-        req.getAdvantages().add(new AdvantageRequest("Hard to Kill", 3));
-        req.getAdvantages().add(new AdvantageRequest("High Pain Threshold"));
-        req.getAdvantages().add(new AdvantageRequest("Talent (Smooth Operator)", 1));
+        //req.getAdvantages().add(new AdvantageRequest("Enhanced Defenses (Dodge)", 1));
+        //req.getAdvantages().add(new AdvantageRequest("Enhanced Defenses (Broadsword Parry)", 2));
+        //req.getAdvantages().add(new AdvantageRequest("Hard to Kill", 3));
+        //req.getAdvantages().add(new AdvantageRequest("High Pain Threshold"));
+        //req.getAdvantages().add(new AdvantageRequest("Talent (Smooth Operator)", 1));
 
-        req.getDisadvantages().add(new DisadvantageRequest("Greed", 15));
-        req.getDisadvantages().add(new DisadvantageRequest("Lecherousness", 12));
-        req.getDisadvantages().add(new DisadvantageRequest("Overconfidence", 6));
+        //req.getDisadvantages().add(new DisadvantageRequest("Greed", 15));
+        //req.getDisadvantages().add(new DisadvantageRequest("Lecherousness", 12));
+        //req.getDisadvantages().add(new DisadvantageRequest("Overconfidence", 6));
 
-        req.getQuirks().add("First quirk.");
-        req.getQuirks().add("Second quirk.");
-        req.getQuirks().add("Third quirk.");
-        req.getQuirks().add("Fourth quirk.");
-        req.getQuirks().add("Last quirk.");
+        //req.getQuirks().add("First quirk.");
+        //req.getQuirks().add("Second quirk.");
+        //req.getQuirks().add("Third quirk.");
+        //req.getQuirks().add("Fourth quirk.");
+        //req.getQuirks().add("Last quirk.");
 
         //req.getSkills().add(new SkillRequest("Brawling", 13));
         //req.getSkills().add(new SkillRequest("Carousing", null, null, 2));
@@ -78,15 +84,8 @@ public class Application {
             mapper.writerWithDefaultPrettyPrinter().writeValue(reqFile, req);
 
             // Create response string.
-            String campaignFileName = "campaign";
             File dataDir = new File(fileDir, "data");
-            File campaignDir = dataDir;
-            File advantageDir = dataDir;
-            File disadvantageDir = dataDir;
-            File skillDir = dataDir;
-            File equipmentDir = dataDir;
-            Transformer transformer = new Transformer(campaignFileName, campaignDir, advantageDir, disadvantageDir,
-                    skillDir, equipmentDir);
+            Transformer transformer = new Transformer("campaign", dataDir, dataDir, dataDir, dataDir, dataDir);
             String respJson = transformer.transform(reqFile);
 
             // Write request file.

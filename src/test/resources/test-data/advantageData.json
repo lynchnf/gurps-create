@@ -4,6 +4,13 @@
     "multiLevel": false,
     "firstLevel": 12,
     "firstLevelCost": 23,
-    "costPerLevel": 34
+    "costPerLevel": 34,
+    "page": "Page",
+    "effects": [
+      {
+        "affected": "OTHER_ATTRIBUTES_DODGE",
+        "adjustment": 45
+      }
+    ]
   }
 ]

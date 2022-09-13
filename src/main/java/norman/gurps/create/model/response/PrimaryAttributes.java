@@ -10,6 +10,7 @@ public class PrimaryAttributes {
         return strength.getPoints() + dexterity.getPoints() + intelligence.getPoints() + health.getPoints();
     }
 
+    // Generated Getters and Setters //////////////////////////////////////////////////////////////////////////////////
     public IntegerAttribute getStrength() {
         return strength;
     }

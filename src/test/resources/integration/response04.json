@@ -1,5 +1,8 @@
 {
   "characterName": "Advantages Guy",
+  "playerName": "Norman Lynch",
+  "characterType": "PLAYER",
+  "campaignName": "gurps-test",
   "primaryAttributes": {
     "strength": {
       "base": 10,
@@ -87,9 +90,9 @@
     "encumbranceLevel": 0,
     "encumberedMove": 4,
     "damageResistance": 0,
-    "dodge": 8,
-    "frightCheck": 12,
-    "mentalStunCheck": 12,
+    "dodge": 9,
+    "frightCheck": 14,
+    "mentalStunCheck": 18,
     "physicalStunCheck": 9,
     "deathCheck": 9
   },
@@ -97,42 +100,6 @@
     {
       "name": "Combat Reflexes",
       "multiLevel": false,
-      "firstLevel": 1,
-      "firstLevelCost": 15,
-      "costPerLevel": 15,
-      "level": 1,
-      "points": 15
-    },
-    {
-      "name": "Enhanced Defenses (Broadsword Parry)",
-      "multiLevel": false,
-      "firstLevel": 1,
-      "firstLevelCost": 5,
-      "costPerLevel": 5,
-      "level": 2,
-      "points": 5
-    },
-    {
-      "name": "Hard to Kill",
-      "multiLevel": true,
-      "firstLevel": 1,
-      "firstLevelCost": 2,
-      "costPerLevel": 2,
-      "level": 3,
-      "points": 6
-    },
-    {
-      "name": "High Pain Threshold",
-      "multiLevel": false,
-      "firstLevel": 1,
-      "firstLevelCost": 10,
-      "costPerLevel": 10,
-      "level": 1,
-      "points": 10
-    },
-    {
-      "name": "Talent (Smooth Operator)",
-      "multiLevel": true,
       "firstLevel": 1,
       "firstLevelCost": 15,
       "costPerLevel": 15,
@@ -146,10 +113,10 @@
   "equipmentList": [],
   "meleeWeapons": [],
   "rangedWeapons": [],
-  "totalPoints": 68,
-  "equipmentWeight": 0.0,
   "disadvantagePoints": 0,
-  "advantagePoints": 51,
+  "equipmentWeight": 0.0,
+  "totalPoints": 32,
   "skillPoints": 0,
-  "quirkPoints": 0
+  "quirkPoints": 0,
+  "advantagePoints": 15
 }

@@ -1,6 +1,7 @@
 package norman.gurps.create.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import norman.gurps.create.Affected;
 import norman.gurps.create.model.BalancedForParry;
 import norman.gurps.create.model.ControllingAttribute;
 import norman.gurps.create.model.DamageBase;
@@ -116,6 +117,10 @@ class HelperTest {
         assertEquals(12, data.getFirstLevel());
         assertEquals(23, data.getFirstLevelCost());
         assertEquals(34, data.getCostPerLevel());
+        assertEquals("Page", data.getPage());
+        assertEquals(1, data.getEffects().size());
+        assertEquals(Affected.OTHER_ATTRIBUTES_DODGE, data.getEffects().get(0).getAffected());
+        assertEquals(45, data.getEffects().get(0).getAdjustment());
     }
 
     @Test

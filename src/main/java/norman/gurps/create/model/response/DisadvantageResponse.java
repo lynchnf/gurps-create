@@ -30,6 +30,7 @@ public class DisadvantageResponse {
         return points;
     }
 
+    // Generated Getters and Setters //////////////////////////////////////////////////////////////////////////////////
     public String getName() {
         return name;
     }

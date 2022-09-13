@@ -13,6 +13,7 @@ public class IntegerAttribute {
         return adjustment * rate;
     }
 
+    // Generated Getters and Setters //////////////////////////////////////////////////////////////////////////////////
     public Integer getBase() {
         return base;
     }

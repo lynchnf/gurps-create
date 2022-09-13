@@ -8,6 +8,7 @@ import norman.gurps.create.model.data.AdvantageData;
 import norman.gurps.create.model.data.ArmorData;
 import norman.gurps.create.model.data.DefaultData;
 import norman.gurps.create.model.data.DisadvantageData;
+import norman.gurps.create.model.data.EffectData;
 import norman.gurps.create.model.data.EquipmentData;
 import norman.gurps.create.model.data.MeleeWeaponData;
 import norman.gurps.create.model.data.MeleeWeaponModeData;
@@ -80,6 +81,42 @@ public class Helper {
         return (dexterity + health) / 4.0;
     }
 
+    public static int calculateEncumbranceLevel(double equipmentWeight, double basicLift) {
+        int encLvl = 5;
+        if (equipmentWeight <= basicLift) {
+            encLvl = 0;
+        } else if (equipmentWeight <= 2.0 * basicLift) {
+            encLvl = 1;
+        } else if (equipmentWeight <= 3.0 * basicLift) {
+            encLvl = 2;
+        } else if (equipmentWeight <= 6.0 * basicLift) {
+            encLvl = 3;
+        } else if (equipmentWeight <= 10.0 * basicLift) {
+            encLvl = 4;
+        }
+        return encLvl;
+    }
+
+    public static int calculateEncumberedMove(int basicMove, int encumbranceLevel) {
+        int move = 0;
+        if (encumbranceLevel == 0) {
+            move = basicMove;
+        } else if (encumbranceLevel == 1) {
+            move = (int) (0.8 * basicMove);
+        } else if (encumbranceLevel == 2) {
+            move = (int) (0.6 * basicMove);
+        } else if (encumbranceLevel == 3) {
+            move = (int) (0.4 * basicMove);
+        } else if (encumbranceLevel == 4) {
+            move = (int) (0.2 * basicMove);
+        }
+        return Math.max(move, 1);
+    }
+
+    public static int calculateDodge(double basicSpeed, int encumbranceLevel) {
+        return (int) (basicSpeed + 3 - encumbranceLevel);
+    }
+
     public static Map<String, AdvantageData> getAdvantageDataMap(File file, ObjectMapper mapper) throws IOException {
         AdvantageData[] dataArray = mapper.readValue(file, AdvantageData[].class);
         Map<String, AdvantageData> dataMap = new HashMap<>();
@@ -91,6 +128,13 @@ public class Helper {
             newData.setFirstLevelCost(
                     oldData.getFirstLevelCost() != null ? oldData.getFirstLevelCost() : oldData.getCostPerLevel());
             newData.setCostPerLevel(oldData.getCostPerLevel());
+            newData.setPage(oldData.getPage());
+            for (EffectData oldEff : oldData.getEffects()) {
+                EffectData newEff = new EffectData();
+                newEff.setAffected(oldEff.getAffected());
+                newEff.setAdjustment(oldEff.getAdjustment());
+                newData.getEffects().add(newEff);
+            }
             dataMap.put(newData.getName(), newData);
         }
         return dataMap;

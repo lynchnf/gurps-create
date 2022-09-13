@@ -1,10 +1,15 @@
 package norman.gurps.create.model.response;
 
+import norman.gurps.create.model.GameCharacterType;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameCharacterResponse {
     private String characterName;
+    private String playerName;
+    private GameCharacterType characterType;
+    private String campaignName;
     private PrimaryAttributes primaryAttributes;
     private SecondaryAttributes secondaryAttributes;
     private OtherAttributes otherAttributes;
@@ -57,12 +62,37 @@ public class GameCharacterResponse {
         return weight;
     }
 
+    // Generated Getters and Setters //////////////////////////////////////////////////////////////////////////////////
     public String getCharacterName() {
         return characterName;
     }
 
     public void setCharacterName(String characterName) {
         this.characterName = characterName;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public GameCharacterType getCharacterType() {
+        return characterType;
+    }
+
+    public void setCharacterType(GameCharacterType characterType) {
+        this.characterType = characterType;
+    }
+
+    public String getCampaignName() {
+        return campaignName;
+    }
+
+    public void setCampaignName(String campaignName) {
+        this.campaignName = campaignName;
     }
 
     public PrimaryAttributes getPrimaryAttributes() {

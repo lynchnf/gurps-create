@@ -1,5 +1,7 @@
 {
   "characterName": "Advantages Guy",
+  "playerName": "Norman Lynch",
+  "characterType": "PLAYER",
   "strengthAdjustment": -2,
   "dexterityAdjustment": 1,
   "intelligenceAdjustment": 2,
@@ -13,21 +15,6 @@
   "advantages": [
     {
       "name": "Combat Reflexes"
-    },
-    {
-      "name": "Enhanced Defenses (Broadsword Parry)",
-      "level": 2
-    },
-    {
-      "name": "Hard to Kill",
-      "level": 3
-    },
-    {
-      "name": "High Pain Threshold"
-    },
-    {
-      "name": "Talent (Smooth Operator)",
-      "level": 1
     }
   ]
 }

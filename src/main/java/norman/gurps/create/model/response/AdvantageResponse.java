@@ -16,6 +16,7 @@ public class AdvantageResponse {
         return costPerLevel;
     }
 
+    // Generated Getters and Setters //////////////////////////////////////////////////////////////////////////////////
     public String getName() {
         return name;
     }

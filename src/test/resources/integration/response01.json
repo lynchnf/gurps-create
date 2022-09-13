@@ -1,5 +1,8 @@
 {
   "characterName": "Default Values Guy",
+  "playerName": "Norman Lynch",
+  "characterType": "PLAYER",
+  "campaignName": "gurps-test",
   "primaryAttributes": {
     "strength": {
       "base": 10,
@@ -100,10 +103,10 @@
   "equipmentList": [],
   "meleeWeapons": [],
   "rangedWeapons": [],
-  "totalPoints": 0,
   "equipmentWeight": 0.0,
+  "totalPoints": 0,
   "disadvantagePoints": 0,
+  "quirkPoints": 0,
   "skillPoints": 0,
-  "advantagePoints": 0,
-  "quirkPoints": 0
+  "advantagePoints": 0
 }

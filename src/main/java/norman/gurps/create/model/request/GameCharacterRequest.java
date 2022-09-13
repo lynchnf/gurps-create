@@ -1,10 +1,14 @@
 package norman.gurps.create.model.request;
 
+import norman.gurps.create.model.GameCharacterType;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameCharacterRequest {
     private String characterName;
+    private String playerName;
+    private GameCharacterType characterType;
     private Integer strengthAdjustment;
     private Integer dexterityAdjustment;
     private Integer intelligenceAdjustment;
@@ -27,6 +31,22 @@ public class GameCharacterRequest {
 
     public void setCharacterName(String characterName) {
         this.characterName = characterName;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public GameCharacterType getCharacterType() {
+        return characterType;
+    }
+
+    public void setCharacterType(GameCharacterType characterType) {
+        this.characterType = characterType;
     }
 
     public Integer getStrengthAdjustment() {

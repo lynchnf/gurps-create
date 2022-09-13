@@ -13,6 +13,7 @@ public class DoubleAttribute {
         return Math.toIntExact(Math.round(adjustment * rate));
     }
 
+    // Generated Getters and Setters //////////////////////////////////////////////////////////////////////////////////
     public Double getBase() {
         return base;
     }

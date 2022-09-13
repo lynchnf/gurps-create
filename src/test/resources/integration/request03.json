@@ -1,5 +1,7 @@
 {
   "characterName": "Secondary Attributes Guy",
+  "playerName": "Norman Lynch",
+  "characterType": "PLAYER",
   "strengthAdjustment": -2,
   "dexterityAdjustment": 1,
   "intelligenceAdjustment": 2,

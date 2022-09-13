@@ -1,5 +1,8 @@
 {
   "characterName": "Primary Attributes Guy",
+  "playerName": "Norman Lynch",
+  "characterType": "PLAYER",
+  "campaignName": "gurps-test",
   "primaryAttributes": {
     "strength": {
       "base": 10,
@@ -103,7 +106,7 @@
   "totalPoints": 30,
   "equipmentWeight": 0.0,
   "disadvantagePoints": 0,
-  "quirkPoints": 0,
   "advantagePoints": 0,
-  "skillPoints": 0
+  "skillPoints": 0,
+  "quirkPoints": 0
 }

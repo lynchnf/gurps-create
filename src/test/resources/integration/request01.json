@@ -1,3 +1,5 @@
 {
-  "characterName": "Default Values Guy"
+  "characterName": "Default Values Guy",
+  "playerName": "Norman Lynch",
+  "characterType": "PLAYER"
 }
