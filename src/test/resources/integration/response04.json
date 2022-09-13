@@ -90,11 +90,11 @@
     "encumbranceLevel": 0,
     "encumberedMove": 4,
     "damageResistance": 0,
-    "dodge": 9,
-    "frightCheck": 14,
+    "dodge": 10,
+    "frightCheck": 15,
     "mentalStunCheck": 18,
-    "physicalStunCheck": 9,
-    "deathCheck": 9
+    "physicalStunCheck": 12,
+    "deathCheck": 10
   },
   "advantages": [
     {
@@ -105,6 +105,42 @@
       "costPerLevel": 15,
       "level": 1,
       "points": 15
+    },
+    {
+      "name": "Enhanced Defenses (Dodge)",
+      "multiLevel": false,
+      "firstLevel": 1,
+      "firstLevelCost": 15,
+      "costPerLevel": 15,
+      "level": 1,
+      "points": 15
+    },
+    {
+      "name": "Fearlessness",
+      "multiLevel": true,
+      "firstLevel": 1,
+      "firstLevelCost": 2,
+      "costPerLevel": 2,
+      "level": 1,
+      "points": 2
+    },
+    {
+      "name": "Hard to Kill",
+      "multiLevel": true,
+      "firstLevel": 1,
+      "firstLevelCost": 2,
+      "costPerLevel": 2,
+      "level": 1,
+      "points": 2
+    },
+    {
+      "name": "High Pain Threshold",
+      "multiLevel": false,
+      "firstLevel": 1,
+      "firstLevelCost": 10,
+      "costPerLevel": 10,
+      "level": 1,
+      "points": 10
     }
   ],
   "disadvantages": [],
@@ -113,10 +149,10 @@
   "equipmentList": [],
   "meleeWeapons": [],
   "rangedWeapons": [],
+  "advantagePoints": 44,
   "disadvantagePoints": 0,
-  "equipmentWeight": 0.0,
-  "totalPoints": 32,
-  "skillPoints": 0,
   "quirkPoints": 0,
-  "advantagePoints": 15
+  "skillPoints": 0,
+  "totalPoints": 61,
+  "equipmentWeight": 0.0
 }

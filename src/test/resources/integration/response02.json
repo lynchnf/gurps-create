@@ -103,10 +103,10 @@
   "equipmentList": [],
   "meleeWeapons": [],
   "rangedWeapons": [],
-  "totalPoints": 30,
-  "equipmentWeight": 0.0,
-  "disadvantagePoints": 0,
   "advantagePoints": 0,
+  "disadvantagePoints": 0,
+  "quirkPoints": 0,
   "skillPoints": 0,
-  "quirkPoints": 0
+  "totalPoints": 30,
+  "equipmentWeight": 0.0
 }

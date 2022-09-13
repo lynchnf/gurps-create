@@ -1,6 +1,6 @@
 package norman.gurps.create.model.data;
 
-import norman.gurps.create.Affected;
+import norman.gurps.create.model.Affected;
 
 public class EffectData {
     private Affected affected;

@@ -1,7 +1,7 @@
 package norman.gurps.create.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import norman.gurps.create.Affected;
+import norman.gurps.create.model.Affected;
 import norman.gurps.create.model.BalancedForParry;
 import norman.gurps.create.model.ControllingAttribute;
 import norman.gurps.create.model.DamageBase;

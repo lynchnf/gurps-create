@@ -15,6 +15,21 @@
   "advantages": [
     {
       "name": "Combat Reflexes"
+    },
+    {
+      "name": "Enhanced Defenses (Dodge)",
+      "level": 1
+    },
+    {
+      "name": "Fearlessness",
+      "level": 1
+    },
+    {
+      "name": "Hard to Kill",
+      "level": 1
+    },
+    {
+      "name": "High Pain Threshold"
     }
   ]
 }

@@ -3,8 +3,8 @@ package norman.gurps.create.util;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import norman.gurps.create.Affected;
 import norman.gurps.create.LoggingException;
+import norman.gurps.create.model.Affected;
 import norman.gurps.create.model.ControllingAttribute;
 import norman.gurps.create.model.data.AdvantageData;
 import norman.gurps.create.model.data.DisadvantageData;
@@ -359,6 +359,12 @@ public class Transformer {
                 } else if (affected == Affected.OTHER_ATTRIBUTES_MENTAL_STUN_CHECK) {
                     resp.getOtherAttributes().setMentalStunCheck(
                             resp.getOtherAttributes().getMentalStunCheck() + effData.getAdjustment());
+                } else if (affected == Affected.OTHER_ATTRIBUTES_DEATH_CHECK) {
+                    resp.getOtherAttributes()
+                            .setDeathCheck(resp.getOtherAttributes().getDeathCheck() + effData.getAdjustment());
+                } else if (affected == Affected.OTHER_ATTRIBUTES_PHYSICAL_STUN_CHECK) {
+                    resp.getOtherAttributes().setPhysicalStunCheck(
+                            resp.getOtherAttributes().getPhysicalStunCheck() + effData.getAdjustment());
                 } else {
                     String msg = String.format("Illegal Affected %s found for Advantage %s.", affected,
                             advResp.getName());

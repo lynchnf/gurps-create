@@ -1,5 +1,0 @@
-package norman.gurps.create;
-
-public enum Affected {
-    OTHER_ATTRIBUTES_DODGE, OTHER_ATTRIBUTES_FRIGHT_CHECK, OTHER_ATTRIBUTES_MENTAL_STUN_CHECK
-}
