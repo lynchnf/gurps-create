@@ -150,6 +150,7 @@ public class Helper {
             newData.setSelfControlAllowed(oldData.getSelfControlAllowed() != null && oldData.getSelfControlAllowed());
             newData.setMultiLevel(oldData.getMultiLevel() != null && oldData.getMultiLevel());
             newData.setCostPerLevel(oldData.getCostPerLevel());
+            newData.setPage(oldData.getPage());
             dataMap.put(newData.getName(), newData);
         }
         return dataMap;

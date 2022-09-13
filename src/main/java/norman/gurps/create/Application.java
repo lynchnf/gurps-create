@@ -30,8 +30,8 @@ public class Application {
         //req.setCharacterName("Primary Attributes Guy");
         //req.setCharacterName("Secondary Attributes Guy");
         //req.setCharacterName("Advantages Guy");
-        req.setCharacterName("Disadvantages Guy");
-        //req.setCharacterName("Quirks Guy");
+        //req.setCharacterName("Disadvantages Guy");
+        req.setCharacterName("Quirks Guy");
         //req.setCharacterName("Skills Guy");
 
         req.setStrengthAdjustment(-2);
@@ -54,14 +54,14 @@ public class Application {
         //req.getAdvantages().add(new AdvantageRequest("Talent (Smooth Operator)", 1));
 
         req.getDisadvantages().add(new DisadvantageRequest("Greed", 15));
-        //req.getDisadvantages().add(new DisadvantageRequest("Lecherousness", 12));
-        //req.getDisadvantages().add(new DisadvantageRequest("Overconfidence", 6));
+        req.getDisadvantages().add(new DisadvantageRequest("Lecherousness", 12));
+        req.getDisadvantages().add(new DisadvantageRequest("Overconfidence", 6));
 
-        //req.getQuirks().add("First quirk.");
-        //req.getQuirks().add("Second quirk.");
-        //req.getQuirks().add("Third quirk.");
-        //req.getQuirks().add("Fourth quirk.");
-        //req.getQuirks().add("Last quirk.");
+        req.getQuirks().add("First quirk.");
+        req.getQuirks().add("Second quirk.");
+        req.getQuirks().add("Third quirk.");
+        req.getQuirks().add("Fourth quirk.");
+        req.getQuirks().add("Last quirk.");
 
         //req.getSkills().add(new SkillRequest("Brawling", 13));
         //req.getSkills().add(new SkillRequest("Carousing", null, null, 2));

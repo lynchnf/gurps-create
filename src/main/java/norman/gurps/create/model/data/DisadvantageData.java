@@ -5,6 +5,7 @@ public class DisadvantageData {
     private Boolean selfControlAllowed;
     private Boolean multiLevel;
     private Integer costPerLevel;
+    private String page;
 
     public String getName() {
         return name;
@@ -36,5 +37,13 @@ public class DisadvantageData {
 
     public void setCostPerLevel(Integer costPerLevel) {
         this.costPerLevel = costPerLevel;
+    }
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
     }
 }

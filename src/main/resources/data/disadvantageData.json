@@ -1,218 +1,267 @@
 [
   {
     "name": "Appearance (Unattractive)",
-    "costPerLevel": -4
+    "costPerLevel": -4,
+    "page": "BS021"
   },
   {
     "name": "Appearance (Ugly)",
-    "costPerLevel": -8
+    "costPerLevel": -8,
+    "page": "BS021"
   },
   {
     "name": "Appearance (Hideous)",
-    "costPerLevel": -16
+    "costPerLevel": -16,
+    "page": "BS021"
   },
   {
     "name": "Odious Personal Habits",
     "multiLevel": true,
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS022"
   },
   {
     "name": "Low TL",
     "multiLevel": true,
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS022"
   },
   {
     "name": "Wealth (Struggling)",
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS025"
   },
   {
     "name": "Wealth (Poor)",
-    "costPerLevel": -15
+    "costPerLevel": -15,
+    "page": "BS025"
   },
   {
     "name": "Wealth (Dead Broke)",
-    "costPerLevel": -25
+    "costPerLevel": -25,
+    "page": "BS025"
   },
   {
     "name": "Low Status",
     "multiLevel": true,
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS028"
   },
   {
     "name": "Bad Sight",
-    "costPerLevel": -25
+    "costPerLevel": -25,
+    "page": "BS123"
   },
   {
     "name": "Bad Sight (Correctable)",
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS123"
   },
   {
     "name": "Bad Temper",
     "selfControlAllowed": true,
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS124"
   },
   {
     "name": "Bloodlust",
     "selfControlAllowed": true,
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS125"
   },
   {
     "name": "Code of Honor (Pirate's)",
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS127"
   },
   {
     "name": "Code of Honor (Gentleman's)",
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS127"
   },
   {
     "name": "Curious",
     "selfControlAllowed": true,
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS129"
   },
   {
     "name": "Delusions (Minor)",
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS130"
   },
   {
     "name": "Delusions (Major)",
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS130"
   },
   {
     "name": "Delusions (Severe)",
-    "costPerLevel": -15
+    "costPerLevel": -15,
+    "page": "BS130"
   },
   {
     "name": "Gluttony",
     "selfControlAllowed": true,
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS137"
   },
   {
     "name": "Greed",
     "selfControlAllowed": true,
-    "costPerLevel": -15
+    "costPerLevel": -15,
+    "page": "BS137"
   },
   {
     "name": "Hard of Hearing",
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS138"
   },
   {
     "name": "Honesty",
     "selfControlAllowed": true,
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS138"
   },
   {
     "name": "Impulsiveness",
     "selfControlAllowed": true,
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS139"
   },
   {
     "name": "Intolerance (All)",
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS140"
   },
   {
     "name": "Intolerance (Specific)",
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS140"
   },
   {
     "name": "Intolerance (Rare)",
-    "costPerLevel": -1
+    "costPerLevel": -1,
+    "page": "BS140"
   },
   {
     "name": "Jealousy",
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS140"
   },
   {
     "name": "Lecherousness",
     "selfControlAllowed": true,
-    "costPerLevel": -15
+    "costPerLevel": -15,
+    "page": "BS142"
   },
   {
     "name": "Obsession (Short-Term)",
     "selfControlAllowed": true,
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS146"
   },
   {
     "name": "Obsession (Long-Term)",
     "selfControlAllowed": true,
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS146"
   },
   {
     "name": "Overconfidence",
     "selfControlAllowed": true,
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS148"
   },
   {
     "name": "Pacifism (Reluctant Killer)",
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS146"
   },
   {
     "name": "Pacifism (Cannot Harm Innocents)",
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS146"
   },
   {
     "name": "Phobias (Blood)",
     "selfControlAllowed": true,
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS146"
   },
   {
     "name": "Phobias (Darkness)",
     "selfControlAllowed": true,
-    "costPerLevel": -15
+    "costPerLevel": -15,
+    "page": "BS146"
   },
   {
     "name": "Phobias (Heights)",
     "selfControlAllowed": true,
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS146"
   },
   {
     "name": "Phobias (Number 13)",
     "selfControlAllowed": true,
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS146"
   },
   {
     "name": "Phobias (Spiders)",
     "selfControlAllowed": true,
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS146"
   },
   {
     "name": "Sense of Duty (Individual)",
-    "costPerLevel": -2
+    "costPerLevel": -2,
+    "page": "BS153"
   },
   {
     "name": "Sense of Duty (Small Group)",
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS153"
   },
   {
     "name": "Sense of Duty (Large Group)",
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS153"
   },
   {
     "name": "Sense of Duty (Entire Race)",
-    "costPerLevel": -15
+    "costPerLevel": -15,
+    "page": "BS153"
   },
   {
     "name": "Sense of Duty (Every Living Being)",
-    "costPerLevel": -20
+    "costPerLevel": -20,
+    "page": "BS153"
   },
   {
     "name": "Truthfulness",
     "selfControlAllowed": true,
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS159"
   },
   {
     "name": "Unluckiness",
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS160"
   },
   {
     "name": "Vow (Minor)",
-    "costPerLevel": -5
+    "costPerLevel": -5,
+    "page": "BS160"
   },
   {
     "name": "Vow (Major)",
-    "costPerLevel": -10
+    "costPerLevel": -10,
+    "page": "BS160"
   },
   {
     "name": "Vow (Great)",
-    "costPerLevel": -15
+    "costPerLevel": -15,
+    "page": "BS160"
   }
 ]

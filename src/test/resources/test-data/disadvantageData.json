@@ -3,6 +3,7 @@
     "name": "DisadvantageName",
     "selfControlAllowed": false,
     "multiLevel": true,
-    "costPerLevel": -12
+    "costPerLevel": -12,
+    "page": "Page"
   }
 ]

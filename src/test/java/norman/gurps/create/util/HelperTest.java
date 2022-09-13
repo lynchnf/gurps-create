@@ -134,6 +134,7 @@ class HelperTest {
         assertEquals(false, data.getSelfControlAllowed());
         assertEquals(true, data.getMultiLevel());
         assertEquals(-12, data.getCostPerLevel());
+        assertEquals("Page", data.getPage());
     }
 
     @Test
