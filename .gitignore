@@ -25,3 +25,6 @@ hs_err_pid*
 # IDE files
 .idea/
 target/
+
+# Don't save GURPS data file in a public repository
+**/data.json

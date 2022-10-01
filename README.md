@@ -9,6 +9,9 @@ Note: This is a Proof of Concept project. Once I get it all working, I'll clean 
 * Add name to Modes.
 * Add page number to all Data.
 * Add player name, character type, and campaign name to response file.
+* Combine all data files into one big data file.
+* Add non-test data files into gitignore file.
+* Add test data file for integration tests.
 
 ## Phase II
 * Import all data files.
