@@ -1,0 +1,61 @@
+{
+  "advantageDataList": [
+    {
+      "name": "Catfall",
+      "page": "BS041",
+      "costPerLevel": 10
+    },
+    {
+      "name": "Charisma",
+      "page": "BS041",
+      "multiLevel": true,
+      "costPerLevel": 5
+    }
+  ],
+  "disadvantageDataList": [
+    {
+      "name": "Low Status",
+      "page": "BS028",
+      "multiLevel": true,
+      "costPerLevel": -5
+    },
+    {
+      "name": "Curious",
+      "page": "BS129",
+      "selfControlAllowed": true,
+      "costPerLevel": -5
+    },
+    {
+      "name": "Unluckiness",
+      "page": "BS160",
+      "costPerLevel": -10
+    }
+  ],
+  "skillDataList": [
+    {
+      "name": "Climbing",
+      "page": "BS183",
+      "controllingAttribute": "DX",
+      "difficultyLevel": "A",
+      "defaults": [
+        {
+          "attribute": "DX",
+          "penalty": -5
+        }
+      ]
+    },
+    {
+      "name": "Swimming",
+      "page": "BS224",
+      "controllingAttribute": "HT",
+      "difficultyLevel": "E",
+      "defaults": [
+        {
+          "attribute": "HT",
+          "penalty": -4
+        }
+      ]
+    }
+  ],
+  "equipmentDataList": []
+}

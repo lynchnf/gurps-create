@@ -1,9 +1,11 @@
 package norman.gurps.create.model.request;
 
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
+
 public class AdvantageRequest {
-    private String name;
+    private String name; // Should not be null.
     private String description;
-    private Integer level;
+    private Integer level = INTEGER_ONE;
 
     public AdvantageRequest() {
     }
@@ -14,6 +16,12 @@ public class AdvantageRequest {
 
     public AdvantageRequest(String name, Integer level) {
         this.name = name;
+        this.level = level;
+    }
+
+    public AdvantageRequest(String name, String description, Integer level) {
+        this.name = name;
+        this.description = description;
         this.level = level;
     }
 

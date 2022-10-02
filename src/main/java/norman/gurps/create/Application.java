@@ -6,6 +6,7 @@ import norman.gurps.create.model.GameCharacterType;
 import norman.gurps.create.model.request.AdvantageRequest;
 import norman.gurps.create.model.request.DisadvantageRequest;
 import norman.gurps.create.model.request.GameCharacterRequest;
+import norman.gurps.create.model.request.SkillRequest;
 import norman.gurps.create.util.Transformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +30,10 @@ public class Application {
         //req.setCharacterName("Default Values Guy");
         //req.setCharacterName("Primary Attributes Guy");
         //req.setCharacterName("Secondary Attributes Guy");
-        //req.setCharacterName("Advantages Guy");
-        //req.setCharacterName("Disadvantages Guy");
-        req.setCharacterName("Quirks Guy");
-        //req.setCharacterName("Skills Guy");
+        //req.setCharacterName("Simple Advantages Guy");
+        //req.setCharacterName("Simple Disadvantages Guy");
+        //req.setCharacterName("Quirks Guy");
+        req.setCharacterName("Simple Skills Guy");
 
         req.setStrengthAdjustment(-2);
         req.setDexterityAdjustment(1);
@@ -46,16 +47,12 @@ public class Application {
         req.setBasicSpeedAdjustment(0.25);
         req.setBasicMoveAdjustment(-1);
 
-        req.getAdvantages().add(new AdvantageRequest("Combat Reflexes"));
-        req.getAdvantages().add(new AdvantageRequest("Enhanced Defenses (Dodge)", 1));
-        req.getAdvantages().add(new AdvantageRequest("Fearlessness", 1));
-        req.getAdvantages().add(new AdvantageRequest("Hard to Kill", 1));
-        req.getAdvantages().add(new AdvantageRequest("High Pain Threshold"));
-        //req.getAdvantages().add(new AdvantageRequest("Talent (Smooth Operator)", 1));
+        req.getAdvantages().add(new AdvantageRequest("Catfall"));
+        req.getAdvantages().add(new AdvantageRequest("Charisma", 3));
 
-        req.getDisadvantages().add(new DisadvantageRequest("Greed", 15));
-        req.getDisadvantages().add(new DisadvantageRequest("Lecherousness", 12));
-        req.getDisadvantages().add(new DisadvantageRequest("Overconfidence", 6));
+        req.getDisadvantages().add(new DisadvantageRequest("Low Status", 3));
+        req.getDisadvantages().add(new DisadvantageRequest("Curious", 9, null));
+        req.getDisadvantages().add(new DisadvantageRequest("Unluckiness"));
 
         req.getQuirks().add("First quirk.");
         req.getQuirks().add("Second quirk.");
@@ -63,12 +60,24 @@ public class Application {
         req.getQuirks().add("Fourth quirk.");
         req.getQuirks().add("Last quirk.");
 
+        req.getSkills().add(new SkillRequest("Climbing", 15));
+        req.getSkills().add(new SkillRequest("Swimming", null, null, 1));
+
+        //req.getAdvantages().add(new AdvantageRequest("Combat Reflexes"));
+        //req.getAdvantages().add(new AdvantageRequest("Enhanced Defenses (Dodge)", 1));
+        //req.getAdvantages().add(new AdvantageRequest("Fearlessness", 1));
+        //req.getAdvantages().add(new AdvantageRequest("Hard to Kill", 1));
+        //req.getAdvantages().add(new AdvantageRequest("High Pain Threshold"));
+        ////req.getAdvantages().add(new AdvantageRequest("Talent (Smooth Operator)", 1));
+
+        //req.getDisadvantages().add(new DisadvantageRequest("Greed", 15));
+        //req.getDisadvantages().add(new DisadvantageRequest("Lecherousness", 12));
+        //req.getDisadvantages().add(new DisadvantageRequest("Overconfidence", 6));
+
+        //req.getSkills().add(new SkillRequest("Carousing"));
         //req.getSkills().add(new SkillRequest("Brawling", 13));
-        //req.getSkills().add(new SkillRequest("Carousing", null, null, 2));
-        //req.getSkills().add(new SkillRequest("Climbing", 12));
         //req.getSkills().add(new SkillRequest("Broadsword", 15));
         //req.getSkills().add(new SkillRequest("Knife", 12));
-        //req.getSkills().add(new SkillRequest("Swimming", null, null, 1));
         //req.getSkills().add(new SkillRequest("Thrown Weapon (Knife)", 14));
 
         try {
@@ -86,7 +95,7 @@ public class Application {
 
             // Create response string.
             File dataDir = new File(fileDir, "data");
-            Transformer transformer = new Transformer("campaign", dataDir, dataDir, dataDir, dataDir, dataDir);
+            Transformer transformer = new Transformer("campaign", dataDir, dataDir);
             String respJson = transformer.transform(reqFile);
 
             // Write request file.

@@ -2,9 +2,11 @@ package norman.gurps.create.model.data;
 
 import norman.gurps.create.model.Affected;
 
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
+
 public class EffectData {
-    private Affected affected;
-    private Integer adjustment;
+    private Affected affected; // Should not be null.
+    private Integer adjustment = INTEGER_ZERO;
 
     public Affected getAffected() {
         return affected;

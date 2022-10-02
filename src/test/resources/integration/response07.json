@@ -1,5 +1,5 @@
 {
-  "characterName": "Quirks Guy",
+  "characterName": "Simple Skills Guy",
   "playerName": "Norman Lynch",
   "characterType": "PLAYER",
   "campaignName": "gurps-test",
@@ -154,14 +154,33 @@
     "Second quirk.",
     "Third quirk."
   ],
-  "skills": [],
+  "skills": [
+    {
+      "name": "Climbing",
+      "controllingAttribute": "DX",
+      "difficultyLevel": "A",
+      "minLevel": 15,
+      "controllingAttributeValue": 11,
+      "level": 15,
+      "points": 16
+    },
+    {
+      "name": "Swimming",
+      "controllingAttribute": "HT",
+      "difficultyLevel": "E",
+      "maxPoints": 1,
+      "controllingAttributeValue": 9,
+      "level": 9,
+      "points": 1
+    }
+  ],
   "equipmentList": [],
   "meleeWeapons": [],
   "rangedWeapons": [],
   "advantagePoints": 25,
   "disadvantagePoints": -32,
   "quirkPoints": -5,
-  "skillPoints": 0,
-  "totalPoints": 5,
+  "skillPoints": 17,
+  "totalPoints": 22,
   "equipmentWeight": 0.0
 }

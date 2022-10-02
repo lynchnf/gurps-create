@@ -5,20 +5,23 @@ import norman.gurps.create.model.GameCharacterType;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.apache.commons.lang3.math.NumberUtils.DOUBLE_ZERO;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
+
 public class GameCharacterRequest {
-    private String characterName;
+    private String characterName; // Should not be null.
     private String playerName;
-    private GameCharacterType characterType;
-    private Integer strengthAdjustment;
-    private Integer dexterityAdjustment;
-    private Integer intelligenceAdjustment;
-    private Integer healthAdjustment;
-    private Integer hitPointsAdjustment;
-    private Integer willAdjustment;
-    private Integer perceptionAdjustment;
-    private Integer fatiguePointsAdjustment;
-    private Double basicSpeedAdjustment;
-    private Integer basicMoveAdjustment;
+    private GameCharacterType characterType = GameCharacterType.NPC;
+    private Integer strengthAdjustment = INTEGER_ZERO;
+    private Integer dexterityAdjustment = INTEGER_ZERO;
+    private Integer intelligenceAdjustment = INTEGER_ZERO;
+    private Integer healthAdjustment = INTEGER_ZERO;
+    private Integer hitPointsAdjustment = INTEGER_ZERO;
+    private Integer willAdjustment = INTEGER_ZERO;
+    private Integer perceptionAdjustment = INTEGER_ZERO;
+    private Integer fatiguePointsAdjustment = INTEGER_ZERO;
+    private Double basicSpeedAdjustment = DOUBLE_ZERO;
+    private Integer basicMoveAdjustment = INTEGER_ZERO;
     private List<AdvantageRequest> advantages = new ArrayList<>();
     private List<DisadvantageRequest> disadvantages = new ArrayList<>();
     private List<String> quirks = new ArrayList<>();

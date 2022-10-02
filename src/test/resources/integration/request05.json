@@ -1,5 +1,5 @@
 {
-  "characterName": "Disadvantages Guy",
+  "characterName": "Simple Disadvantages Guy",
   "playerName": "Norman Lynch",
   "characterType": "PLAYER",
   "strengthAdjustment": -2,
@@ -14,36 +14,24 @@
   "basicMoveAdjustment": -1,
   "advantages": [
     {
-      "name": "Combat Reflexes"
+      "name": "Catfall"
     },
     {
-      "name": "Enhanced Defenses (Dodge)",
-      "level": 1
-    },
-    {
-      "name": "Fearlessness",
-      "level": 1
-    },
-    {
-      "name": "Hard to Kill",
-      "level": 1
-    },
-    {
-      "name": "High Pain Threshold"
+      "name": "Charisma",
+      "level": 3
     }
   ],
   "disadvantages": [
     {
-      "name": "Greed",
-      "selfControlLevel": 15
+      "name": "Low Status",
+      "level": 3
     },
     {
-      "name": "Lecherousness",
-      "selfControlLevel": 12
+      "name": "Curious",
+      "selfControlLevel": 9
     },
     {
-      "name": "Overconfidence",
-      "selfControlLevel": 6
+      "name": "Unluckiness"
     }
   ]
 }

@@ -9,6 +9,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -20,19 +21,13 @@ class TransformerTest {
     @BeforeEach
     void setUp() throws Exception {
         loader = Thread.currentThread().getContextClassLoader();
-        URL url = loader.getResource("logback.xml");
+        String campaignFileName = "test-campaign";
+        String resourceName = "integration" + File.separator + campaignFileName + Transformer.PROPERTIES_EXTENSION;
+        URL url = loader.getResource(resourceName);
         File file = new File(url.toURI().getPath());
-        File fileDir = file.getParentFile();
-
-        String campaignFileName = "campaign";
-        File dataDir = new File(fileDir, "data");
-        File campaignDir = dataDir;
-        File advantageDir = dataDir;
-        File disadvantageDir = dataDir;
-        File skillDir = dataDir;
-        File equipmentDir = dataDir;
-        transformer = new Transformer(campaignFileName, campaignDir, advantageDir, disadvantageDir, skillDir,
-                equipmentDir);
+        File campaignDir = file.getParentFile();
+        File dataDir = new File(campaignDir, "data");
+        transformer = new Transformer(campaignFileName, campaignDir, dataDir);
     }
 
     @AfterEach
@@ -69,12 +64,20 @@ class TransformerTest {
         testTransform("request06.json", "response06.json");
     }
 
+    @Test
+    void transform_07() throws Exception {
+        testTransform("request07.json", "response07.json");
+    }
+
     private void testTransform(String reqFileName, String respFileName)
             throws URISyntaxException, IOException, JSONException {
-        URL reqUrl = loader.getResource("integration/" + reqFileName);
-        File reqFile = new File(reqUrl.toURI().getPath());
-        String respJsonExpected = IOUtils.toString(loader.getResourceAsStream("integration/" + respFileName),
-                StandardCharsets.UTF_8.name());
+        String reqRscName = "integration/" + reqFileName;
+        URL reqUrl = loader.getResource(reqRscName);
+        String reqRscPath = reqUrl.toURI().getPath();
+        File reqFile = new File(reqRscPath);
+        String respRscName = "integration/" + respFileName;
+        InputStream respRscStream = loader.getResourceAsStream(respRscName);
+        String respJsonExpected = IOUtils.toString(respRscStream, StandardCharsets.UTF_8.name());
 
         String respJsonActual = transformer.transform(reqFile);
 

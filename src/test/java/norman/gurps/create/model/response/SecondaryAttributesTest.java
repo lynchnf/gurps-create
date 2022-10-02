@@ -32,13 +32,6 @@ class SecondaryAttributesTest {
         fatiguePoints.setAdjustment(4);
         fatiguePoints.setRate(3);
         model.setFatiguePoints(fatiguePoints);
-        model.setThrustDamageDice(1);
-        model.setThrustDamageAdds(-1);
-        model.setThrustDamage("1d-1");
-        model.setSwingDamageDice(2);
-        model.setSwingDamageAdds(0);
-        model.setSwingDamage("2d");
-        model.setBasicLift(20.0);
         DoubleAttribute basicSpeed = new DoubleAttribute();
         basicSpeed.setBase(5.0);
         basicSpeed.setAdjustment(1.25);
@@ -78,41 +71,6 @@ class SecondaryAttributesTest {
     @Test
     void getFatiguePoints() {
         assertEquals(14, model.getFatiguePoints().getValue());
-    }
-
-    @Test
-    void getThrustDamageDice() {
-        assertEquals(1, model.getThrustDamageDice());
-    }
-
-    @Test
-    void getThrustDamageAdds() {
-        assertEquals(-1, model.getThrustDamageAdds());
-    }
-
-    @Test
-    void getThrustDamage() {
-        assertEquals("1d-1", model.getThrustDamage());
-    }
-
-    @Test
-    void getSwingDamageDice() {
-        assertEquals(2, model.getSwingDamageDice());
-    }
-
-    @Test
-    void getSwingDamageAdds() {
-        assertEquals(0, model.getSwingDamageAdds());
-    }
-
-    @Test
-    void getSwingDamage() {
-        assertEquals("2d", model.getSwingDamage());
-    }
-
-    @Test
-    void getBasicLift() {
-        assertEquals(20.0, model.getBasicLift());
     }
 
     @Test

@@ -63,13 +63,6 @@
       "value": 10,
       "points": 0
     },
-    "thrustDamageDice": 1,
-    "thrustDamageAdds": -2,
-    "thrustDamage": "1d-2",
-    "swingDamageDice": 1,
-    "swingDamageAdds": 0,
-    "swingDamage": "1d",
-    "basicLift": 20.0,
     "basicSpeed": {
       "base": 5.0,
       "adjustment": 0.0,
@@ -87,6 +80,15 @@
     "points": 0
   },
   "otherAttributes": {
+    "damageStrength": 10,
+    "thrustDamageDice": 1,
+    "thrustDamageAdds": -2,
+    "thrustDamage": "1d-2",
+    "swingDamageDice": 1,
+    "swingDamageAdds": 0,
+    "swingDamage": "1d",
+    "liftingStrength": 10,
+    "basicLift": 20.0,
     "encumbranceLevel": 0,
     "encumberedMove": 5,
     "damageResistance": 0,

@@ -1,11 +1,17 @@
 package norman.gurps.create.model.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
+
 public class DisadvantageData {
-    private String name;
-    private Boolean selfControlAllowed;
-    private Boolean multiLevel;
-    private Integer costPerLevel;
+    private String name; // Should not be null.
     private String page;
+    private Boolean selfControlAllowed = Boolean.FALSE;
+    private Boolean multiLevel = Boolean.FALSE;
+    private Integer costPerLevel = INTEGER_ZERO;
+    private List<EffectData> effects = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -13,6 +19,14 @@ public class DisadvantageData {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
     }
 
     public Boolean getSelfControlAllowed() {
@@ -39,11 +53,11 @@ public class DisadvantageData {
         this.costPerLevel = costPerLevel;
     }
 
-    public String getPage() {
-        return page;
+    public List<EffectData> getEffects() {
+        return effects;
     }
 
-    public void setPage(String page) {
-        this.page = page;
+    public void setEffects(List<EffectData> effects) {
+        this.effects = effects;
     }
 }

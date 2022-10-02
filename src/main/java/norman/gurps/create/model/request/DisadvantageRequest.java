@@ -1,10 +1,13 @@
 package norman.gurps.create.model.request;
 
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
+
 public class DisadvantageRequest {
-    private String name;
-    private Integer selfControlLevel;
+    public static final int DISADVANTAGE_DEFAULT_SELF_CONTROL_LEVEL = 12;
+    private String name; // Should not be null.
+    private Integer selfControlLevel = DISADVANTAGE_DEFAULT_SELF_CONTROL_LEVEL;
     private String description;
-    private Integer level;
+    private Integer level = INTEGER_ONE;
 
     public DisadvantageRequest() {
     }
@@ -13,15 +16,28 @@ public class DisadvantageRequest {
         this.name = name;
     }
 
-    public DisadvantageRequest(String name, Integer selfControlLevel) {
+    public DisadvantageRequest(String name, Integer level) {
         this.name = name;
-        this.selfControlLevel = selfControlLevel;
+        this.level = level;
+    }
+
+    public DisadvantageRequest(String name, String description, Integer level) {
+        this.name = name;
+        this.description = description;
+        this.level = level;
     }
 
     public DisadvantageRequest(String name, Integer selfControlLevel, String description) {
         this.name = name;
         this.selfControlLevel = selfControlLevel;
         this.description = description;
+    }
+
+    public DisadvantageRequest(String name, Integer selfControlLevel, String description, Integer level) {
+        this.name = name;
+        this.selfControlLevel = selfControlLevel;
+        this.description = description;
+        this.level = level;
     }
 
     public String getName() {

@@ -1,5 +1,5 @@
 {
-  "characterName": "Advantages Guy",
+  "characterName": "Simple Advantages Guy",
   "playerName": "Norman Lynch",
   "characterType": "PLAYER",
   "strengthAdjustment": -2,
@@ -14,22 +14,11 @@
   "basicMoveAdjustment": -1,
   "advantages": [
     {
-      "name": "Combat Reflexes"
+      "name": "Catfall"
     },
     {
-      "name": "Enhanced Defenses (Dodge)",
-      "level": 1
-    },
-    {
-      "name": "Fearlessness",
-      "level": 1
-    },
-    {
-      "name": "Hard to Kill",
-      "level": 1
-    },
-    {
-      "name": "High Pain Threshold"
+      "name": "Charisma",
+      "level": 3
     }
   ]
 }

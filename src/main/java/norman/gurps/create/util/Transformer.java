@@ -11,6 +11,7 @@ import norman.gurps.create.model.data.DisadvantageData;
 import norman.gurps.create.model.data.EffectData;
 import norman.gurps.create.model.data.EquipmentData;
 import norman.gurps.create.model.data.SkillData;
+import norman.gurps.create.model.data.SourceBookData;
 import norman.gurps.create.model.request.AdvantageRequest;
 import norman.gurps.create.model.request.DisadvantageRequest;
 import norman.gurps.create.model.request.EquipmentRequest;
@@ -29,7 +30,6 @@ import norman.gurps.create.model.response.RangedWeaponResponse;
 import norman.gurps.create.model.response.SecondaryAttributes;
 import norman.gurps.create.model.response.SkillResponse;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +45,8 @@ import java.util.Properties;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.naturalOrder;
 import static java.util.Comparator.nullsLast;
+import static org.apache.commons.lang3.math.NumberUtils.DOUBLE_ZERO;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 public class Transformer {
     private static final Logger LOGGER = LoggerFactory.getLogger(Transformer.class);
@@ -62,46 +64,49 @@ public class Transformer {
     public static final int FATIGUE_POINTS_RATE = 3;
     public static final int BASIC_SPEED_RATE = 20;
     public static final int BASIC_MOVE_RATE = 5;
-    public static final int DISADVANTAGE_DEFAULT_SELF_CONTROL_LEVEL = 12;
     public static final String CAMPAIGN_NAME_KEY = "campaign.name";
-    public static final String ADVANTAGE_DATA_FILE_NAMES_KEY = "advantage.data.file.names";
-    public static final String DISADVANTAGE_DATA_FILE_NAMES_KEY = "disadvantage.data.file.names";
-    public static final String SKILL_DATA_FILE_NAMES_KEY = "skill.data.file.names";
-    public static final String EQUIPMENT_DATA_FILE_NAMES_KEY = "equipment.data.file.names";
+    public static final String DATA_FILE_NAMES_KEY = "data.file.names";
     public static final String PROPERTIES_EXTENSION = ".properties";
     public static final String JSON_EXTENSION = ".json";
-    private final String campaignName;
-    private final String advantageDataFileNames;
-    private final String disadvantageDataFileNames;
-    private final String skillDataFileNames;
-    private final String equipmentDataFileNames;
-    private final File advantageDir;
-    private final File disadvantageDir;
-    private final File skillDir;
-    private final File equipmentDir;
+    private ObjectMapper mapper;
+    private String campaignName;
+    private Map<String, AdvantageData> advantageDataMap = new HashMap<>();
+    private Map<String, DisadvantageData> disadvantageDataMap = new HashMap<>();
+    private Map<String, SkillData> skillDataMap = new HashMap<>();
+    private Map<String, EquipmentData> equipmentDataMap = new HashMap<>();
 
-    public Transformer(String campaignFileName, File campaignDir, File advantageDir, File disadvantageDir,
-            File skillDir, File equipmentDir) throws IOException {
+    public Transformer(String campaignFileName, File campaignDir, File dataDir) throws Exception {
+        mapper = new ObjectMapper();
+
         File campaignFile = new File(campaignDir, campaignFileName + PROPERTIES_EXTENSION);
         Properties campaignProps = new Properties();
         InputStream inputStream = new FileInputStream(campaignFile);
         campaignProps.load(inputStream);
         campaignName = campaignProps.getProperty(CAMPAIGN_NAME_KEY);
-        advantageDataFileNames = campaignProps.getProperty(ADVANTAGE_DATA_FILE_NAMES_KEY);
-        disadvantageDataFileNames = campaignProps.getProperty(DISADVANTAGE_DATA_FILE_NAMES_KEY);
-        skillDataFileNames = campaignProps.getProperty(SKILL_DATA_FILE_NAMES_KEY);
-        equipmentDataFileNames = campaignProps.getProperty(EQUIPMENT_DATA_FILE_NAMES_KEY);
-        this.advantageDir = advantageDir;
-        this.disadvantageDir = disadvantageDir;
-        this.skillDir = skillDir;
-        this.equipmentDir = equipmentDir;
+        String dataFileNames = campaignProps.getProperty(DATA_FILE_NAMES_KEY);
+
+        // Read data files into data maps.
+        String[] dataFileNameArray = StringUtils.split(dataFileNames, ',');
+        for (String name : dataFileNameArray) {
+            File file = new File(dataDir, name + JSON_EXTENSION);
+            SourceBookData book = mapper.readValue(file, SourceBookData.class);
+            for (AdvantageData adv : book.getAdvantageDataList()) {
+                advantageDataMap.putIfAbsent(adv.getName(), adv);
+            }
+            for (DisadvantageData dis : book.getDisadvantageDataList()) {
+                disadvantageDataMap.putIfAbsent(dis.getName(), dis);
+            }
+            for (SkillData skill : book.getSkillDataList()) {
+                skillDataMap.putIfAbsent(skill.getName(), skill);
+            }
+            for (EquipmentData equip : book.getEquipmentDataList()) {
+                equipmentDataMap.putIfAbsent(equip.getName(), equip);
+            }
+        }
     }
 
     public String transform(File reqFile) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-
         GameCharacterRequest req = mapper.readValue(reqFile, GameCharacterRequest.class);
-        cleanRequest(req);
         GameCharacterResponse resp = new GameCharacterResponse();
         resp.setCharacterName(req.getCharacterName());
         resp.setPlayerName(req.getPlayerName());
@@ -123,64 +128,34 @@ public class Transformer {
         int perceptionValue = resp.getSecondaryAttributes().getPerception().getValue();
 
         // Other Attributes
-        constructOtherAttributes(resp, intelligenceValue, healthValue);
+        constructOtherAttributes(resp, strengthValue, intelligenceValue, healthValue);
 
         // Advantages
-        String[] advantageDataFileNameArray = StringUtils.split(advantageDataFileNames, ',');
-        Map<String, AdvantageData> advMap = new HashMap<>();
-        for (String name : advantageDataFileNameArray) {
-            File file = new File(advantageDir, name + JSON_EXTENSION);
-            Map<String, AdvantageData> map = Helper.getAdvantageDataMap(file, mapper);
-            for (String key : map.keySet()) {
-                advMap.putIfAbsent(key, map.get(key));
-            }
-        }
-        transformAdvantages(req, resp, advMap);
-
-        // Apply bonuses from Advantages.
-        applyAdvantageEffects(resp, resp.getAdvantages(), advMap);
+        transformAdvantages(req, resp, advantageDataMap);
 
         // Disadvantages
-        String[] disadvantageDataFileNameArray = StringUtils.split(disadvantageDataFileNames, ',');
-        Map<String, DisadvantageData> disMap = new HashMap<>();
-        for (String name : disadvantageDataFileNameArray) {
-            File file = new File(disadvantageDir, name + JSON_EXTENSION);
-            Map<String, DisadvantageData> map = Helper.getDisadvantageDataMap(file, mapper);
-            for (String key : map.keySet()) {
-                disMap.putIfAbsent(key, map.get(key));
-            }
-        }
-        transformDisadvantages(req, resp, disMap);
+        transformDisadvantages(req, resp, disadvantageDataMap);
 
         // Quirks
         resp.getQuirks().addAll(req.getQuirks());
 
         // Skills
-        String[] skillDataFileNameArray = StringUtils.split(skillDataFileNames, ',');
-        Map<String, SkillData> skillMap = new HashMap<>();
-        for (String name : skillDataFileNameArray) {
-            File file = new File(skillDir, name + JSON_EXTENSION);
-            Map<String, SkillData> map = Helper.getSkillDataMap(file, mapper);
-            for (String key : map.keySet()) {
-                skillMap.putIfAbsent(key, map.get(key));
-            }
-        }
         transformSkills(req, resp, strengthValue, dexterityValue, intelligenceValue, healthValue, willValue,
-                perceptionValue, skillMap);
-
-        // Add skill bonuses from advantages.
+                perceptionValue, skillDataMap);
 
         // Equipment
-        String[] equipmentDataFileNameArray = StringUtils.split(equipmentDataFileNames, ',');
-        Map<String, EquipmentData> equipMap = new HashMap<>();
-        for (String name : equipmentDataFileNameArray) {
-            File file = new File(equipmentDir, name + JSON_EXTENSION);
-            Map<String, EquipmentData> map = Helper.getEquipmentDataMap(file, mapper);
-            for (String key : map.keySet()) {
-                equipMap.putIfAbsent(key, map.get(key));
-            }
-        }
-        transformEquipment(req, resp, equipMap);
+        transformEquipment(req, resp, equipmentDataMap);
+
+        // Apply bonuses from Advantages.
+        applyAdvantageEffects(resp, resp.getAdvantages(), advantageDataMap);
+
+        // Apply penalties from Disadvantages.
+
+        // Apply skill bonuses from Advantages.
+
+        // Apply skill penalties from Disadvantages.
+
+        // Apply point discounts from Defaults.
 
         // Sort
         sortForOutput(resp);
@@ -191,39 +166,6 @@ public class Transformer {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         return mapper.writeValueAsString(resp);
-    }
-
-    private void cleanRequest(GameCharacterRequest req) {
-        if (req.getStrengthAdjustment() == null) {
-            req.setStrengthAdjustment(0);
-        }
-        if (req.getDexterityAdjustment() == null) {
-            req.setDexterityAdjustment(0);
-        }
-        if (req.getIntelligenceAdjustment() == null) {
-            req.setIntelligenceAdjustment(0);
-        }
-        if (req.getHealthAdjustment() == null) {
-            req.setHealthAdjustment(0);
-        }
-        if (req.getHitPointsAdjustment() == null) {
-            req.setHitPointsAdjustment(0);
-        }
-        if (req.getWillAdjustment() == null) {
-            req.setWillAdjustment(0);
-        }
-        if (req.getPerceptionAdjustment() == null) {
-            req.setPerceptionAdjustment(0);
-        }
-        if (req.getFatiguePointsAdjustment() == null) {
-            req.setFatiguePointsAdjustment(0);
-        }
-        if (req.getBasicSpeedAdjustment() == null) {
-            req.setBasicSpeedAdjustment(0.0);
-        }
-        if (req.getBasicMoveAdjustment() == null) {
-            req.setBasicMoveAdjustment(0);
-        }
     }
 
     private void transformPrimaryAttributes(GameCharacterRequest req, GameCharacterResponse resp) {
@@ -283,19 +225,6 @@ public class Transformer {
         fatiguePoints.setRate(FATIGUE_POINTS_RATE);
         secondary.setFatiguePoints(fatiguePoints);
 
-        // TODO Are there any advantages or disadvantages which change basic damage?
-        secondary.setThrustDamageDice(Helper.calculateThrustDamageDice(strengthValue));
-        secondary.setThrustDamageAdds(Helper.calculateThrustDamageAdds(strengthValue));
-        secondary.setThrustDamage(
-                Helper.calculateDamage(secondary.getThrustDamageDice(), secondary.getThrustDamageAdds()));
-        secondary.setSwingDamageDice(Helper.calculateSwingDamageDice(strengthValue));
-        secondary.setSwingDamageAdds(Helper.calculateSwingDamageAdds(strengthValue));
-        secondary.setSwingDamage(
-                Helper.calculateDamage(secondary.getSwingDamageDice(), secondary.getSwingDamageAdds()));
-
-        // TODO Are there any advantages or disadvantages which change basic lift?
-        secondary.setBasicLift(Helper.calculateBasicLift(strengthValue));
-
         DoubleAttribute basicSpeed = new DoubleAttribute();
         basicSpeed.setBase(Helper.calculateBasicSpeed(dexterityValue, healthValue));
         basicSpeed.setAdjustment(req.getBasicSpeedAdjustment());
@@ -311,15 +240,24 @@ public class Transformer {
         resp.setSecondaryAttributes(secondary);
     }
 
-    private static void constructOtherAttributes(GameCharacterResponse resp, int intelligenceValue, int healthValue) {
+    private static void constructOtherAttributes(GameCharacterResponse resp, int strengthValue, int intelligenceValue,
+            int healthValue) {
         OtherAttributes other = new OtherAttributes();
-        int encumbranceLevel = Helper.calculateEncumbranceLevel(0.0, resp.getSecondaryAttributes().getBasicLift());
-        other.setEncumbranceLevel(encumbranceLevel);
+        other.setDamageStrength(strengthValue);
+        other.setThrustDamageDice(Helper.calculateThrustDamageDice(other.getDamageStrength()));
+        other.setThrustDamageAdds(Helper.calculateThrustDamageAdds(other.getDamageStrength()));
+        other.setThrustDamage(Helper.calculateDamage(other.getThrustDamageDice(), other.getThrustDamageAdds()));
+        other.setSwingDamageDice(Helper.calculateSwingDamageDice(other.getDamageStrength()));
+        other.setSwingDamageAdds(Helper.calculateSwingDamageAdds(other.getDamageStrength()));
+        other.setSwingDamage(Helper.calculateDamage(other.getSwingDamageDice(), other.getSwingDamageAdds()));
+        other.setLiftingStrength(strengthValue);
+        other.setBasicLift(Helper.calculateBasicLift(other.getLiftingStrength()));
+        other.setEncumbranceLevel(Helper.calculateEncumbranceLevel(DOUBLE_ZERO, other.getBasicLift()));
         other.setEncumberedMove(Helper.calculateEncumberedMove(resp.getSecondaryAttributes().getBasicMove().getValue(),
-                encumbranceLevel));
-        other.setDamageResistance(0);
-        other.setDodge(
-                Helper.calculateDodge(resp.getSecondaryAttributes().getBasicSpeed().getValue(), encumbranceLevel));
+                other.getEncumbranceLevel()));
+        other.setDamageResistance(INTEGER_ZERO);
+        other.setDodge(Helper.calculateDodge(resp.getSecondaryAttributes().getBasicSpeed().getValue(),
+                other.getEncumbranceLevel()));
         other.setFrightCheck(intelligenceValue);
         other.setMentalStunCheck(intelligenceValue);
         other.setPhysicalStunCheck(healthValue);
@@ -337,11 +275,90 @@ public class Transformer {
             advResp.setFirstLevel(advData.getFirstLevel());
             advResp.setFirstLevelCost(advData.getFirstLevelCost());
             advResp.setCostPerLevel(advData.getCostPerLevel());
-            if (advReq.getDescription() != null) {
-                advResp.setDescription(advReq.getDescription());
-            }
-            advResp.setLevel(advReq.getLevel() != null ? advReq.getLevel() : NumberUtils.INTEGER_ONE);
+            advResp.setDescription(advReq.getDescription());
+            advResp.setLevel(advReq.getLevel());
             resp.getAdvantages().add(advResp);
+        }
+    }
+
+    private void transformDisadvantages(GameCharacterRequest req, GameCharacterResponse resp,
+            Map<String, DisadvantageData> disMap) {
+        for (DisadvantageRequest disReq : req.getDisadvantages()) {
+            DisadvantageResponse disResp = new DisadvantageResponse();
+            disResp.setName(disReq.getName());
+            DisadvantageData disData = disMap.get(disReq.getName());
+            disResp.setSelfControlAllowed(disData.getSelfControlAllowed());
+            disResp.setMultiLevel(disData.getMultiLevel());
+            disResp.setCostPerLevel(disData.getCostPerLevel());
+            disResp.setSelfControlLevel(disReq.getSelfControlLevel());
+            disResp.setDescription(disReq.getDescription());
+            disResp.setLevel(disReq.getLevel());
+            resp.getDisadvantages().add(disResp);
+        }
+    }
+
+    private void transformSkills(GameCharacterRequest req, GameCharacterResponse resp, int strengthValue,
+            int dexterityValue, int intelligenceValue, int healthValue, int willValue, int perceptionValue,
+            Map<String, SkillData> skillMap) {
+        for (SkillRequest skillReq : req.getSkills()) {
+            SkillResponse skillResp = new SkillResponse();
+            skillResp.setName(skillReq.getName());
+            SkillData skillData = skillMap.get(skillReq.getName());
+            skillResp.setControllingAttribute(skillData.getControllingAttribute());
+            skillResp.setDifficultyLevel(skillData.getDifficultyLevel());
+            skillResp.setSpecialty(skillReq.getSpecialty());
+
+            int attributeValue;
+            if (skillData.getControllingAttribute() == ControllingAttribute.ST) {
+                attributeValue = strengthValue;
+            } else if (skillData.getControllingAttribute() == ControllingAttribute.DX) {
+                attributeValue = dexterityValue;
+            } else if (skillData.getControllingAttribute() == ControllingAttribute.IQ) {
+                attributeValue = intelligenceValue;
+            } else if (skillData.getControllingAttribute() == ControllingAttribute.HT) {
+                attributeValue = healthValue;
+            } else if (skillData.getControllingAttribute() == ControllingAttribute.Will) {
+                attributeValue = willValue;
+            } else if (skillData.getControllingAttribute() == ControllingAttribute.Per) {
+                attributeValue = perceptionValue;
+            } else {
+                String msg = String.format("Illegal Controlling Attribute %s found for Skill %s.",
+                        skillData.getControllingAttribute(), skillData.getName());
+                throw new LoggingException(LOGGER, msg);
+            }
+            skillResp.setControllingAttributeValue(attributeValue);
+
+            if (skillReq.getMinLevel() != null) {
+                skillResp.setMinLevel(skillReq.getMinLevel());
+                int points = Helper.calculateSkillPoints(skillReq.getMinLevel(), attributeValue,
+                        skillData.getDifficultyLevel());
+                skillResp.setPoints(points);
+                int level = Helper.calculateSkillLevel(points, attributeValue, skillData.getDifficultyLevel());
+                skillResp.setLevel(level);
+            } else {
+                skillResp.setMaxPoints(skillReq.getMaxPoints());
+                skillResp.setPoints(skillReq.getMaxPoints());
+                int level = Helper.calculateSkillLevel(skillReq.getMaxPoints(), attributeValue,
+                        skillData.getDifficultyLevel());
+                skillResp.setLevel(level);
+            }
+            resp.getSkills().add(skillResp);
+        }
+    }
+
+    private void transformEquipment(GameCharacterRequest req, GameCharacterResponse resp,
+            Map<String, EquipmentData> equipMap) {
+        for (EquipmentRequest equipReq : req.getEquipmentList()) {
+            EquipmentResponse equipResp = new EquipmentResponse();
+            EquipmentData equipData = equipMap.get(equipReq.getName());
+            equipResp.setName(equipReq.getName());
+            equipResp.setQuantity(equipReq.getQuantity() != null ? equipReq.getQuantity() : Integer.valueOf(1));
+            equipResp.setWeight(equipData.getWeight() != 0.0 ?
+                    equipData.getWeight() * equipResp.getQuantity() / equipData.getQuantity() : 0.0);
+            if (equipData.getNotes() != null) {
+                equipResp.setNotes(equipData.getNotes());
+            }
+            resp.getEquipmentList().add(equipResp);
         }
     }
 
@@ -371,96 +388,6 @@ public class Transformer {
                     throw new LoggingException(LOGGER, msg);
                 }
             }
-        }
-    }
-
-    private void transformDisadvantages(GameCharacterRequest req, GameCharacterResponse resp,
-            Map<String, DisadvantageData> disMap) {
-        for (DisadvantageRequest disReq : req.getDisadvantages()) {
-            DisadvantageResponse disResp = new DisadvantageResponse();
-            disResp.setName(disReq.getName());
-            DisadvantageData disData = disMap.get(disReq.getName());
-            disResp.setSelfControlAllowed(disData.getSelfControlAllowed());
-            disResp.setMultiLevel(disData.getMultiLevel());
-            disResp.setCostPerLevel(disData.getCostPerLevel());
-            disResp.setSelfControlLevel(disReq.getSelfControlLevel() != null ? disReq.getSelfControlLevel() :
-                    Integer.valueOf(DISADVANTAGE_DEFAULT_SELF_CONTROL_LEVEL));
-            if (disReq.getDescription() != null) {
-                disResp.setDescription(disReq.getDescription());
-            }
-            disResp.setLevel(disReq.getLevel() != null ? disReq.getLevel() : NumberUtils.INTEGER_ONE);
-            resp.getDisadvantages().add(disResp);
-        }
-    }
-
-    private void transformSkills(GameCharacterRequest req, GameCharacterResponse resp, int strengthValue,
-            int dexterityValue, int intelligenceValue, int healthValue, int willValue, int perceptionValue,
-            Map<String, SkillData> skillMap) {
-        for (SkillRequest skillReq : req.getSkills()) {
-            SkillResponse skillResp = new SkillResponse();
-            skillResp.setName(skillReq.getName());
-            SkillData skillData = skillMap.get(skillReq.getName());
-            skillResp.setControllingAttribute(skillData.getControllingAttribute());
-            skillResp.setDifficultyLevel(skillData.getDifficultyLevel());
-            if (skillReq.getSpecialty() != null) {
-                skillResp.setSpecialty(skillReq.getSpecialty());
-            }
-
-            int attributeValue = 0;
-            if (skillData.getControllingAttribute() == ControllingAttribute.ST) {
-                attributeValue = strengthValue;
-            } else if (skillData.getControllingAttribute() == ControllingAttribute.DX) {
-                attributeValue = dexterityValue;
-            } else if (skillData.getControllingAttribute() == ControllingAttribute.IQ) {
-                attributeValue = intelligenceValue;
-            } else if (skillData.getControllingAttribute() == ControllingAttribute.HT) {
-                attributeValue = healthValue;
-            } else if (skillData.getControllingAttribute() == ControllingAttribute.Will) {
-                attributeValue = willValue;
-            } else if (skillData.getControllingAttribute() == ControllingAttribute.Per) {
-                attributeValue = perceptionValue;
-            } else {
-                String msg = String.format("Illegal Controlling Attribute %s found for Skill %s.",
-                        skillData.getControllingAttribute(), skillData.getName());
-                throw new LoggingException(LOGGER, msg);
-            }
-            skillResp.setControllingAttributeValue(attributeValue);
-
-            if (skillReq.getMinLevel() != null) {
-                skillResp.setMinLevel(skillReq.getMinLevel());
-                int points = Helper.calculateSkillPoints(skillReq.getMinLevel(), attributeValue,
-                        skillData.getDifficultyLevel(), skillReq.getName());
-                skillResp.setPoints(points);
-                int level = Helper.calculateSkillLevel(points, attributeValue, skillData.getDifficultyLevel(),
-                        skillReq.getName());
-                skillResp.setLevel(level);
-            } else if (skillReq.getMaxPoints() != null) {
-                skillResp.setMaxPoints(skillReq.getMaxPoints());
-                skillResp.setPoints(skillReq.getMaxPoints());
-                int level = Helper.calculateSkillLevel(skillReq.getMaxPoints(), attributeValue,
-                        skillData.getDifficultyLevel(), skillReq.getName());
-                skillResp.setLevel(level);
-            } else {
-                skillResp.setLevel(0);
-                skillResp.setPoints(0);
-            }
-            resp.getSkills().add(skillResp);
-        }
-    }
-
-    private void transformEquipment(GameCharacterRequest req, GameCharacterResponse resp,
-            Map<String, EquipmentData> equipMap) {
-        for (EquipmentRequest equipReq : req.getEquipmentList()) {
-            EquipmentResponse equipResp = new EquipmentResponse();
-            EquipmentData equipData = equipMap.get(equipReq.getName());
-            equipResp.setName(equipReq.getName());
-            equipResp.setQuantity(equipReq.getQuantity() != null ? equipReq.getQuantity() : Integer.valueOf(1));
-            equipResp.setWeight(equipData.getWeight() != 0.0 ?
-                    equipData.getWeight() * equipResp.getQuantity() / equipData.getQuantity() : 0.0);
-            if (equipData.getNotes() != null) {
-                equipResp.setNotes(equipData.getNotes());
-            }
-            resp.getEquipmentList().add(equipResp);
         }
     }
 

@@ -1,10 +1,12 @@
 package norman.gurps.create.model.request;
 
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
+
 public class SkillRequest {
-    private String name;
+    private String name; // Should not be null.
     private String specialty;
     private Integer minLevel;
-    private Integer maxPoints;
+    private Integer maxPoints = INTEGER_ZERO;
 
     public SkillRequest() {
     }

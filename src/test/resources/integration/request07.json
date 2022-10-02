@@ -1,5 +1,5 @@
 {
-  "characterName": "Quirks Guy",
+  "characterName": "Simple Skills Guy",
   "playerName": "Norman Lynch",
   "characterType": "PLAYER",
   "strengthAdjustment": -2,
@@ -40,5 +40,15 @@
     "Third quirk.",
     "Fourth quirk.",
     "Last quirk."
+  ],
+  "skills": [
+    {
+      "name": "Climbing",
+      "minLevel": 15
+    },
+    {
+      "name": "Swimming",
+      "maxPoints": 1
+    }
   ]
 }

@@ -12,6 +12,16 @@ class OtherAttributesTest {
     @BeforeEach
     void setUp() {
         model = new OtherAttributes();
+        model.setDamageStrength(11);
+        model.setThrustDamageDice(1);
+        model.setThrustDamageAdds(-1);
+        model.setThrustDamage("1d-1");
+        model.setSwingDamageDice(2);
+        model.setSwingDamageAdds(0);
+        model.setSwingDamage("2d");
+        model.setLiftingStrength(12);
+        model.setBasicLift(20.0);
+
         model.setEncumbranceLevel(123);
         model.setEncumberedMove(234);
         model.setDamageResistance(345);
@@ -24,6 +34,51 @@ class OtherAttributesTest {
 
     @AfterEach
     void tearDown() {
+    }
+
+    @Test
+    void getDamageStrength() {
+        assertEquals(11, model.getDamageStrength());
+    }
+
+    @Test
+    void getThrustDamageDice() {
+        assertEquals(1, model.getThrustDamageDice());
+    }
+
+    @Test
+    void getThrustDamageAdds() {
+        assertEquals(-1, model.getThrustDamageAdds());
+    }
+
+    @Test
+    void getThrustDamage() {
+        assertEquals("1d-1", model.getThrustDamage());
+    }
+
+    @Test
+    void getSwingDamageDice() {
+        assertEquals(2, model.getSwingDamageDice());
+    }
+
+    @Test
+    void getSwingDamageAdds() {
+        assertEquals(0, model.getSwingDamageAdds());
+    }
+
+    @Test
+    void getSwingDamage() {
+        assertEquals("2d", model.getSwingDamage());
+    }
+
+    @Test
+    void getFoo() {
+        assertEquals(12, model.getLiftingStrength());
+    }
+
+    @Test
+    void getBasicLift() {
+        assertEquals(20.0, model.getBasicLift());
     }
 
     @Test
